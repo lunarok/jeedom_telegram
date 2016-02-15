@@ -1,0 +1,9 @@
+==== Telegram
+
+Telegram est un service de messagerie chiffré bout-à-bout. Ce qui veut dire que même les serveurs intermédiaires ne voient ce qui transite.
+
+Vous pouvez l'utiliser pour envoyer des messages depuis et vers Jeedom.
+
+Telegram accepte les pièces jointes également (pour le plugin Camera par exemple)
+
+Le plugin accepte également la fonction "ask"

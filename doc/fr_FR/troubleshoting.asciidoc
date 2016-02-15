@@ -1,0 +1,5 @@
+[panel,danger]
+.Je n'ai pas de retour de Telegram
+--
+Il faut bien avoir une adresse en HTTPS, Telegram refuse d'utiliser une URL http en webhook (ce point est visible dans la page santé)
+--

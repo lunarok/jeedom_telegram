@@ -1,0 +1,179 @@
+<?php
+
+/* This file is part of Jeedom.
+*
+* Jeedom is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or
+* (at your option) any later version.
+*
+* Jeedom is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with Jeedom. If not, see <http://www.gnu.org/licenses/>.
+*/
+
+/* * ***************************Includes********************************* */
+require_once dirname(__FILE__) . '/../../../../core/php/core.inc.php';
+
+class telegram extends eqLogic {
+
+  public static function health() {
+    $return = array();
+    if (strpos(network::getNetworkAccess('external'),'https') !== false) {
+      $https = true;
+    } else {
+      $https = false;
+    }
+
+
+    $return[] = array(
+      'test' => __('HTTPS', __FILE__),
+      'result' => ($https) ?  __('OK', __FILE__) : __('NOK', __FILE__),
+      'advice' => ($https) ? '' : __('Votre Jeedom ne permet pas le fonctionnement de Telegram sans HTTPS', __FILE__),
+      'state' => $https,
+    );
+    return $return;
+  }
+
+  public function postSave() {
+    $text = $this->getCmd(null, 'text');
+		if (!is_object($text)) {
+			$text = new telegramCmd();
+			$text->setLogicalId('text');
+			$text->setIsVisible(0);
+			$text->setName(__('Message', __FILE__));
+		}
+		$text->setType('info');
+		$text->setSubType('string');
+		$text->setEqLogic_id($this->getId());
+		$text->save();
+
+		$sender = $this->getCmd(null, 'sender');
+		if (!is_object($sender)) {
+			$sender = new telegramCmd();
+			$sender->setLogicalId('sender');
+			$sender->setIsVisible(0);
+			$sender->setName(__('Expediteur', __FILE__));
+		}
+		$sender->setType('info');
+		$sender->setSubType('string');
+		$sender->setEqLogic_id($this->getId());
+		$sender->save();
+
+    $url = network::getNetworkAccess('external') . '/plugins/telegram/core/api/jeeTelegram.php?apikey=' . config::byKey('api') . '&id=' . $this->getId();
+    $token = trim($this->getConfiguration('bot_token'));
+
+    $request_http = new com_http('https://api.telegram.org/bot' . $token . '/setWebhook');
+    log::add('telegram', 'debug', $url);
+    $post = array(
+        'url' => $url
+    );
+
+    $request_http->setPost($post);
+    try {
+      $result = $request_http->exec(60, 1);
+    } catch (Exception $e) {
+    }
+    log::add('telegram', 'debug', $result);
+
+  }
+
+}
+
+class telegramCmd extends cmd {
+
+  public function preSave() {
+		if ($this->getSubtype() == 'message') {
+			$this->setDisplay('title_disable', 1);
+		}
+	}
+
+	public function execute($_options = array()) {
+    $eqLogic = $this->getEqLogic();
+    $chatid = $this->getConfiguration('chatid');
+		$request_http = "https://api.telegram.org/bot" . trim($eqLogic->getConfiguration('bot_token'));
+
+		$text = trim($_options['title'] . ' ' . $_options['message']);
+
+    $data = array(
+        'chat_id' => $chatid,
+        'text'  => $text
+    );
+    if (isset($_options['answer'])) {
+      $replyMarkup = array(
+        'keyboard' => array(
+            $_options['answer']
+        ),
+        'one_time_keyboard' => true,
+        'resize_keyboard' => true
+      );
+      $encodedMarkup = json_encode($replyMarkup);
+			//$data['reply_markup'] = '{"keyboard": [["' . implode('""],["', $_options['answer']) . '"]],"one_time_keyboard": true}';
+      $data['reply_markup'] = $encodedMarkup;
+      log::add('telegram', 'debug', $data['reply_markup']);
+		}
+
+    $options = array(
+        'http' => array(
+            'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+            'method'  => 'POST',
+            'content' => http_build_query($data),
+        ),
+    );
+
+    $context  = stream_context_create($options);
+    $url = $request_http . "/sendMessage";
+    $result = file_get_contents($url, false, $context);
+    //log::add('telegram', 'debug', print_r($result));
+
+		if (isset($_options['files']) && is_array($_options['files'])) {
+
+
+			foreach ($_options['files'] as $file) {
+        $ext = pathinfo($file, PATHINFO_EXTENSION);
+        $photolist = "gif,jpeg,jpg,png";
+        $videolist = "avi,mpeg,mpg,mkv,mp4,mpe";
+        $audiolist = "ogg,mp3";
+        log::add('telegram', 'debug', $file);
+
+        if (strpos($photolist,$ext) !== false) {
+          $post_fields = array('chat_id'   => $chatid,
+              'photo'     => new CURLFile(realpath($file))
+          );
+          $url = $request_http . "/sendPhoto?chat_id=" . $chatid;
+        } else if (strpos($audiolist,$ext) !== false) {
+          $post_fields = array('chat_id'   => $chatid,
+              'audio'     => new CURLFile(realpath($file))
+          );
+          $url = $request_http . "/sendAudio";
+        } else if (strpos($videolist,$ext) !== false) {
+          $post_fields = array('chat_id'   => $chatid,
+              'video'     => new CURLFile(realpath($file))
+          );
+          $url = $request_http . "/sendVideo";
+        } else {
+          $post_fields = array('chat_id'   => $chatid,
+              'document'     => new CURLFile(realpath($file))
+          );
+          $url = $request_http . "/sendDocument";
+        }
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            "Content-Type:multipart/form-data"
+        ));
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $post_fields);
+        $output = curl_exec($ch);
+			}
+		}
+	}
+
+}
+
+?>
