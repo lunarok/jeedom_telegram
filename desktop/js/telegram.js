@@ -48,6 +48,11 @@
    tr += '</td>';
    tr += '<td>';
    if (!isset(_cmd.type) || _cmd.type == 'action') {
+       tr += '<span class="cmdAttr" data-l1key="configuration" data-l2key="firstname"></span>';
+   }
+   tr += '</td>';
+   tr += '<td>';
+   if (!isset(_cmd.type) || _cmd.type == 'action') {
           tr += '<input type="checkbox" data-size="mini" data-label-text="{{Interactions}}" class="cmdAttr bootstrapSwitch" data-l1key="configuration" data-l2key="interact" />';
    }
    tr += '</td>';

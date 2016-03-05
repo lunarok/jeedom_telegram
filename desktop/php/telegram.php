@@ -120,7 +120,7 @@ $eqLogics = eqLogic::byType('telegram');
   <table id="table_cmd" class="table table-bordered table-condensed">
     <thead>
       <tr>
-        <th>{{Nom}}</th><th>{{Chat Id / Valeur}}</th><th>{{Username}}</th><th></th><th>{{Options}}</th>
+        <th>{{Nom}}</th><th>{{Chat Id}}</th><th>{{Username}}</th><th>{{First Name}}</th><th></th><th>{{Options}}</th>
       </tr>
     </thead>
     <tbody>

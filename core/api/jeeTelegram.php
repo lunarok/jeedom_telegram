@@ -54,7 +54,7 @@ if (is_object($user)) {
 }
 
 foreach ($eqLogic->getCmd('action') as $cmd) {
-	if ($json["message"]["from"]["username"] == $cmd->getConfiguration('username') && $cmd->getConfiguration('storeVariable', 'none') != 'none') {
+	if ($json["message"]["chat"]["id"] == $cmd->getConfiguration('chatid') && $cmd->getConfiguration('storeVariable', 'none') != 'none') {
 		$dataStore = new dataStore();
 		$dataStore->setType('scenario');
 		$dataStore->setKey($cmd->getConfiguration('storeVariable', 'none'));
@@ -74,20 +74,21 @@ $cmd_text->setValue($json["message"]["text"]);
 $cmd_text->setConfiguration('value',$json["message"]["text"]);
 $cmd_text->save();
 $cmd_sender = $eqLogic->getCmd('info', 'sender');
-$cmd_sender->event($json["message"]["from"]["username"]);
-$cmd_sender->setValue($json["message"]["from"]["username"]);
-$cmd_sender->setConfiguration('value',$json["message"]["from"]["username"]);
+$cmd_sender->event($json["message"]["chat"]["id"]);
+$cmd_sender->setValue($json["message"]["chat"]["id"]);
+$cmd_sender->setConfiguration('value',$json["message"]["chat"]["id"]);
 $cmd_sender->save();
 
-$cmd_user = $eqLogic->getCmd('action', $json["message"]["from"]["username"]);
+$cmd_user = $eqLogic->getCmd('action', $json["message"]["chat"]["id"]);
 if (!is_object($cmd_user) && $eqLogic->getConfiguration('isAccepting') == 1) {
 	$cmd_user = new telegramCmd();
-	$cmd_user->setLogicalId($json["message"]["from"]["username"]);
+	$cmd_user->setLogicalId($json["message"]["chat"]["id"]);
 	$cmd_user->setIsVisible(1);
 	$cmd_user->setName($json["message"]["from"]["username"]);
 	$cmd_user->setConfiguration('interact',0);
 	$cmd_user->setConfiguration('chatid',$json["message"]["chat"]["id"]);
 	$cmd_user->setConfiguration('username',$json["message"]["from"]["username"]);
+	$cmd_user->setConfiguration('firstname',$json["message"]["from"]["first_name"]);
 	$cmd_user->setType('action');
 	$cmd_user->setSubType('message');
 	$cmd_user->setEqLogic_id($eqLogic->getId());
