@@ -24,7 +24,7 @@ $eqLogics = eqLogic::byType('telegram');
     </div>
 
     <div class="col-lg-10 col-md-9 col-sm-8 eqLogicThumbnailDisplay" style="border-left: solid 1px #EEE; padding-left: 25px;">
-        <legend>{{Mes Telegram}}
+        <legend><i class="fa fa-table"></i>  {{Mes Telegram}}
         </legend>
             <div class="eqLogicThumbnailContainer">
                       <div class="cursor eqLogicAction" data-action="add" style="background-color : #ffffff; height : 200px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;" >
@@ -88,7 +88,7 @@ $eqLogics = eqLogic::byType('telegram');
 
   <form class="form-horizontal">
     <fieldset>
-        <legend>{{Configuration}}</legend>
+        <legend><i class="fa fa-info-circle"></i>  {{Configuration}}</legend>
 
         <div class="form-group">
         <label class="col-sm-2 control-label">{{Bot Token}}</label>
@@ -107,7 +107,7 @@ $eqLogics = eqLogic::byType('telegram');
   </form>
   </div>
 
-  <legend>{{Commandes}}</legend>
+  <legend><i class="fa fa-table"></i>  {{Commandes}}</legend>
   <form class="form-horizontal">
             <fieldset>
                 <div class="form-actions">
@@ -120,7 +120,7 @@ $eqLogics = eqLogic::byType('telegram');
   <table id="table_cmd" class="table table-bordered table-condensed">
     <thead>
       <tr>
-        <th>{{Nom}}</th><th>{{Chat Id}}</th><th>{{Username}}</th><th>{{First Name}}</th><th></th><th>{{Options}}</th>
+        <th>{{Nom}}</th><th>{{Valeur}}</th><th>{{Username}}</th><th>{{First Name}}</th><th></th><th>{{Options}}</th>
       </tr>
     </thead>
     <tbody>
