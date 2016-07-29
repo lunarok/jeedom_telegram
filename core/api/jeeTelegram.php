@@ -56,14 +56,14 @@ if (isset($json["message"]["from"]["username"])) {
 }
 
 foreach ($eqLogic->getCmd('action') as $cmd) {
-	if ($json["message"]["chat"]["id"] == $cmd->getConfiguration('chatid') && $cmd->getConfiguration('storeVariable', 'none') != 'none') {
+	if ($json["message"]["chat"]["id"] == $cmd->getConfiguration('chatid') && $cmd->getCache('storeVariable', 'none') != 'none') {
 		$dataStore = new dataStore();
 		$dataStore->setType('scenario');
-		$dataStore->setKey($cmd->getConfiguration('storeVariable', 'none'));
+		$dataStore->setKey($cmd->getCache('storeVariable', 'none'));
 		$dataStore->setValue($json["message"]["text"]);
 		$dataStore->setLink_id(-1);
 		$dataStore->save();
-		$cmd->setConfiguration('storeVariable', 'none');
+		$cmd->setCache('storeVariable', 'none');
 		$cmd->save();
 		echo json_encode(array('text' => ''));
 		die();
