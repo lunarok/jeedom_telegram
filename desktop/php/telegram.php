@@ -114,7 +114,7 @@ $eqLogics = eqLogic::byType('telegram');
             <div class="form-group">
               <label class="col-sm-3 control-label">{{Créer les nouveaux contacts}}</label>
               <div class="col-sm-3">
-                <input type="checkbox" class="eqLogicAttr bootstrapSwitch" data-label-text="{{Activer}}" data-l1key="configuration" data-l2key="isAccepting" checked/>
+                <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="isAccepting" checked/>{{Activer}}</label>
               </div>
             </div>
           </fieldset>
