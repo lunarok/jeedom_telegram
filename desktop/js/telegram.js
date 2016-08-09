@@ -52,8 +52,9 @@
    }
    tr += '</td>';
    tr += '<td>';
-   if (!isset(_cmd.type) || _cmd.type == 'action') {
-          tr += '<input type="checkbox" data-size="mini" data-label-text="{{Interactions}}" class="cmdAttr bootstrapSwitch" data-l1key="configuration" data-l2key="interact" />';
+   tr += '<span><label class="checkbox-inline"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="isVisible" checked/>{{Visible}}</label></span> ';
+   if ((!isset(_cmd.type) || _cmd.type == 'action') && _cmd.logicalId != 'alluser') {
+     tr += '<span><label class="checkbox-inline"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="configuration" data-l2key="interact" checked/>{{Interactions}}</label></span> ';
    }
    tr += '</td>';
    tr += '<td>';

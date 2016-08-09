@@ -64,6 +64,21 @@ class telegram extends eqLogic {
 		$sender->setEqLogic_id($this->getId());
 		$sender->save();
 
+		$alluser = $this->getCmd(null, 'alluser');
+		if (!is_object($alluser)) {
+			$alluser = new telegramCmd();
+			$alluser->setLogicalId('alluser');
+			$alluser->setIsVisible(1);
+			$alluser->setName(__('Tous', __FILE__));
+			$alluser->setType('action');
+			$alluser->setConfiguration('chatid','Tous les utilisateurs');
+			$alluser->setConfiguration('firstname','Tous les utilisateurs');
+			$alluser->setConfiguration('username','Tous les utilisateurs');
+			$alluser->setSubType('message');
+			$alluser->setEqLogic_id($this->getId());
+			$alluser->save();
+		}
+
     $url = network::getNetworkAccess('external') . '/plugins/telegram/core/api/jeeTelegram.php?apikey=' . config::byKey('api') . '&id=' . $this->getId();
     $token = trim($this->getConfiguration('bot_token'));
 
@@ -94,82 +109,99 @@ class telegramCmd extends cmd {
 
 	public function execute($_options = array()) {
     $eqLogic = $this->getEqLogic();
-    $chatid = $this->getConfiguration('chatid');
-		$request_http = "https://api.telegram.org/bot" . trim($eqLogic->getConfiguration('bot_token'));
-
-		$text = trim($_options['title'] . ' ' . $_options['message']);
-
-    $data = array(
-        'chat_id' => $chatid,
-        'text'  => $text
-    );
-    if (isset($_options['answer'])) {
-      $replyMarkup = array(
-        'keyboard' => array(
-            $_options['answer']
-        ),
-        'one_time_keyboard' => true,
-        'resize_keyboard' => true
-      );
-      $encodedMarkup = json_encode($replyMarkup);
-			//$data['reply_markup'] = '{"keyboard": [["' . implode('""],["', $_options['answer']) . '"]],"one_time_keyboard": true}';
-      $data['reply_markup'] = $encodedMarkup;
-      log::add('telegram', 'debug', $data['reply_markup']);
+    $toSend = array();
+	if ($this->getLogicalId() == 'alluser'){
+		foreach($eqLogic->getCmd('action') as $cmd){
+			if ($cmd->getLogicalId() != 'alluser'){
+				$toSend[]= $cmd->getConfiguration('chatid');
+			}
 		}
+	} else {
+		$toSend[] = $this->getConfiguration('chatid');
+	}
+	$request_http = "https://api.telegram.org/bot" . trim($eqLogic->getConfiguration('bot_token'));
 
-    $options = array(
-        'http' => array(
-            'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
-            'method'  => 'POST',
-            'content' => http_build_query($data),
-        ),
-    );
+	$text = trim($_options['title'] . ' ' . $_options['message']);
+	foreach ($toSend as $chatid){
+		$data = array(
+			'chat_id' => $chatid,
+			'text'  => $text
+		);
+		if (isset($_options['answer'])) {
+		$replyMarkup = array(
+			'keyboard' => array(
+				$_options['answer']
+			),
+			'one_time_keyboard' => true,
+			'resize_keyboard' => true
+		);
+		$encodedMarkup = json_encode($replyMarkup);
+				//$data['reply_markup'] = '{"keyboard": [["' . implode('""],["', $_options['answer']) . '"]],"one_time_keyboard": true}';
+		$data['reply_markup'] = $encodedMarkup;
+		log::add('telegram', 'debug', $data['reply_markup']);
+			}
 
-    $context  = stream_context_create($options);
-    $url = $request_http . "/sendMessage";
-    $result = file_get_contents($url, false, $context);
-    //log::add('telegram', 'debug', print_r($result));
+		$options = array(
+			'http' => array(
+				'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+				'method'  => 'POST',
+				'content' => http_build_query($data),
+			),
+		);
 
-		if (isset($_options['files']) && is_array($_options['files'])) {
+		$context  = stream_context_create($options);
+		$url = $request_http . "/sendMessage";
+		$result = file_get_contents($url, false, $context);
+		//log::add('telegram', 'debug', print_r($result));
+
+			if (isset($_options['files']) && is_array($_options['files'])) {
 
 
-			foreach ($_options['files'] as $file) {
-        $ext = pathinfo($file, PATHINFO_EXTENSION);
-        $photolist = "gif,jpeg,jpg,png";
-        $videolist = "avi,mpeg,mpg,mkv,mp4,mpe";
-        $audiolist = "ogg,mp3";
-        log::add('telegram', 'debug', $file);
+				foreach ($_options['files'] as $file) {
+			$ext = pathinfo($file, PATHINFO_EXTENSION);
+			if ($ext == 'mp4'){
+				copy($file , substr($file,0,-3) . 'mkv');
+				$file = substr($file,0,-3) . 'mkv';
+			}
+			$photolist = "gif,jpeg,jpg,png";
+			$videolist = "avi,mpeg,mpg,mkv,mp4,mpe";
+			$audiolist = "ogg,mp3";
+			if (strpos($photolist,$ext) !== false) {
+			$post_fields = array('chat_id'   => $chatid,
+				'photo'     => new CURLFile(realpath($file))
+			);
+			$url = $request_http . "/sendPhoto?chat_id=" . $chatid;
+			} else if (strpos($audiolist,$ext) !== false) {
+			$post_fields = array('chat_id'   => $chatid,
+				'audio'     => new CURLFile(realpath($file))
+			);
+			$url = $request_http . "/sendAudio";
+			} else if (strpos($videolist,$ext) !== false) {
+			$post_fields = array('chat_id'   => $chatid,
+				'video'     => new CURLFile(realpath($file))
+			);
+			$url = $request_http . "/sendVideo";
+			} else {
+			$post_fields = array('chat_id'   => $chatid,
+				'document'     => new CURLFile(realpath($file))
+			);
+			$url = $request_http . "/sendDocument";
+			}
 
-        if (strpos($photolist,$ext) !== false) {
-          $post_fields = array('chat_id'   => $chatid,
-              'photo'     => new CURLFile(realpath($file))
-          );
-          $url = $request_http . "/sendPhoto?chat_id=" . $chatid;
-        } else if (strpos($audiolist,$ext) !== false) {
-          $post_fields = array('chat_id'   => $chatid,
-              'audio'     => new CURLFile(realpath($file))
-          );
-          $url = $request_http . "/sendAudio";
-        } else if (strpos($videolist,$ext) !== false) {
-          $post_fields = array('chat_id'   => $chatid,
-              'video'     => new CURLFile(realpath($file))
-          );
-          $url = $request_http . "/sendVideo";
-        } else {
-          $post_fields = array('chat_id'   => $chatid,
-              'document'     => new CURLFile(realpath($file))
-          );
-          $url = $request_http . "/sendDocument";
-        }
+			$ch = curl_init();
+			curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+				"Content-Type:multipart/form-data"
+			));
 
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-            "Content-Type:multipart/form-data"
-        ));
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $post_fields);
-        $output = curl_exec($ch);
+			log::add('telegram', 'debug',$url);
+			curl_setopt($ch, CURLOPT_URL, $url);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+			curl_setopt($ch, CURLOPT_POSTFIELDS, $post_fields);
+			$output = curl_exec($ch);
+			if ($ext == 'mp4'){
+				unlink($file);
+			}
+				}
 			}
 		}
 	}
