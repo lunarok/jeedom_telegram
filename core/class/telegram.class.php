@@ -148,13 +148,14 @@ class telegramCmd extends cmd {
 				'content' => http_build_query($data),
 			),
 		);
-
-		$context  = stream_context_create($options);
-		$url = $request_http . "/sendMessage";
-		$result = file_get_contents($url, false, $context);
+		if (!isset($_options['files']) || !is_array($_options['files'])) {
+			$context  = stream_context_create($options);
+			$url = $request_http . "/sendMessage";
+			$result = file_get_contents($url, false, $context);
+		}
 		//log::add('telegram', 'debug', print_r($result));
 
-			if (isset($_options['files']) && is_array($_options['files'])) {
+		if (isset($_options['files']) && is_array($_options['files'])) {
 
 
 				foreach ($_options['files'] as $file) {
@@ -168,22 +169,26 @@ class telegramCmd extends cmd {
 			$audiolist = "ogg,mp3";
 			if (strpos($photolist,$ext) !== false) {
 			$post_fields = array('chat_id'   => $chatid,
-				'photo'     => new CURLFile(realpath($file))
+				'photo'     => new CURLFile(realpath($file)),
+				'caption' => $text
 			);
 			$url = $request_http . "/sendPhoto?chat_id=" . $chatid;
 			} else if (strpos($audiolist,$ext) !== false) {
 			$post_fields = array('chat_id'   => $chatid,
-				'audio'     => new CURLFile(realpath($file))
+				'audio'     => new CURLFile(realpath($file)),
+				'title' => $text
 			);
 			$url = $request_http . "/sendAudio";
 			} else if (strpos($videolist,$ext) !== false) {
 			$post_fields = array('chat_id'   => $chatid,
-				'video'     => new CURLFile(realpath($file))
+				'video'     => new CURLFile(realpath($file)),
+				'caption' => $text
 			);
 			$url = $request_http . "/sendVideo";
 			} else {
 			$post_fields = array('chat_id'   => $chatid,
-				'document'     => new CURLFile(realpath($file))
+				'document'     => new CURLFile(realpath($file)),
+				'caption' => $text
 			);
 			$url = $request_http . "/sendDocument";
 			}
