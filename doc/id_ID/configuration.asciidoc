@@ -1,0 +1,15 @@
+==== Configuration du plugin
+
+Le plugin ne comporte pas de configuration générale.
+
+Sur la page santé, un test pour vérifier le https en connexion externe est fait. Il n'est pas possible en l'état d'utiliser un certificat autosigné.
+
+Un certification letsencrypt fonctionne (en ayant bien paramétrer le certificat de chaine également)
+
+==== Configuration d'un équipement
+
+Chaque équipement correspond à un Bot telegram
+
+Vous devez donc rentrer la clef fournie par Telegram à la création du bot sur la page équipement
+
+Par la suite, les utilisateurs entrant en communication avec le bot créeront automatiquement une entrée sur l'équipement pour envoyer des messages
