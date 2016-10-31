@@ -18,10 +18,9 @@
 header('Content-type: application/json');
 require_once dirname(__FILE__) . "/../../../../core/php/core.inc.php";
 
-if (init('apikey') != config::byKey('api') || config::byKey('api') == '') {
-	connection::failed();
-	echo 'Clef API non valide, vous n\'etes pas autorisé à effectuer cette action (jeeApi)';
-	die();
+if (!jeedom::apiAccess(init('apikey'), 'telegram')) {
+ echo __('Clef API non valide, vous n\'êtes pas autorisé à effectuer cette action (telegram)', __FILE__);
+ die();
 }
 
 $content = file_get_contents('php://input');

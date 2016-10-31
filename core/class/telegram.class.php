@@ -15,12 +15,9 @@
 * You should have received a copy of the GNU General Public License
 * along with Jeedom. If not, see <http://www.gnu.org/licenses/>.
 */
-
-/* * ***************************Includes********************************* */
 require_once dirname(__FILE__) . '/../../../../core/php/core.inc.php';
 
 class telegram extends eqLogic {
-
   public static function health() {
     $return = array();
     if (strpos(network::getNetworkAccess('external'),'https') !== false) {
@@ -28,8 +25,6 @@ class telegram extends eqLogic {
     } else {
       $https = false;
     }
-
-
     $return[] = array(
       'test' => __('HTTPS', __FILE__),
       'result' => ($https) ?  __('OK', __FILE__) : __('NOK', __FILE__),
@@ -79,7 +74,7 @@ class telegram extends eqLogic {
 			$alluser->save();
 		}
 
-    $url = network::getNetworkAccess('external') . '/plugins/telegram/core/api/jeeTelegram.php?apikey=' . config::byKey('api') . '&id=' . $this->getId();
+    $url = network::getNetworkAccess('external') . '/plugins/telegram/core/api/jeeTelegram.php?apikey=' . jeedom::getApiKey('telegram') . '&id=' . $this->getId();
     $token = trim($this->getConfiguration('bot_token'));
 
     $request_http = new com_http('https://api.telegram.org/bot' . $token . '/setWebhook');
