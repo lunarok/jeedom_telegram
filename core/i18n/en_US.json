@@ -1,0 +1,36 @@
+{
+    "plugins\/telegram\/desktop\/php\/telegram.php": {
+        "Ajouter un équipement": "Ajouter un équipement",
+        "Rechercher": "Rechercher",
+        "Mes Telegram": "Mes Telegram",
+        "Sauvegarder": "Sauvegarder",
+        "Supprimer": "Supprimer",
+        "Configuration avancée": "Configuration avancée",
+        "Equipement": "Equipement",
+        "Commandes": "Commandes",
+        "Nom de l'équipement Telegram": "Nom de l'équipement Telegram",
+        "Nom de l'équipement telegram": "Nom de l'équipement telegram",
+        "Catégorie": "Catégorie",
+        "Activer": "Activer",
+        "Visible": "Visible",
+        "Bot Token": "Bot Token",
+        "Token": "Token",
+        "Créer les nouveaux contacts": "Créer les nouveaux contacts",
+        "Nom": "Nom",
+        "Valeur": "Valeur",
+        "Username": "Username",
+        "First Name": "First Name",
+        "Options": "Options"
+    },
+    "plugins\/telegram\/desktop\/js\/telegram.js": {
+        "Nom": "Nom",
+        "Visible": "Visible",
+        "Interactions": "Interactions",
+        "Tester": "Tester"
+    },
+    "plugins\/telegram\/core\/class\/telegram.class.php": {
+        "Message": "Message",
+        "Expediteur": "Expediteur",
+        "Tous": "Tous"
+    }
+}
