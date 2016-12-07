@@ -1,4 +1,4 @@
-==== Configuration du plugin
+==== The plugin configuration
 
 Le plugin ne comporte pas de configuration générale.
 
@@ -10,6 +10,6 @@ Un certification letsencrypt fonctionne (en ayant bien paramétrer le certificat
 
 Chaque équipement correspond à un Bot telegram
 
-Vous devez donc rentrer la clef fournie par Telegram à la création du bot sur la page équipement
+So you must get the key supplied by Telegram to the creation of the bot on the equipment page
 
 Par la suite, les utilisateurs entrant en communication avec le bot créeront automatiquement une entrée sur l'équipement pour envoyer des messages

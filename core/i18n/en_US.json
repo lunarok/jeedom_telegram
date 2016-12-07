@@ -1,8 +1,8 @@
 {
     "plugins\/telegram\/desktop\/php\/telegram.php": {
-        "Ajouter un équipement": "Ajouter un équipement",
-        "Rechercher": "Rechercher",
-        "Mes Telegram": "Mes Telegram",
+        "Ajouter un équipement": "Add equipment",
+        "Rechercher": "Search",
+        "Mes Telegram": "My Telegram",
         "Sauvegarder": "Sauvegarder",
         "Supprimer": "Supprimer",
         "Configuration avancée": "Configuration avancée",
