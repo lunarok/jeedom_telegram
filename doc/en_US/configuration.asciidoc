@@ -1,12 +1,12 @@
 ==== The plugin configuration
 
-Le plugin ne comporte pas de configuration générale.
+The plugin does not have general configuration.
 
 Sur la page santé, un test pour vérifier le https en connexion externe est fait. Il n'est pas possible en l'état d'utiliser un certificat autosigné.
 
 Un certification letsencrypt fonctionne (en ayant bien paramétrer le certificat de chaine également)
 
-==== Configuration d'un équipement
+==== Configuration of equipment
 
 Chaque équipement correspond à un Bot telegram
 
