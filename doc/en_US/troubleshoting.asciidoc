@@ -1,5 +1,5 @@
 [panel,danger]
-.Je n'ai pas de retour de Telegram
+. I don't have a return of Telegram
 --
 Il faut bien avoir une adresse en HTTPS, Telegram refuse d'utiliser une URL http en webhook (ce point est visible dans la page santé)
 --
