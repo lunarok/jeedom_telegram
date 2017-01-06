@@ -1,4 +1,4 @@
-==== Telegram
+==== Telegramm
 
 Telegram est un service de messagerie chiffré bout-à-bout. Ce qui veut dire que même les serveurs intermédiaires ne voient ce qui transite.
 

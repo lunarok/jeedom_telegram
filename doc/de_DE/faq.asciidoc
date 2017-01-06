@@ -1,5 +1,5 @@
 [panel,primary]
-.Est-ce que le plugin s'appuie sur des API tiers ?
+.Stützt sich das Plugin auf APIs Dritter ?
 --
 Oui il utilise les API Telegram (la version Bot)
 --
