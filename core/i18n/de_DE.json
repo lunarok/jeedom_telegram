@@ -23,14 +23,14 @@
         "Options": "Optionen"
     },
     "plugins\/telegram\/desktop\/js\/telegram.js": {
-        "Nom": "Nom",
-        "Visible": "Visible",
-        "Interactions": "Interactions",
-        "Tester": "Tester"
+        "Nom": "Name",
+        "Visible": "Sichtbar",
+        "Interactions": "Interaktionen",
+        "Tester": "Testen"
     },
     "plugins\/telegram\/core\/class\/telegram.class.php": {
-        "Message": "Message",
-        "Expediteur": "Expediteur",
-        "Tous": "Tous"
+        "Message": "Nachricht",
+        "Expediteur": "Absender",
+        "Tous": "Alle"
     }
 }
