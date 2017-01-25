@@ -2,7 +2,7 @@
 
 The plugin does not have general configuration.
 
-Sur la page santé, un test pour vérifier le https en connexion externe est fait. Il n'est pas possible en l'état d'utiliser un certificat autosigné.
+On the health page, a test to check the https in external connection is done. It is not possible  to use a self-signed certificate.
 
 Un certification letsencrypt fonctionne (en ayant bien paramétrer le certificat de chaine également)
 
