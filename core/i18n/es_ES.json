@@ -1,36 +1,36 @@
 {
     "plugins\/telegram\/desktop\/php\/telegram.php": {
-        "Ajouter un équipement": "Ajouter un équipement",
-        "Rechercher": "Rechercher",
-        "Mes Telegram": "Mes Telegram",
-        "Sauvegarder": "Sauvegarder",
-        "Supprimer": "Supprimer",
-        "Configuration avancée": "Configuration avancée",
-        "Equipement": "Equipement",
-        "Commandes": "Commandes",
-        "Nom de l'équipement Telegram": "Nom de l'équipement Telegram",
-        "Nom de l'équipement telegram": "Nom de l'équipement telegram",
-        "Catégorie": "Catégorie",
-        "Activer": "Activer",
+        "Ajouter un équipement": "Agregar un dispositivo",
+        "Rechercher": "Buscar",
+        "Mes Telegram": "Mis Telegram",
+        "Sauvegarder": "Salvar",
+        "Supprimer": "Borrar",
+        "Configuration avancée": "Configuración avanzada",
+        "Equipement": "Dispositivo",
+        "Commandes": "Ordenes",
+        "Nom de l'équipement Telegram": "Nombre del dispositivo Telegram",
+        "Nom de l'équipement telegram": "Nombre del dispositivo telegram ",
+        "Catégorie": "Categoría",
+        "Activer": "Activar",
         "Visible": "Visible",
-        "Bot Token": "Bot Token",
+        "Bot Token": "Token del Bot",
         "Token": "Token",
-        "Créer les nouveaux contacts": "Créer les nouveaux contacts",
-        "Nom": "Nom",
-        "Valeur": "Valeur",
-        "Username": "Username",
-        "First Name": "First Name",
-        "Options": "Options"
+        "Créer les nouveaux contacts": "Crear nuevos contactos",
+        "Nom": "Nombre",
+        "Valeur": "Valor",
+        "Username": "Usuario",
+        "First Name": "Nombre",
+        "Options": "Opciones"
     },
     "plugins\/telegram\/desktop\/js\/telegram.js": {
-        "Nom": "Nom",
+        "Nom": "Nombre",
         "Visible": "Visible",
-        "Interactions": "Interactions",
-        "Tester": "Tester"
+        "Interactions": "Interacciones",
+        "Tester": "Prueba"
     },
     "plugins\/telegram\/core\/class\/telegram.class.php": {
-        "Message": "Message",
-        "Expediteur": "Expediteur",
-        "Tous": "Tous"
+        "Message": "Mensaje",
+        "Expediteur": "Remitente",
+        "Tous": "Todos"
     }
 }
