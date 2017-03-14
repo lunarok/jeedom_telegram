@@ -107,7 +107,7 @@ if (isset($json["message"]["from"]["username"])) {
 if ($cmd_user->getConfiguration('interact') == 1) {
 	$reply = interactQuery::tryToReply(trim($json["message"]["text"]), $parameters);
 } else {
-	$reply = 'Message recu';
+	$reply['reply'] = 'Message recu';
 }
 
 $answer = array('method' => 'sendMessage', 'chat_id' => $json["message"]["chat"]["id"], "reply_to_message_id" => $json["message"]["message_id"], "text" => $reply['reply']);
