@@ -3,6 +3,6 @@
 	"name" : "Telegram",
 	"licence" : "AGPL",
 	"author" : "lunarok",
-	"require" : "2.4",
+	"require" : "3.0",
 	"category" : "communication"
 }
