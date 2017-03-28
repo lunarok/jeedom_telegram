@@ -25,7 +25,6 @@ if (!jeedom::apiAccess(init('apikey'), 'telegram')) {
 
 $content = file_get_contents('php://input');
 $json = json_decode($content, true);
-log::add('telegram', 'debug', 'Recu message de ' . $json["message"]["from"]["username"] . ' texte : ' . $json["message"]["text"]);
 log::add('telegram', 'debug', $content);
 
 $id = init('id');
@@ -37,6 +36,7 @@ if (!is_object($eqLogic)) {
 
 $parameters = array();
 if (isset($json["message"]["from"]["username"])) {
+	log::add('telegram', 'debug', 'Recu message de ' . $json["message"]["from"]["username"] . ' texte : ' . $json["message"]["text"]);
 	$username = $json["message"]["from"]["username"];
 	$username = strtr(utf8_decode($username), utf8_decode('ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝßàáâãäåæçèéêëìíîïñòóôõöøùúûüýÿĀāĂăĄąĆćĈĉĊċČčĎďĐđĒēĔĕĖėĘęĚěĜĝĞğĠġĢģĤĥĦħĨĩĪīĬĭĮįİıĲĳĴĵĶķĹĺĻļĽľĿŀŁłŃńŅņŇňŉŌōŎŏŐőŒœŔŕŖŗŘřŚśŜŝŞşŠšŢţŤťŦŧŨũŪūŬŭŮůŰűŲųŴŵŶŷŸŹźŻżŽžſƒƠơƯưǍǎǏǐǑǒǓǔǕǖǗǘǙǚǛǜǺǻǼǽǾǿ'), 'AAAAAAAECEEEEIIIIDNOOOOOOUUUUYsaaaaaaaeceeeeiiiinoooooouuuuyyAaAaAaCcCcCcCcDdDdEeEeEeEeEeGgGgGgGgHhHhIiIiIiIiIiIJijJjKkLlLlLlLlllNnNnNnnOoOoOoOEoeRrRrRrSsSsSsSsTtTtTtUuUuUuUuUuUuWwYyYZzZzZzsfOoUuAaIiOoUuUuUuUuUuAaAEaeOo');
 	$username = strtolower($username);
