@@ -69,7 +69,7 @@ foreach ($eqLogic->getCmd('action') as $cmd) {
 	}
 }
 
-$eqLogic->checkAndUpdateCmd('text', trim($json["message"]["text"]));
+$eqLogic->checkAndUpdateCmd('text', $json["message"]["text"]);
 $eqLogic->checkAndUpdateCmd('sender', trim($json["message"]["chat"]["id"]));
 
 $cmd_user = $eqLogic->getCmd('action', $json["message"]["chat"]["id"]);
