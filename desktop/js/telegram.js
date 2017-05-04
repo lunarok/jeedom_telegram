@@ -34,9 +34,13 @@
    tr += '<input class="cmdAttr" data-l1key="subtype" value="message" style="display:none;" />';
    tr += '</td>';
    tr += '<td>';
-   if (!isset(_cmd.type) || _cmd.type == 'info') {
-       tr += '<span class="cmdAttr" data-l1key="configuration" data-l2key="value"></span>';
+   if (!isset(_cmd.type) || _cmd.type == 'action') {
+       tr += '<span>Action</span>';
+   } else {
+       tr += '<span>Info</span>';
    }
+   tr += '</td>';
+   tr += '<td>';
    if (!isset(_cmd.type) || _cmd.type == 'action') {
        tr += '<span class="cmdAttr" data-l1key="configuration" data-l2key="chatid"></span>';
    }
