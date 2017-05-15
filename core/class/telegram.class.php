@@ -114,14 +114,20 @@ class telegramCmd extends cmd {
         }
     }
     
-    public function sendTelegram($url,$header,$post_fields) {
+    public function sendTelegram($url,$type,$post_fields) {
         $ch = curl_init();
+        if ($type == 'file') {
+            $header = "Content-Type:multipart/form-data";
+        } else {
+            $header = "Content-Type:application/x-www-form-urlencoded";
+        }
         curl_setopt($ch, CURLOPT_HTTPHEADER, array(
             $header
         ));
         log::add('telegram', 'debug',$url);
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $post_fields);
         $output = curl_exec($ch);
     }
@@ -172,8 +178,7 @@ class telegramCmd extends cmd {
                         $data['voice'] = new CURLFile(realpath('/tmp/voice.ogg'));
                     }
                     $url = $request_http . "/sendVoice";
-                    $header = "Content-Type:multipart/form-data";
-                    $this->sendTelegram($url,$header,$data);
+                    $this->sendTelegram($url,'file',$data);
                     return;
                 } else if ($_options['title'] == 'location') {
                     if (strrpos($_options['message'],'geoloc:') !== false) {
@@ -192,8 +197,7 @@ class telegramCmd extends cmd {
                     $data['longitude'] = $coordinate[1];
                     $url = $request_http . "/sendLocation";
                     //log::add('telegram', 'debug', print_r($data, true));
-                    $header = "Content-type:application/x-www-form-urlencoded";
-                    $this->sendTelegram($url,$header,$data);
+                    $this->sendTelegram($url,'message',$data);
                 } else if ($_options['title'] == 'file') {
                     $_options['files'][0] = $_options['message'];
                 } else {
@@ -201,8 +205,7 @@ class telegramCmd extends cmd {
                     $data['parse_mode'] = 'HTML';
                     $url = $request_http . "/sendMessage";
                     //log::add('telegram', 'debug', print_r($data, true));
-                    $header = "Content-type:application/x-www-form-urlencoded";
-                    $this->sendTelegram($url,$header,$data);
+                    $this->sendTelegram($url,'message',$data);
                 }
             }
             //log::add('telegram', 'debug', print_r($result, true));
@@ -242,8 +245,7 @@ class telegramCmd extends cmd {
                         );
                         $url = $request_http . "/sendDocument";
                     }
-                    $header = "Content-Type:multipart/form-data";
-                    $this->sendTelegram($url,$header,$post_fields);
+                    $this->sendTelegram($url,'file',$post_fields);
                     if ($ext == 'mp4'){
                         unlink($file);
                     }
