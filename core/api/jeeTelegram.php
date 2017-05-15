@@ -91,6 +91,10 @@ if (!is_object($cmd_user)) {
 		die();
 	}
 }
+if (isset($json["message"]["chat"]["title"])) {
+	$cmd_user->setConfiguration('title',$json["message"]["chat"]["title"]);
+	$cmd_user->save();
+}
 if (isset($json["message"]["from"]["username"])) {
 	$cmd_user->setConfiguration('username',$json["message"]["from"]["username"]);
 	$cmd_user->save();
