@@ -152,7 +152,13 @@ class telegramCmd extends cmd {
 
             if (!isset($_options['files']) || !is_array($_options['files'])) {
                 if ($_options['title'] == 'tts') {
-                    $data['voice'] = new CURLFile(realpath($_options['message']));
+                    if (is_file(realpath($_options['message']))) {
+                        $data['voice'] = new CURLFile(realpath($_options['message']));
+                    } else {
+                        exec("pico2wave -l fr-FR -w /tmp/voice.wav \"" . $_options['message'] . "\"");
+                        exec("opusenc --bitrate 64 /tmp/voice.wav /tmp/voice.ogg");
+                        $data['voice'] = new CURLFile(realpath('/tmp/voice.ogg'));
+                    }
                     $url = $request_http . "/sendVoice";
                     $ch = curl_init();
                     curl_setopt($ch, CURLOPT_HTTPHEADER, array(
@@ -192,11 +198,11 @@ class telegramCmd extends cmd {
                         'content' => http_build_query($data),
                     ),
                 );
-                log::add('telegram', 'debug', print_r($data));
+                //log::add('telegram', 'debug', print_r($data, true));
                 $context  = stream_context_create($options);
                 $result = file_get_contents($url, false, $context);
             }
-            //log::add('telegram', 'debug', print_r($result));
+            //log::add('telegram', 'debug', print_r($result, true));
 
             if (isset($_options['files']) && is_array($_options['files'])) {
                 foreach ($_options['files'] as $file) {

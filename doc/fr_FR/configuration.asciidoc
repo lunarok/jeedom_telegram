@@ -24,9 +24,9 @@ Pareil pour les groupes et le ask marche sur les groupes
 
 Par défaut, pour une commande action il est possible de faire les types d'envoi :
 
-- tts : en précisant "tts" en titre, le message doit être le chemin d'un fichier audio de type ogg qui sera notifié en message vocal dans Telegram
+- tts : en précisant "tts" en titre, le message doit être le chemin d'un fichier audio de type ogg encodé avec opus qui sera notifié en message vocal dans Telegram
 
-- geoloc : en précisant "geoloc" en titre, le message doit être soit "goloc:idEqGeoloc" soit "latitude,longitude"
+- location : en précisant "location" en titre, le message doit être soit "geoloc:idEqGeoloc" soit "latitude,longitude"
 
 - texte dans le reste des cas
 
