@@ -132,6 +132,7 @@ class telegramCmd extends cmd {
             $data = array(
                 'chat_id' => $chatid
             );
+            $data['chat_id'] = $chatid;
             if ($eqLogic->getConfiguration('silentnotif') == true) {
                 $data['disable_notification'] = 1;
             }
@@ -149,13 +150,6 @@ class telegramCmd extends cmd {
                 log::add('telegram', 'debug', $data['reply_markup']);
             }
 
-            $options = array(
-                'http' => array(
-                    'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
-                    'method'  => 'POST',
-                    'content' => http_build_query($data),
-                ),
-            );
             if (!isset($_options['files']) || !is_array($_options['files'])) {
                 if ($_options['title'] == 'tts') {
                     $data['voice'] = new CURLFile(realpath($_options['message']));
@@ -187,9 +181,18 @@ class telegramCmd extends cmd {
                     $url = $request_http . "/sendLocation";
                 } else {
                     $data['text'] = trim($_options['title'] . ' ' . $_options['message']);
+                    $data['parse_mode'] = 'HTML';
                     $url = $request_http . "/sendMessage";
                 }
 
+                $options = array(
+                    'http' => array(
+                        'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+                        'method'  => 'POST',
+                        'content' => http_build_query($data),
+                    ),
+                );
+                log::add('telegram', 'debug', print_r($data));
                 $context  = stream_context_create($options);
                 $result = file_get_contents($url, false, $context);
             }
