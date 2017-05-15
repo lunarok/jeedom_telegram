@@ -192,7 +192,7 @@ class telegramCmd extends cmd {
                     $data['longitude'] = $coordinate[1];
                     $url = $request_http . "/sendLocation";
                     //log::add('telegram', 'debug', print_r($data, true));
-                    $header = "Content-type: application/x-www-form-urlencoded\r\n";
+                    $header = "Content-type:application/x-www-form-urlencoded";
                     $this->sendTelegram($url,$header,$data);
                 } else if ($_options['title'] == 'file') {
                     $_options['files'][0] = $_options['message'];
@@ -200,15 +200,8 @@ class telegramCmd extends cmd {
                     $data['text'] = trim($_options['title'] . ' ' . $_options['message']);
                     $data['parse_mode'] = 'HTML';
                     $url = $request_http . "/sendMessage";
-                    $options = array(
-                    'http' => array(
-                        'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
-                        'method'  => 'POST',
-                        'content' => http_build_query($data),
-                        ),
-                    );
                     //log::add('telegram', 'debug', print_r($data, true));
-                    $header = "Content-type: application/x-www-form-urlencoded\r\n";
+                    $header = "Content-type:application/x-www-form-urlencoded";
                     $this->sendTelegram($url,$header,$data);
                 }
             }
@@ -227,25 +220,25 @@ class telegramCmd extends cmd {
                     if (strpos($photolist,$ext) !== false) {
                         $post_fields = array('chat_id'   => $chatid,
                         'photo'     => new CURLFile(realpath($file)),
-                        'caption' => $text
+                        'caption' => pathinfo($file, PATHINFO_FILENAME)
                         );
                         $url = $request_http . "/sendPhoto?chat_id=" . $chatid;
                     } else if (strpos($audiolist,$ext) !== false) {
                         $post_fields = array('chat_id'   => $chatid,
                         'audio'     => new CURLFile(realpath($file)),
-                        'title' => $text
+                        'title' => pathinfo($file, PATHINFO_FILENAME)
                         );
                         $url = $request_http . "/sendAudio";
                     } else if (strpos($videolist,$ext) !== false) {
                         $post_fields = array('chat_id'   => $chatid,
                         'video'     => new CURLFile(realpath($file)),
-                        'caption' => $text
+                        'caption' => pathinfo($file, PATHINFO_FILENAME)
                         );
                         $url = $request_http . "/sendVideo";
                     } else {
                         $post_fields = array('chat_id'   => $chatid,
                         'document'     => new CURLFile(realpath($file)),
-                        'caption' => $text
+                        'caption' => pathinfo($file, PATHINFO_FILENAME)
                         );
                         $url = $request_http . "/sendDocument";
                     }
