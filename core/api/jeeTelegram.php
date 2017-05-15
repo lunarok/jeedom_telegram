@@ -66,7 +66,7 @@ foreach ($eqLogic->getCmd('action') as $cmd) {
 		$cmd->setCache('storeVariable', 'none');
 		$cmd->save();
 		echo json_encode(array('text' => ''));
-		die();
+		return;
 	}
 }
 
@@ -86,9 +86,8 @@ if (!is_object($cmd_user)) {
 		$cmd_user->setType('action');
 		$cmd_user->setSubType('message');
 		$cmd_user->setEqLogic_id($eqLogic->getId());
-		$cmd_user->save();
 	} else {
-		die();
+		return;
 	}
 }
 if (isset($json["message"]["chat"]["title"])) {
@@ -105,6 +104,7 @@ if (isset($json["message"]["from"]["first_name"])) {
 if (isset($json["message"]["from"]["last_name"])) {
     $cmd_user->setConfiguration('last_name',$json["message"]["from"]["last_name"]);
 }
+$cmd_user->save();
 
 if ($cmd_user->getConfiguration('interact') == 1) {
 	$reply = interactQuery::tryToReply(trim($json["message"]["text"]), $parameters);
