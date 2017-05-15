@@ -118,12 +118,13 @@ class telegramCmd extends cmd {
         $ch = curl_init();
         if ($type == 'file') {
             $header = "Content-Type:multipart/form-data";
-        } else {
-            $header = "Content-Type:application/x-www-form-urlencoded";
-        }
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
             $header
         ));
+        }/* else {
+            $header = "Content-Type:application/x-www-form-urlencoded";
+        }*/
+        
         log::add('telegram', 'debug',$url);
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
