@@ -93,16 +93,17 @@ if (!is_object($cmd_user)) {
 if (isset($json["message"]["chat"]["title"])) {
 	$cmd_user->setConfiguration('title',$json["message"]["chat"]["title"]);
 	$cmd_user->save();
-}
-if (isset($json["message"]["from"]["username"])) {
-	$cmd_user->setConfiguration('username',$json["message"]["from"]["username"]);
-	$cmd_user->save();
-}
-if (isset($json["message"]["from"]["first_name"])) {
-    $cmd_user->setConfiguration('last_name',$json["message"]["from"]["first_name"]);
-}
-if (isset($json["message"]["from"]["last_name"])) {
-    $cmd_user->setConfiguration('last_name',$json["message"]["from"]["last_name"]);
+} else {
+    if (isset($json["message"]["from"]["username"])) {
+    	$cmd_user->setConfiguration('username',$json["message"]["from"]["username"]);
+    	$cmd_user->save();
+    }
+    if (isset($json["message"]["from"]["first_name"])) {
+        $cmd_user->setConfiguration('last_name',$json["message"]["from"]["first_name"]);
+    }
+    if (isset($json["message"]["from"]["last_name"])) {
+        $cmd_user->setConfiguration('last_name',$json["message"]["from"]["last_name"]);
+    }
 }
 $cmd_user->save();
 
