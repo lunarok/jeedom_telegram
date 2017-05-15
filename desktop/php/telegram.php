@@ -111,7 +111,14 @@ $eqLogics = eqLogic::byType('telegram');
             </div>
 
             <div class="form-group">
-              <label class="col-sm-3 control-label">{{Créer les nouveaux contacts}}</label>
+              <label class="col-sm-3 control-label">{{Message de confirmation de réception}}</label>
+              <div class="col-sm-3">
+                <input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="reply" placeholder="{{Message recu}}"/>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-sm-3 control-label">{{Créer automatiquement les nouveaux contacts}}</label>
               <div class="col-sm-3">
                 <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="isAccepting" checked/>{{Activer}}</label>
               </div>
@@ -125,7 +132,7 @@ $eqLogics = eqLogic::byType('telegram');
         <table id="table_cmd" class="table table-bordered table-condensed">
           <thead>
             <tr>
-              <th>{{Nom}}</th><th>{{Type}}</th><th>{{Id}}</th><th>{{Username}}</th><th>{{First Name}}</th><th></th><th>{{Options}}</th>
+              <th>{{Nom}}</th><th>{{Type}}</th><th>{{Id}}</th><th>{{Username}}</th><th>{{First Name}}</th><th>{{Last Name}}</th><th></th><th>{{Options}}</th>
             </tr>
           </thead>
           <tbody>

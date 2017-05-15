@@ -59,6 +59,18 @@ class telegram extends eqLogic {
 		$sender->setEqLogic_id($this->getId());
 		$sender->save();
 
+        $sender = $this->getCmd(null, 'chat');
+		if (!is_object($sender)) {
+			$sender = new telegramCmd();
+			$sender->setLogicalId('chat');
+			$sender->setIsVisible(0);
+			$sender->setName(__('Chat', __FILE__));
+		}
+		$sender->setType('info');
+		$sender->setSubType('string');
+		$sender->setEqLogic_id($this->getId());
+		$sender->save();
+
 		$alluser = $this->getCmd(null, 'alluser');
 		if (!is_object($alluser)) {
 			$alluser = new telegramCmd();

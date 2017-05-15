@@ -52,7 +52,12 @@ function addCmdToTable(_cmd) {
     tr += '</td>';
     tr += '<td>';
     if (!isset(_cmd.type) || _cmd.type == 'action') {
-        tr += '<span class="cmdAttr" data-l1key="configuration" data-l2key="firstname"></span>';
+        tr += '<span class="cmdAttr" data-l1key="configuration" data-l2key="first_name"></span>';
+    }
+    tr += '</td>';
+    tr += '<td>';
+    if (!isset(_cmd.type) || _cmd.type == 'action') {
+        tr += '<span class="cmdAttr" data-l1key="configuration" data-l2key="last_name"></span>';
     }
     tr += '</td>';
     tr += '<td>';
