@@ -6,4 +6,6 @@ Vous pouvez l'utiliser pour envoyer des messages depuis et vers Jeedom.
 
 Telegram accepte les pièces jointes également (pour le plugin Camera par exemple)
 
-Le plugin accepte également la fonction "ask"
+Il est également possible dans un message de spécifier en titre "tts" ou "geoloc"
+
+Le plugin accepte également la fonction "ask" de Jeedom et fournira un clavier spécifique avec des touches pré-remplies des réponses
