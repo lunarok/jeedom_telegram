@@ -16,7 +16,7 @@
 */
 $("#table_cmd").delegate(".listEquipementAction", 'click', function () {
     var el = $(this);
-    jeedom.cmd.getSelectModal({cmd: {type: 'info', subType: 'other'}}, function (result) {
+    jeedom.cmd.getSelectModal({cmd: {eqType: 'geoloc', type: 'info', subType: 'string'}}, function (result) {
         var calcul = el.closest('tr').find('.cmdAttr[data-l1key=configuration][data-l2key=' + el.attr('data-input') + ']');
         calcul.atCaret('insert', result.human);
     });
@@ -40,42 +40,46 @@ function addCmdToTable(_cmd) {
     }
     tr += '<input class="cmdAttr" data-l1key="subtype" value="message" style="display:none;" />';
     tr += '</td>';
-    tr += '<td>';
     if (!isset(_cmd.type) || _cmd.type == 'action') {
+        tr += '<td>';
         tr += '<span>Action</span>';
-    } else {
-        tr += '<span>Info</span>';
-    }
-    tr += '</td>';
-    tr += '<td>';
-    if (!isset(_cmd.type) || _cmd.type == 'action') {
+        tr += '</td>';
+        tr += '<td>';
         tr += '<span class="cmdAttr" data-l1key="configuration" data-l2key="chatid"></span>';
-    }
-    tr += '</td>';
-    tr += '<td>';
-    if (!isset(_cmd.type) || _cmd.type == 'action') {
+        tr += '</td>';
+        tr += '<td>';
         tr += '<span class="cmdAttr" data-l1key="configuration" data-l2key="title"></span>';
-    }
-    tr += '</td>';
-    tr += '<td>';
-    if (!isset(_cmd.type) || _cmd.type == 'action') {
+        tr += '</td>';
+        tr += '<td>';
         tr += '<span class="cmdAttr" data-l1key="configuration" data-l2key="username"></span>';
-    }
-    tr += '</td>';
-    tr += '<td>';
-    tr += '<input class="cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="cmdgeoloc" style="width : 140px;">';
-    tr += '<a class="btn btn-default btn-sm cursor listEquipementAction" data-input="cmdgeoloc" style="margin-left : 5px;"><i class="fa fa-list-alt "></i> {{Rechercher équipement}}</a>';
-    tr += '</td>';
-    tr += '<td>';
-    if (!isset(_cmd.type) || _cmd.type == 'action') {
+        tr += '</td>';
+        tr += '<td>';
+        tr += '<input class="cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="cmdgeoloc" style="width : 140px;">';
+        tr += '<a class="btn btn-default btn-sm cursor listEquipementAction" data-input="cmdgeoloc" style="margin-left : 5px;"><i class="fa fa-list-alt "></i> {{Rechercher équipement}}</a>';
+        tr += '</td>';
+        tr += '<td>';
         tr += '<span class="cmdAttr" data-l1key="configuration" data-l2key="first_name"></span>';
-    }
-    tr += '</td>';
-    tr += '<td>';
-    if (!isset(_cmd.type) || _cmd.type == 'action') {
+        tr += '</td>';
+        tr += '<td>';
         tr += '<span class="cmdAttr" data-l1key="configuration" data-l2key="last_name"></span>';
+        tr += '</td>';
+    } else {
+        tr += '<td>';
+        tr += '<span>Info</span>';
+        tr += '</td>';
+        tr += '<td>';
+        tr += '</td>';
+        tr += '<td>';
+        tr += '</td>';
+        tr += '<td>';
+        tr += '</td>';
+        tr += '<td>';
+        tr += '</td>';
+        tr += '<td>';
+        tr += '</td>';
+        tr += '<td>';
+        tr += '</td>';
     }
-    tr += '</td>';
     tr += '<td>';
     tr += '<span><label class="checkbox-inline"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="isVisible" checked/>{{Visible}}</label></span> ';
     if ((!isset(_cmd.type) || _cmd.type == 'action') && _cmd.logicalId != 'alluser') {
