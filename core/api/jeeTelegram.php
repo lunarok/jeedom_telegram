@@ -138,9 +138,9 @@ if (isset($json["message"]["location"])) {
     $file_id = '';
     $cmd_user = $eqLogic->getCmd('action', $json["message"]["chat"]["id"]);
     $geoloc = str_replace('#','',$cmd_user->getConfiguration('geoloc'));
-    $geocmd = cmd::byId($geoloc);
-    $geocmd->event($json["message"]["location"]["latitude"] . ',' . $json["message"]["location"]["longitude"]);
-    $geocmd->save();
+    $geolocCmd = geolocCmd::byId($geoloc);
+    $geolocCmd->event($json["message"]["location"]["latitude"] . ',' . $json["message"]["location"]["longitude"]);
+    $geolocCmd->save();
     $reply['reply'] = $eqLogic->getConfiguration('reply', 'Message recu') . ' (Localisation)';
 }
 
