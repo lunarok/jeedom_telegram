@@ -135,6 +135,7 @@ if (isset($json["message"]["video"])) {
     $reply['reply'] = $eqLogic->getConfiguration('reply', 'Vidéo recue');
 }
 if (isset($json["message"]["location"])) {
+    $cmd_user = $eqLogic->getCmd('action', $json["message"]["chat"]["id"]);
     $geoloc = str_replace('#','',$cmd_user->getConfiguration('geoloc'));
     $url = network::getNetworkAccess('internal', 'proto:127.0.0.1:port:comp') . '/core/api/jeeApi.php?api=' . config::byKey('api');
     $url = $url . '&type=geoloc&id=' . $geoloc . '&value=' . $json["message"]["location"]["latitude"] . ',' . $json["message"]["location"]["longitude"];
