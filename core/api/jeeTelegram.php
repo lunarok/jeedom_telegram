@@ -148,7 +148,7 @@ if ($file_id != '' && $eqLogic->getConfiguration('savepath','') != '') {
     curl_setopt($ch, CURLOPT_POST, 1);
     curl_setopt($ch, CURLOPT_POSTFIELDS, $post_fields);
     $output = json_decode(curl_exec($ch), true);
-    $local_file_path = $eqLogic->getConfiguration('savepath') . '/' . $file_url;
+    $local_file_path = $eqLogic->getConfiguration('savepath') . '/' . $file_name;
     $file_url = "https://api.telegram.org/file/bot" . trim($eqLogic->getConfiguration('bot_token')) . "/" . $output["result"]["file_path"];
     $in = fopen($file_url, "rb");
     $out = fopen($local_file_path, "wb");
