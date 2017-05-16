@@ -138,6 +138,7 @@ if (isset($json["message"]["location"])) {
     $file_id = '';
     $cmd_user = $eqLogic->getCmd('action', $json["message"]["chat"]["id"]);
     $geoloc = str_replace('#','',$cmd_user->getConfiguration('geoloc'));
+    log::add('telegram', 'debug', $geoloc);
     $geolocCmd = geolocCmd::byId($geoloc);
     $geolocCmd->event($json["message"]["location"]["latitude"] . ',' . $json["message"]["location"]["longitude"]);
     $geolocCmd->save();
