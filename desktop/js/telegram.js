@@ -16,7 +16,7 @@
 */
 $("#table_cmd").delegate(".listEquipementAction", 'click', function () {
     var el = $(this);
-    jeedom.cmd.getSelectModal({cmd: {type: 'info', subType: 'string'}}, {eqLogic : {eqType_name : 'monplugin'}}, function (result) {
+    jeedom.cmd.getSelectModal({cmd: {type: 'info', subType: 'string'}, eqLogic : {eqType_name : 'geoloc'}}, function (result) {
         var calcul = el.closest('tr').find('.cmdAttr[data-l1key=configuration][data-l2key=' + el.attr('data-input') + ']');
         calcul.atCaret('insert', result.human);
     });
