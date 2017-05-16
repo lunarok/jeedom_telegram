@@ -137,11 +137,15 @@ if (isset($json["message"]["video"])) {
 if (isset($json["message"]["location"])) {
     $file_id = '';
     $cmd_user = $eqLogic->getCmd('action', $json["message"]["chat"]["id"]);
-    $geoloc = str_replace('#','',$cmd_user->getConfiguration('cmdgeoloc'));
-    //log::add('telegram', 'debug', $geoloc);
-    $geolocCmd = geolocCmd::byId($geoloc);
-    $geolocCmd->event($json["message"]["location"]["latitude"] . ',' . $json["message"]["location"]["longitude"]);
-    $geolocCmd->save();
+    if (is_object($cmd_user)) {
+        $geoloc = str_replace('#','',$cmd_user->getConfiguration('cmdgeoloc', ''));
+        //log::add('telegram', 'debug', $geoloc);
+        $geolocCmd = geolocCmd::byId($geoloc);
+        if (is_object($geolocCmd)) {
+            $geolocCmd->event($json["message"]["location"]["latitude"] . ',' . $json["message"]["location"]["longitude"]);
+            $geolocCmd->save();
+        }
+    }
     $reply['reply'] = $eqLogic->getConfiguration('reply', 'Message recu') . ' (Localisation)';
 }
 
