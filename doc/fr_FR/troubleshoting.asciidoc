@@ -3,3 +3,8 @@
 --
 Il faut bien avoir une adresse en HTTPS, Telegram refuse d'utiliser une URL http en webhook (ce point est visible dans la page santé)
 --
+[panel,danger]
+.Je ne reçois pas un fichier envoyé
+--
+Il faut vérifier que le user www-data a bien accès au fichier envoyé (et aux répertoires parents).
+--
