@@ -16,6 +16,14 @@ Vous pouvez configurer le bot pour créer des notifications silencieuses sur les
 
 Il est possible de personnaliser le texte que le bot répond à un message
 
+Vous pouvez également préciser un emplacement pour stocker les fichiers envoyés au bot. Dans ce cas les fichiers seront créés suivant le format :
+
+- vidéo : $username.mp4
+
+- photo : $username.png
+
+- document : nom du fichier envoyé
+
 Par la suite, les utilisateurs entrant en communication avec le bot créeront automatiquement une entrée sur l'équipement pour envoyer des messages
 
 Pareil pour les groupes et le ask marche sur les groupes
@@ -24,9 +32,11 @@ Pareil pour les groupes et le ask marche sur les groupes
 
 Par défaut, pour une commande action il est possible de faire les types d'envoi :
 
-- tts : en précisant "tts" en titre, le message doit être le chemin d'un fichier audio de type ogg encodé avec opus qui sera notifié en message vocal dans Telegram
+- tts : en précisant "tts" en titre, le message doit être le chemin d'un fichier audio de type ogg encodé avec opus qui sera notifié en message vocal dans Telegram (sinon un texte mais opus-tools doit être installé)
 
 - location : en précisant "location" en titre, le message doit être soit "geoloc:idEqGeoloc" soit "latitude,longitude"
+
+- file : en précisant "file" en titre, le message doit être le path d'un fichier
 
 - texte dans le reste des cas
 

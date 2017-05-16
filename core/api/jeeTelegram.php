@@ -48,7 +48,7 @@ if ($json["message"]["chat"]["type"] == 'private') {
     log::add('telegram', 'debug', 'Message non supporté');
     return;
 }
-log::add('telegram', 'debug', 'Recu message de ' . $username . ' texte : ' . $json["message"]["text"]);
+log::add('telegram', 'debug', 'Recu message de ' . $username);
 $username = strtolower(strtr(utf8_decode($username), utf8_decode('ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝßàáâãäåæçèéêëìíîïñòóôõöøùúûüýÿĀāĂăĄąĆćĈĉĊċČčĎďĐđĒēĔĕĖėĘęĚěĜĝĞğĠġĢģĤĥĦħĨĩĪīĬĭĮįİıĲĳĴĵĶķĹĺĻļĽľĿŀŁłŃńŅņŇňŉŌōŎŏŐőŒœŔŕŖŗŘřŚśŜŝŞşŠšŢţŤťŦŧŨũŪūŬŭŮůŰűŲųŴŵŶŷŸŹźŻżŽžſƒƠơƯưǍǎǏǐǑǒǓǔǕǖǗǘǙǚǛǜǺǻǼǽǾǿ'), 'AAAAAAAECEEEEIIIIDNOOOOOOUUUUYsaaaaaaaeceeeeiiiinoooooouuuuyyAaAaAaCcCcCcCcDdDdEeEeEeEeEeGgGgGgGgHhHhIiIiIiIiIiIJijJjKkLlLlLlLlllNnNnNnnOoOoOoOEoeRrRrRrSsSsSsSsTtTtTtUuUuUuUuUuUuWwYyYZzZzZzsfOoUuAaIiOoUuUuUuUuUuAaAEaeOo'));
 $user = user::byLogin($username);
 if (is_object($user)) {
@@ -121,15 +121,25 @@ if (isset($json["message"]["text"])) {
 }
 if (isset($json["message"]["document"])) {
     $file_id = $json["message"]["document"]["file_id"];
+    $file_name = $json["message"]["document"]["file_name"];
     $reply['reply'] = $eqLogic->getConfiguration('reply', 'Document recu');
 }
-
+if (isset($json["message"]["photo"])) {
+    $file_id = $json["message"]["photo"]["file_id"];
+    $file_name = $username . '.png';
+    $reply['reply'] = $eqLogic->getConfiguration('reply', 'Photo recue');
+}
+if (isset($json["message"]["video"])) {
+    $file_id = $json["message"]["video"]["file_id"];
+    $file_name = $username . '.mp4';
+    $reply['reply'] = $eqLogic->getConfiguration('reply', 'Vidéo recue');
+}
 
 $answer = array('method' => 'sendMessage', 'chat_id' => $json["message"]["chat"]["id"], "reply_to_message_id" => $json["message"]["message_id"], "text" => $reply['reply']);
 header("Content-Type: application/json");
 echo json_encode($answer);
 
-if ($file_id != '') {
+if ($file_id != '' && $eqLogic->getConfiguration('savepath','') != '') {
     $url = "https://api.telegram.org/bot" . trim($eqLogic->getConfiguration('bot_token')) . '/getFile';
     $post_fields['file_id'] = $file_id;
     $ch = curl_init();
@@ -138,7 +148,7 @@ if ($file_id != '') {
     curl_setopt($ch, CURLOPT_POST, 1);
     curl_setopt($ch, CURLOPT_POSTFIELDS, $post_fields);
     $output = json_decode(curl_exec($ch), true);
-    $local_file_path = '/tmp/telegram.file';
+    $local_file_path = $eqLogic->getConfiguration('savepath') . '/' . $file_url;
     $file_url = "https://api.telegram.org/file/bot" . trim($eqLogic->getConfiguration('bot_token')) . "/" . $output["result"]["file_path"];
     $in = fopen($file_url, "rb");
     $out = fopen($local_file_path, "wb");

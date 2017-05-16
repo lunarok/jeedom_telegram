@@ -118,6 +118,13 @@ $eqLogics = eqLogic::byType('telegram');
             </div>
 
             <div class="form-group">
+              <label class="col-sm-3 control-label">{{Emplacement de réception des fichiers du bot}}</label>
+              <div class="col-sm-3">
+                <input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="savepath" placeholder="{{Emplacement}}"/>
+              </div>
+            </div>
+
+            <div class="form-group">
               <label class="col-sm-3 control-label">{{Notification silencieuse des messages}}</label>
               <div class="col-sm-3">
                 <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="silentnotif"/>{{Activer}}</label>
