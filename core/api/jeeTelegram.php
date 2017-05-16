@@ -135,11 +135,20 @@ if (isset($json["message"]["video"])) {
     $reply['reply'] = $eqLogic->getConfiguration('reply', 'Vidéo recue');
 }
 if (isset($json["message"]["location"])) {
+    $file_id = '';
     $cmd_user = $eqLogic->getCmd('action', $json["message"]["chat"]["id"]);
     $geoloc = str_replace('#','',$cmd_user->getConfiguration('geoloc'));
     $url = network::getNetworkAccess('internal', 'proto:127.0.0.1:port:comp') . '/core/api/jeeApi.php?api=' . config::byKey('api');
     $url = $url . '&type=geoloc&id=' . $geoloc . '&value=' . $json["message"]["location"]["latitude"] . ',' . $json["message"]["location"]["longitude"];
-    $result = file_get_contents($url);
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+    curl_setopt($ch, CURLOPT_HEADER, false);
+    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_REFERER, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+    $result = curl_exec($ch);
+    curl_close($ch);
     $reply['reply'] = $eqLogic->getConfiguration('reply', 'Localisation recue');
 }
 
