@@ -424,6 +424,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <ul class="sectlevel3">
 <li><a href="#_plugin_konfiguration">2.1. Plugin Konfiguration</a></li>
 <li><a href="#_konfiguration_von_geräten">2.2. Konfiguration von Geräten</a></li>
+<li><a href="#_envoyer_des_messages">2.3. Envoyer des messages</a></li>
 </ul>
 </li>
 <li><a href="#_faq">3. FAQ</a></li>
@@ -447,7 +448,10 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p>Telegram accepte les pièces jointes également (pour le plugin Camera par exemple)</p>
 </div>
 <div class="paragraph">
-<p>Le plugin accepte également la fonction "ask"</p>
+<p>Il est également possible dans un message de spécifier en titre "tts" ou "geoloc"</p>
+</div>
+<div class="paragraph">
+<p>Le plugin accepte également la fonction "ask" de Jeedom et fournira un clavier spécifique avec des touches pré-remplies des réponses</p>
 </div>
 <hr>
 </div>
@@ -477,7 +481,73 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p>Vous devez donc rentrer la clef fournie par Telegram à la création du bot sur la page équipement</p>
 </div>
 <div class="paragraph">
+<p>Vous pouvez configurer le bot pour créer des notifications silencieuses sur les téléphones</p>
+</div>
+<div class="paragraph">
+<p>Il est possible de personnaliser le texte que le bot répond à un message</p>
+</div>
+<div class="paragraph">
+<p>Vous pouvez également préciser un emplacement pour stocker les fichiers envoyés au bot. Dans ce cas les fichiers seront créés suivant le format :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>vidéo : $username.mp4</p>
+</li>
+<li>
+<p>photo : $username.png</p>
+</li>
+<li>
+<p>document : nom du fichier envoyé</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
 <p>Par la suite, les utilisateurs entrant en communication avec le bot créeront automatiquement une entrée sur l&#8217;équipement pour envoyer des messages</p>
+</div>
+<div class="paragraph">
+<p>Pareil pour les groupes et le ask marche sur les groupes</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_envoyer_des_messages">2.3. Envoyer des messages</h4>
+<div class="paragraph">
+<p>Par défaut, pour une commande action il est possible de faire les types d&#8217;envoi :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>tts : en précisant "tts" en titre, le message doit être le chemin d&#8217;un fichier audio de type ogg encodé avec opus qui sera notifié en message vocal dans Telegram (sinon un texte mais opus-tools doit être installé)</p>
+</li>
+<li>
+<p>location : en précisant "location" en titre, le message doit être soit "geoloc:idEqGeoloc" soit "latitude,longitude"</p>
+</li>
+<li>
+<p>file : en précisant "file" en titre, le message doit être le path d&#8217;un fichier</p>
+</li>
+<li>
+<p>texte dans le reste des cas</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Toutes les pièces jointes ajoutées à une commande action sont envoyées :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>vidéos en extensions "avi,mpeg,mpg,mkv,mp4,mpe"</p>
+</li>
+<li>
+<p>audio en extensions "ogg,mp3"</p>
+</li>
+<li>
+<p>images en extensions "gif,jpeg,jpg,png"</p>
+</li>
+<li>
+<p>le reste est envoyé en tant que document joint</p>
+</li>
+</ul>
 </div>
 <hr>
 </div>
