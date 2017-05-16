@@ -122,34 +122,26 @@ if (isset($json["message"]["text"])) {
 if (isset($json["message"]["document"])) {
     $file_id = $json["message"]["document"]["file_id"];
     $file_name = $json["message"]["document"]["file_name"];
-    $reply['reply'] = $eqLogic->getConfiguration('reply', 'Document recu');
+    $reply['reply'] = $eqLogic->getConfiguration('reply', 'Message recu') . ' (Document)';
 }
 if (isset($json["message"]["photo"])) {
     $file_id = $json["message"]["photo"]["file_id"];
     $file_name = $username . '.png';
-    $reply['reply'] = $eqLogic->getConfiguration('reply', 'Photo recue');
+    $reply['reply'] = $eqLogic->getConfiguration('reply', 'Message recu') . ' (Photo)';
 }
 if (isset($json["message"]["video"])) {
     $file_id = $json["message"]["video"]["file_id"];
     $file_name = $username . '.mp4';
-    $reply['reply'] = $eqLogic->getConfiguration('reply', 'Vidéo recue');
+    $reply['reply'] = $eqLogic->getConfiguration('reply', 'Message recu') . ' (Vidéo)';
 }
 if (isset($json["message"]["location"])) {
     $file_id = '';
     $cmd_user = $eqLogic->getCmd('action', $json["message"]["chat"]["id"]);
     $geoloc = str_replace('#','',$cmd_user->getConfiguration('geoloc'));
-    $url = network::getNetworkAccess('internal', 'proto:127.0.0.1:port:comp') . '/core/api/jeeApi.php?api=' . config::byKey('api');
-    $url = $url . '&type=geoloc&id=' . $geoloc . '&value=' . $json["message"]["location"]["latitude"] . ',' . $json["message"]["location"]["longitude"];
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
-    curl_setopt($ch, CURLOPT_HEADER, false);
-    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-    curl_setopt($ch, CURLOPT_URL, $url);
-    curl_setopt($ch, CURLOPT_REFERER, $url);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-    $result = curl_exec($ch);
-    curl_close($ch);
-    $reply['reply'] = $eqLogic->getConfiguration('reply', 'Localisation recue');
+    $geocmd = cmd::byId($geoloc);
+    $geocmd->event($json["message"]["location"]["latitude"] . ',' . $json["message"]["location"]["longitude"]);
+    $geocmd->save();
+    $reply['reply'] = $eqLogic->getConfiguration('reply', 'Message recu') . ' (Localisation)';
 }
 
 $answer = array('method' => 'sendMessage', 'chat_id' => $json["message"]["chat"]["id"], "reply_to_message_id" => $json["message"]["message_id"], "text" => $reply['reply']);
