@@ -134,6 +134,14 @@ if (isset($json["message"]["video"])) {
     $file_name = $username . '.mp4';
     $reply['reply'] = $eqLogic->getConfiguration('reply', 'Vidéo recue');
 }
+if (isset($json["message"]["location"])) {
+    $url = network::getNetworkAccess('internal', 'proto:127.0.0.1:port:comp') . '/core/api/jeeApi.php?api=' . config::byKey('api');
+    $url = $url . '&type=geoloc&id=' . $geoloc . '&value=' . $json["message"]["location"]["latitude"] . ',' . $json["message"]["location"]["longitude"];
+    $result = file_get_contents($url);
+    $reply['reply'] = $eqLogic->getConfiguration('reply', 'Localisation recue');
+}
+$geoloc = str_replace('#','',$cmd_user->getConfiguration('geoloc'));
+
 
 $answer = array('method' => 'sendMessage', 'chat_id' => $json["message"]["chat"]["id"], "reply_to_message_id" => $json["message"]["message_id"], "text" => $reply['reply']);
 header("Content-Type: application/json");

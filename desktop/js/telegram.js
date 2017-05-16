@@ -14,6 +14,13 @@
 * You should have received a copy of the GNU General Public License
 * along with Jeedom. If not, see <http://www.gnu.org/licenses/>.
 */
+$("#table_cmd").delegate(".listEquipementAction", 'click', function () {
+    var el = $(this);
+    jeedom.cmd.getSelectModal({cmd: {type: 'info', subType: 'other'}}, function (result) {
+        var calcul = el.closest('tr').find('.cmdAttr[data-l1key=configuration][data-l2key=' + el.attr('data-input') + ']');
+        calcul.atCaret('insert', result.human);
+    });
+});
 
 function addCmdToTable(_cmd) {
     if (!isset(_cmd)) {
@@ -54,6 +61,10 @@ function addCmdToTable(_cmd) {
     if (!isset(_cmd.type) || _cmd.type == 'action') {
         tr += '<span class="cmdAttr" data-l1key="configuration" data-l2key="username"></span>';
     }
+    tr += '</td>';
+    tr += '<td>';
+    tr += '<input class="cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="cmdgeoloc" style="width : 140px;">';
+    tr += '<a class="btn btn-default btn-sm cursor listEquipementAction" data-input="cmdgeoloc" style="margin-left : 5px;"><i class="fa fa-list-alt "></i> {{Rechercher équipement}}</a>';
     tr += '</td>';
     tr += '<td>';
     if (!isset(_cmd.type) || _cmd.type == 'action') {
