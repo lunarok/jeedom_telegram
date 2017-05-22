@@ -171,6 +171,7 @@ if ($file_id != '' && $eqLogic->getConfiguration('savepath','') != '') {
     }
     fclose($in);
     fclose($out);
+    $eqLogic->checkAndUpdateCmd('text', 'file:' . $local_file_path);
 }
 
 return true;
