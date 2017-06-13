@@ -113,7 +113,7 @@ if (isset($json["message"]["text"])) {
     }
 
     if ($cmd_user->getConfiguration('interact') == 1) {
-    	$reply = interactQuery::tryToReply(trim($json["message"]["text"]), $parameters);
+    	$reply['reply'] = interactQuery::tryToReply(trim($json["message"]["text"]), $parameters);
     } else {
     	$reply['reply'] = $eqLogic->getConfiguration('reply', 'Message recu');
     }
