@@ -115,24 +115,24 @@ if (isset($json["message"]["text"])) {
     if ($cmd_user->getConfiguration('interact') == 1) {
     	$reply = interactQuery::tryToReply(trim($json["message"]["text"]), $parameters);
     } else {
-    	$reply = $eqLogic->getConfiguration('reply', 'Message recu');
+    	$reply['reply'] = $eqLogic->getConfiguration('reply', 'Message recu');
     }
     $file_id = '';
 }
 if (isset($json["message"]["document"])) {
     $file_id = $json["message"]["document"]["file_id"];
     $file_name = $json["message"]["document"]["file_name"];
-    $reply = $eqLogic->getConfiguration('reply', 'Message recu') . ' (Document)';
+    $reply['reply'] = $eqLogic->getConfiguration('reply', 'Message recu') . ' (Document)';
 }
 if (isset($json["message"]["photo"])) {
     $file_id = $json["message"]["photo"]["file_id"];
     $file_name = $username . '.png';
-    $reply = $eqLogic->getConfiguration('reply', 'Message recu') . ' (Photo)';
+    $reply['reply'] = $eqLogic->getConfiguration('reply', 'Message recu') . ' (Photo)';
 }
 if (isset($json["message"]["video"])) {
     $file_id = $json["message"]["video"]["file_id"];
     $file_name = $username . '.mp4';
-    $reply = $eqLogic->getConfiguration('reply', 'Message recu') . ' (Vidéo)';
+    $reply['reply'] = $eqLogic->getConfiguration('reply', 'Message recu') . ' (Vidéo)';
 }
 if (isset($json["message"]["location"])) {
     $file_id = '';
@@ -146,10 +146,10 @@ if (isset($json["message"]["location"])) {
             $geolocCmd->save();
         }
     }
-    $reply = $eqLogic->getConfiguration('reply', 'Message recu') . ' (Localisation)';
+    $reply['reply'] = $eqLogic->getConfiguration('reply', 'Message recu') . ' (Localisation)';
 }
 
-$answer = array('method' => 'sendMessage', 'chat_id' => $json["message"]["chat"]["id"], "reply_to_message_id" => $json["message"]["message_id"], "text" => $reply);
+$answer = array('method' => 'sendMessage', 'chat_id' => $json["message"]["chat"]["id"], "reply_to_message_id" => $json["message"]["message_id"], "text" => $reply['reply']);
 header("Content-Type: application/json");
 echo json_encode($answer);
 
