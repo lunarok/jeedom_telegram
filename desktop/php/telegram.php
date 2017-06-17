@@ -58,9 +58,9 @@ $eqLogics = eqLogic::byType('telegram');
 </ul>
 <div class="tab-content" style="height:calc(100% - 50px);overflow:auto;overflow-x: hidden;">
   <div role="tabpanel" class="tab-pane active" id="eqlogictab">
+        <br/>
         <form class="form-horizontal">
           <fieldset>
-
             <div class="form-group">
               <label class="col-sm-3 control-label">{{Nom de l'équipement Telegram}}</label>
               <div class="col-sm-3">
@@ -142,7 +142,7 @@ $eqLogics = eqLogic::byType('telegram');
       </div>
 
       <div role="tabpanel" class="tab-pane" id="commandtab">
-
+        <br/>
         <table id="table_cmd" class="table table-bordered table-condensed">
           <thead>
             <tr>
