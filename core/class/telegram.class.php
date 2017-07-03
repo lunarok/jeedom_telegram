@@ -223,24 +223,28 @@ class telegramCmd extends cmd {
                     $audiolist = "ogg,mp3";
                     if (strpos($photolist,$ext) !== false) {
                         $post_fields = array('chat_id'   => $chatid,
+                        'text' => trim($_options['title'] . ' ' . $_options['message']),
                         'photo'     => new CURLFile(realpath($file)),
                         'caption' => pathinfo($file, PATHINFO_FILENAME)
                         );
                         $url = $request_http . "/sendPhoto?chat_id=" . $chatid;
                     } else if (strpos($audiolist,$ext) !== false) {
                         $post_fields = array('chat_id'   => $chatid,
+                        'text' => trim($_options['title'] . ' ' . $_options['message']),
                         'audio'     => new CURLFile(realpath($file)),
                         'title' => pathinfo($file, PATHINFO_FILENAME)
                         );
                         $url = $request_http . "/sendAudio";
                     } else if (strpos($videolist,$ext) !== false) {
                         $post_fields = array('chat_id'   => $chatid,
+                        'text' => trim($_options['title'] . ' ' . $_options['message']),
                         'video'     => new CURLFile(realpath($file)),
                         'caption' => pathinfo($file, PATHINFO_FILENAME)
                         );
                         $url = $request_http . "/sendVideo";
                     } else {
                         $post_fields = array('chat_id'   => $chatid,
+                        'text' => trim($_options['title'] . ' ' . $_options['message']),
                         'document'     => new CURLFile(realpath($file)),
                         'caption' => pathinfo($file, PATHINFO_FILENAME)
                         );
