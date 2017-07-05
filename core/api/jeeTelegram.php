@@ -149,6 +149,10 @@ if (isset($json["message"]["location"])) {
     $reply['reply'] = $eqLogic->getConfiguration('reply', 'Message recu') . ' (Localisation)';
 }
 
+if ($eqLogic->getConfiguration('noreply')) {
+	return;
+}
+
 $answer = array('method' => 'sendMessage', 'chat_id' => $json["message"]["chat"]["id"], "reply_to_message_id" => $json["message"]["message_id"], "text" => $reply['reply']);
 header("Content-Type: application/json");
 echo json_encode($answer);
