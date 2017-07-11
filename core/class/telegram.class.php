@@ -83,7 +83,7 @@ class telegram extends eqLogic {
             $alluser->setConfiguration('username','Tous les utilisateurs');
             $alluser->setSubType('message');
             $alluser->setEqLogic_id($this->getId());
-            $alluser->setDisplay('title_placeholder','option');
+            $alluser->setDisplay('message_disable', 1);
             $alluser->setDisplay('message_placeholder','message');
             $alluser->save();
         }
@@ -156,7 +156,8 @@ class telegramCmd extends cmd {
                 'chat_id' => $chatid
             );
             $data['chat_id'] = $chatid;
-            if ($eqLogic->getConfiguration('silentnotif') == true) {
+            $options = arg2array($_options['message']);
+            if ($eqLogic->getConfiguration('silentnotif') == true || (isset($options['notify']) && $options['notify'] == 0)) {
                 $data['disable_notification'] = 1;
             }
             if (isset($_options['answer'])) {
@@ -173,45 +174,59 @@ class telegramCmd extends cmd {
                 log::add('telegram', 'debug', $data['reply_markup']);
             }
 
-            if (!isset($_options['files']) || !is_array($_options['files'])) {
-                if ($_options['title'] == 'tts') {
-                    if (is_file(realpath($_options['message']))) {
-                        $data['voice'] = new CURLFile(realpath($_options['message']));
+            if (isset($options['location'])) {
+                if (strrpos($options['location'],'#') !== false) {
+                    $geolocCmd = geolocCmd::byId(str_replace('#','',$options['location']));
+                    if ($geolocCmd->getConfiguration('mode') == 'fixe') {
+                      $geolocval = $geolocCmd->getConfiguration('coordinate');
                     } else {
-                        exec("pico2wave -l fr-FR -w /tmp/voice.wav \"" . $_options['message'] . "\"");
-                        exec("opusenc --bitrate 64 /tmp/voice.wav /tmp/voice.ogg");
-                        $data['voice'] = new CURLFile(realpath('/tmp/voice.ogg'));
+                      $geolocval = $geolocCmd->execCmd();
                     }
-                    $url = $request_http . "/sendVoice";
-                    $this->sendTelegram($url,'file',$data);
-                    return;
-                } else if ($_options['title'] == 'location') {
-                    if (strrpos($_options['message'],'geoloc:') !== false) {
-                        $geoloc = explode('geoloc:',$_options['message']);
-                        $geolocCmd = geolocCmd::byId($geoloc[1]);
-                        if ($geolocCmd->getConfiguration('mode') == 'fixe') {
-                          $geolocval = $geolocCmd->getConfiguration('coordinate');
-                        } else {
-                          $geolocval = $geolocCmd->execCmd();
-                        }
-                    } else {
-                        $geolocval = $_options['message'];
-                    }
-                    $coordinate = explode(',',$geolocval);
-                    $data['latitude'] = $coordinate[0];
-                    $data['longitude'] = $coordinate[1];
-                    $url = $request_http . "/sendLocation";
-                    //log::add('telegram', 'debug', print_r($data, true));
-                    $this->sendTelegram($url,'message',$data);
-                } else if ($_options['title'] == 'file') {
-                    $_options['files'][0] = $_options['message'];
                 } else {
+                    $geolocval = $options['location'];
+                }
+                $coordinate = explode(',',$geolocval);
+                $data['latitude'] = $coordinate[0];
+                $data['longitude'] = $coordinate[1];
+                $url = $request_http . "/sendLocation";
+                //log::add('telegram', 'debug', print_r($data, true));
+                $this->sendTelegram($url,'message',$data);
+            }
+
+            if (isset($options['tts'])) {
+                if (is_file(realpath($options['tts']))) {
+                    $data['voice'] = new CURLFile(realpath($options['tts']));
+                } else {
+                    exec("pico2wave -l fr-FR -w /tmp/voice.wav \"" . $options['tts'] . "\"");
+                    exec("opusenc --bitrate 64 /tmp/voice.wav /tmp/voice.ogg");
+                    $data['voice'] = new CURLFile(realpath('/tmp/voice.ogg'));
+                }
+                $url = $request_http . "/sendVoice";
+                $this->sendTelegram($url,'file',$data);
+                return;
+            }
+
+            if (isset($options['file'])) {
+                if (strrpos($options['file'],',') !== false) {
+                    $files = explode(',',$options['file']);
+                    foreach ($files as $file) {
+                        $_options['files'][] = $options['file']$file;
+                    }
+                } else {
+                    $_options['files'][] = $options['file'];
+                }
+            }
+
+            if (isset($options['message'])) {
+                $_options['message'] = $options['message'];
+            }
+
+            if (!isset($_options['files']) || !is_array($_options['files']) || (isset($options['message']) && count($options) > 0)) {
                     $data['text'] = trim($_options['message']);
                     $data['parse_mode'] = 'HTML';
                     $url = $request_http . "/sendMessage";
                     //log::add('telegram', 'debug', print_r($data, true));
                     $this->sendTelegram($url,'message',$data);
-                }
             }
             //log::add('telegram', 'debug', print_r($result, true));
 
