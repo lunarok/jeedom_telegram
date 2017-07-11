@@ -53,6 +53,7 @@ $username = strtolower(strtr(utf8_decode($username), utf8_decode('ÀÁÂÃÄÅÆ
 $user = user::byLogin($username);
 if (is_object($user)) {
     $parameters['profile'] = $username;
+    $parameters['reply_cmd'] = $eqLogic->getCmd('action', $json["message"]["chat"]["id"]);
 }
 
 foreach ($eqLogic->getCmd('action') as $cmd) {

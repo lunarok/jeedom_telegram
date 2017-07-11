@@ -210,7 +210,7 @@ class telegramCmd extends cmd {
                 if (strrpos($options['file'],',') !== false) {
                     $files = explode(',',$options['file']);
                     foreach ($files as $file) {
-                        $_options['files'][] = $options['file']$file;
+                        $_options['files'][] = $file;
                     }
                 } else {
                     $_options['files'][] = $options['file'];
@@ -223,7 +223,7 @@ class telegramCmd extends cmd {
 
             if (!isset($_options['files']) || !is_array($_options['files']) || (isset($options['message']) && count($options) > 0)) {
                     $data['text'] = trim($_options['message']);
-                    if (!(isset($options['html']) && $options['html'] == 0)) {
+                    if ($eqLogic->getConfiguration('nohtml') == true || (isset($options['html']) && $options['html'] == 0)) {
                         $data['parse_mode'] = 'HTML';
                     }
                     $url = $request_http . "/sendMessage";

@@ -109,7 +109,7 @@ $eqLogics = eqLogic::byType('telegram');
                 <input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="bot_token" placeholder="{{Token}}"/>
               </div>
             </div>
-            
+
             <div class="form-group">
               <label class="col-sm-3 control-label">{{Ne pas envoyer de confirmation de réception}}</label>
               <div class="col-sm-3">
@@ -135,6 +135,13 @@ $eqLogics = eqLogic::byType('telegram');
               <label class="col-sm-3 control-label">{{Notification silencieuse des messages}}</label>
               <div class="col-sm-3">
                 <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="silentnotif"/>{{Activer}}</label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-sm-3 control-label">{{Ne pas utiliser le HTML pour les messages}}</label>
+              <div class="col-sm-3">
+                <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="nohtml"/>{{Activer}}</label>
               </div>
             </div>
 
