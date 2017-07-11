@@ -20,6 +20,11 @@ require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
 
 function telegram_update() {
   foreach (eqLogic::byType('telegram', true) as $telegram) {
+      foreach ($this->getCmd('action') as $cmd) {
+          $cmd->setDisplay('title_placeholder','option');
+          $cmd->setDisplay('message_placeholder','option');
+          $cmd->save();
+      }
       $telegram->save();
   }
 }

@@ -83,6 +83,8 @@ class telegram extends eqLogic {
             $alluser->setConfiguration('username','Tous les utilisateurs');
             $alluser->setSubType('message');
             $alluser->setEqLogic_id($this->getId());
+            $alluser->setDisplay('title_placeholder','option');
+            $alluser->setDisplay('message_placeholder','option');
             $alluser->save();
         }
 
@@ -113,7 +115,7 @@ class telegramCmd extends cmd {
             $this->setDisplay('title_disable', 0);
         }
     }
-    
+
     public function sendTelegram($url,$type,$post_fields) {
         $ch = curl_init();
         if ($type == 'file') {
@@ -124,7 +126,7 @@ class telegramCmd extends cmd {
         }/* else {
             $header = "Content-Type:application/x-www-form-urlencoded";
         }*/
-        
+
         log::add('telegram', 'debug',$url);
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -202,7 +204,7 @@ class telegramCmd extends cmd {
                 } else if ($_options['title'] == 'file') {
                     $_options['files'][0] = $_options['message'];
                 } else {
-                    $data['text'] = trim($_options['title'] . ' ' . $_options['message']);
+                    $data['text'] = trim($_options['message']);
                     $data['parse_mode'] = 'HTML';
                     $url = $request_http . "/sendMessage";
                     //log::add('telegram', 'debug', print_r($data, true));
@@ -223,7 +225,7 @@ class telegramCmd extends cmd {
                     $audiolist = "ogg,mp3";
                     if (strpos($photolist,$ext) !== false) {
                         $post_fields = array('chat_id'   => $chatid,
-                        'text' => trim($_options['title'] . ' ' . $_options['message']),
+                        'text' => trim($_options['message']),
                         'photo'     => new CURLFile(realpath($file)),
                         'caption' => pathinfo($file, PATHINFO_FILENAME)
                         );
