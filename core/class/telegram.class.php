@@ -83,7 +83,7 @@ class telegram extends eqLogic {
             $alluser->setConfiguration('username','Tous les utilisateurs');
             $alluser->setSubType('message');
             $alluser->setEqLogic_id($this->getId());
-            $alluser->setDisplay('message_disable', 1);
+            $alluser->setDisplay('title_disable', 1);
             $alluser->setDisplay('message_placeholder','message');
             $alluser->save();
         }
@@ -223,7 +223,9 @@ class telegramCmd extends cmd {
 
             if (!isset($_options['files']) || !is_array($_options['files']) || (isset($options['message']) && count($options) > 0)) {
                     $data['text'] = trim($_options['message']);
-                    $data['parse_mode'] = 'HTML';
+                    if (!(isset($options['html']) && $options['html'] == 0)) {
+                        $data['parse_mode'] = 'HTML';
+                    }
                     $url = $request_http . "/sendMessage";
                     //log::add('telegram', 'debug', print_r($data, true));
                     $this->sendTelegram($url,'message',$data);
