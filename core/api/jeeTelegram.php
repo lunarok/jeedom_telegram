@@ -88,7 +88,7 @@ if (isset($json["message"]["text"])) {
     		$cmd_user->setSubType('message');
     		$cmd_user->setEqLogic_id($eqLogic->getId());
             $cmd_user->setDisplay('title_placeholder','option');
-            $cmd_user->setDisplay('message_placeholder','option');
+            $cmd_user->setDisplay('message_placeholder','message');
     	} else {
     		return;
     	}

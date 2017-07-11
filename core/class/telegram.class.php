@@ -84,7 +84,7 @@ class telegram extends eqLogic {
             $alluser->setSubType('message');
             $alluser->setEqLogic_id($this->getId());
             $alluser->setDisplay('title_placeholder','option');
-            $alluser->setDisplay('message_placeholder','option');
+            $alluser->setDisplay('message_placeholder','message');
             $alluser->save();
         }
 
