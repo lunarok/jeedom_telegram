@@ -4,7 +4,7 @@ The plugin does not have general configuration.
 
 On the health page, a test to check the https in external connection is done. It is not possible  to use a self-signed certificate.
 
-Un certification letsencrypt fonctionne (en ayant bien paramétrer le certificat de chaine également)
+Un certificat letsencrypt fonctionne (en ayant bien paramétrer le certificat de chaine également)
 
 ==== Configuration of equipment
 
@@ -24,13 +24,13 @@ Vous pouvez également préciser un emplacement pour stocker les fichiers envoy�
 
 - document : nom du fichier envoyé
 
-Par la suite, les utilisateurs entrant en communication avec le bot créeront automatiquement une entrée sur l'équipement pour envoyer des messages
+Par la suite, les utilisateurs entrant en communication avec le bot créeront automatiquement une entrée sur l'équipement pour envoyer des messages si l'option est activée
 
-Pareil pour les groupes et le ask marche sur les groupes
+Pareil pour les groupes et le ask marche sur les groupes (il ne marche pas pour le destinataire "Tous")
 
 ==== Envoyer des messages
 
-Par défaut, pour une commande action il est possible de faire les types d'envoi :
+Les commandes actions permettent d'envoyer des messages. Si l'option est remplie avec un des mots clés, il y aura un envoi spcéifique dans Telegram
 
 - tts : en précisant "tts" en titre, le message doit être le chemin d'un fichier audio de type ogg encodé avec opus qui sera notifié en message vocal dans Telegram (sinon un texte mais opus-tools doit être installé)
 
@@ -38,9 +38,11 @@ Par défaut, pour une commande action il est possible de faire les types d'envoi
 
 - file : en précisant "file" en titre, le message doit être le path d'un fichier
 
-- texte dans le reste des cas
+- texte dans le reste des cas (mot clef non listé ou option vide)
 
-Toutes les pièces jointes ajoutées à une commande action sont envoyées :
+Option est le champ "titre"
+
+Toutes les pièces jointes ajoutées à une commande action sont envoyées avec un type détecté par rapport à leur extension :
 
 - vidéos en extensions "avi,mpeg,mpg,mkv,mp4,mpe"
 

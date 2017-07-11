@@ -1,10 +1,15 @@
 [panel,danger]
 .Je n'ai pas de retour de Telegram
 --
-Il faut bien avoir une adresse en HTTPS, Telegram refuse d'utiliser une URL http en webhook (ce point est visible dans la page santé)
+Il faut bien avoir une adresse en HTTPS, Telegram refuse d'utiliser une URL http en webhook (ce point est visible dans la page santé). De plus Telegram n'accepte que les ports 443, 80, 88, 443
 --
 [panel,danger]
 .Je ne reçois pas un fichier envoyé
 --
 Il faut vérifier que le user www-data a bien accès au fichier envoyé (et aux répertoires parents).
+--
+[panel,danger]
+.Le 'ask' sur tous les destinataires ne marche pas
+--
+C'est normal, il ne peut pas fonctionner car Telegram ne sait pas reconnaitre l'utilisateur à qui ont a envoyé la question de celui qui répond, il faut utiliser les groupes pour ca
 --
