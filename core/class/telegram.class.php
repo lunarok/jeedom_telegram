@@ -206,41 +206,30 @@ class telegramCmd extends cmd {
 				if (trim($file) == '') {
 					continue;
 				}
+				$data['text'] = $_options['title'];
 				$ext = pathinfo($file, PATHINFO_EXTENSION);
 				if ($ext == 'mp4') {
 					copy($file, substr($file, 0, -3) . 'mkv');
 					$file = substr($file, 0, -3) . 'mkv';
 				}
 				if (in_array($ext, array('gif', 'jpeg', 'jpg', 'png'))) {
-					$post_fields = array('chat_id' => $chatid,
-						'text' => $_options['title'],
-						'photo' => new CURLFile(realpath($file)),
-						'caption' => pathinfo($file, PATHINFO_FILENAME),
-					);
-					$url = $request_http . "/sendPhoto?chat_id=" . $chatid;
+					$data['photo'] = new CURLFile(realpath($file));
+					$data['caption'] = pathinfo($file, PATHINFO_FILENAME);
+					$url = $request_http . '/sendPhoto';
 				} else if (in_array($ext, array('ogg', 'mp3'))) {
-					$post_fields = array('chat_id' => $chatid,
-						'text' => $_options['title'],
-						'audio' => new CURLFile(realpath($file)),
-						'title' => pathinfo($file, PATHINFO_FILENAME),
-					);
-					$url = $request_http . "/sendAudio";
+					$data['audio'] = new CURLFile(realpath($file));
+					$data['title'] = pathinfo($file, PATHINFO_FILENAME);
+					$url = $request_http . '/sendAudio';
 				} else if (in_array($ext, array('avi', 'mpeg', 'mpg', 'mkv', 'mp4', 'mpe'))) {
-					$post_fields = array('chat_id' => $chatid,
-						'text' => $_options['title'],
-						'video' => new CURLFile(realpath($file)),
-						'caption' => pathinfo($file, PATHINFO_FILENAME),
-					);
-					$url = $request_http . "/sendVideo";
+					$data['video'] = new CURLFile(realpath($file));
+					$data['caption'] = pathinfo($file, PATHINFO_FILENAME);
+					$url = $request_http . '/sendVideo';
 				} else {
-					$post_fields = array('chat_id' => $chatid,
-						'text' => $_options['title'],
-						'document' => new CURLFile(realpath($file)),
-						'caption' => pathinfo($file, PATHINFO_FILENAME),
-					);
-					$url = $request_http . "/sendDocument";
+					$data['document'] = new CURLFile(realpath($file));
+					$data['caption'] = pathinfo($file, PATHINFO_FILENAME);
+					$url = $request_http . '/sendDocument';
 				}
-				$this->sendTelegram($url, 'file', $to, $post_fields);
+				$this->sendTelegram($url, 'file', $to, $data);
 				if ($ext == 'mp4') {
 					unlink($file);
 				}
