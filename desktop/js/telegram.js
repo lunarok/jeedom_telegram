@@ -33,29 +33,25 @@ function addCmdToTable(_cmd) {
     tr += '<td>';
     tr += '<input class="cmdAttr form-control input-sm" data-l1key="name" style="width : 140px;" placeholder="{{Nom}}">';
     tr += '<input class="cmdAttr" data-l1key="id" style="display:none;" />';
-    if (isset(_cmd.type) &&  _cmd.type == 'info') {
-        tr += '<input class="cmdAttr" data-l1key="type" value="info" style="display:none;" />';
-    }else{
-        tr += '<input class="cmdAttr" data-l1key="type" value="action" style="display:none;" />';
-    }
+    tr += '<input class="cmdAttr" data-l1key="type" style="display:none;" />';
     tr += '<input class="cmdAttr" data-l1key="subtype" value="message" style="display:none;" />';
     tr += '</td>';
     if (!isset(_cmd.type) || _cmd.type == 'action') {
         tr += '<td>';
-        tr += '<span>Action</span>';
-        tr += '</td>';
-        tr += '<td>';
-        tr += '<span class="cmdAttr" data-l1key="configuration" data-l2key="chatid"></span>';
-        tr += '</td>';
-        tr += '<td>';
         tr += '<span class="cmdAttr" data-l1key="configuration" data-l2key="title"></span>';
         tr += '</td>';
         tr += '<td>';
-        tr += '<span class="cmdAttr" data-l1key="configuration" data-l2key="username"></span>';
+        if(_cmd.logicalId != 'alluser'){
+            tr += '<select class="form-control cmdAttr input-sm" data-l1key="configuration" data-l2key="user"></select>';
+        }
         tr += '</td>';
         tr += '<td>';
-        tr += '<input class="cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="cmdgeoloc" style="width : 140px;">';
-        tr += '<a class="btn btn-default btn-sm cursor listEquipementAction" data-input="cmdgeoloc" style="margin-left : 5px;"><i class="fa fa-list-alt "></i> {{Rechercher équipement}}</a>';
+        tr += '<div class="input-group">';
+        tr += '<input class="cmdAttr form-control" data-l1key="configuration" data-l2key="cmdgeoloc">';
+        tr += '<span class="input-group-btn">';
+        tr += '<a class="btn btn-default cursor listEquipementAction" data-input="cmdgeoloc"><i class="fa fa-list-alt "></i></a>';
+        tr += '</span>';
+        tr += '</div>';
         tr += '</td>';
         tr += '<td>';
         tr += '<span class="cmdAttr" data-l1key="configuration" data-l2key="first_name"></span>';
@@ -64,11 +60,6 @@ function addCmdToTable(_cmd) {
         tr += '<span class="cmdAttr" data-l1key="configuration" data-l2key="last_name"></span>';
         tr += '</td>';
     } else {
-        tr += '<td>';
-        tr += '<span>Info</span>';
-        tr += '</td>';
-        tr += '<td>';
-        tr += '</td>';
         tr += '<td>';
         tr += '</td>';
         tr += '<td>';
@@ -96,6 +87,21 @@ function addCmdToTable(_cmd) {
     tr += '</tr>';
     $('#table_cmd tbody').append(tr);
     $('#table_cmd tbody tr:last').setValues(_cmd, '.cmdAttr');
+    var tr = $('#table_cmd tbody tr:last');
+    jeedom.user.all({
+      error: function (error) {
+        $('#div_alert').showAlert({message: error.message, level: 'danger'});
+    },
+    success: function (data) {
+        var option = '<option value="">Aucun</option>';
+        for (var i in data) {
+          option += '<option value="' + data[i].id + '">' + data[i].login + '</option>';
+      }
+      tr.find('.cmdAttr[data-l1key=configuration][data-l2key=user]').empty().append(option);
+      tr.setValues(_cmd, '.cmdAttr');
+      modifyWithoutSave = false;
+  }
+});
     if (isset(_cmd.type)) {
         $('#table_cmd tbody tr:last .cmdAttr[data-l1key=type]').value(init(_cmd.type));
     }

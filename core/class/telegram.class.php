@@ -1,285 +1,250 @@
 <?php
 
 /* This file is part of Jeedom.
-*
-* Jeedom is free software: you can redistribute it and/or modify
-* it under the terms of the GNU General Public License as published by
-* the Free Software Foundation, either version 3 of the License, or
-* (at your option) any later version.
-*
-* Jeedom is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-* GNU General Public License for more details.
-*
-* You should have received a copy of the GNU General Public License
-* along with Jeedom. If not, see <http://www.gnu.org/licenses/>.
-*/
+ *
+ * Jeedom is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Jeedom is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Jeedom. If not, see <http://www.gnu.org/licenses/>.
+ */
 require_once dirname(__FILE__) . '/../../../../core/php/core.inc.php';
 
 class telegram extends eqLogic {
-    public static function health() {
-        $return = array();
-        if (strpos(network::getNetworkAccess('external'),'https') !== false) {
-            $https = true;
-        } else {
-            $https = false;
-        }
-        $return[] = array(
-            'test' => __('HTTPS', __FILE__),
-            'result' => ($https) ?  __('OK', __FILE__) : __('NOK', __FILE__),
-            'advice' => ($https) ? '' : __('Votre Jeedom ne permet pas le fonctionnement de Telegram sans HTTPS', __FILE__),
-            'state' => $https,
-        );
-        return $return;
-    }
 
-    public function postSave() {
-        $text = $this->getCmd(null, 'text');
-        if (!is_object($text)) {
-            $text = new telegramCmd();
-            $text->setLogicalId('text');
-            $text->setIsVisible(0);
-            $text->setName(__('Message', __FILE__));
-        }
-        $text->setType('info');
-        $text->setSubType('string');
-        $text->setEqLogic_id($this->getId());
-        $text->save();
+	/*     * *************************Attributs****************************** */
 
-        $sender = $this->getCmd(null, 'sender');
-        if (!is_object($sender)) {
-            $sender = new telegramCmd();
-            $sender->setLogicalId('sender');
-            $sender->setIsVisible(0);
-            $sender->setName(__('Expediteur', __FILE__));
-        }
-        $sender->setType('info');
-        $sender->setSubType('string');
-        $sender->setEqLogic_id($this->getId());
-        $sender->save();
+	/*     * ***********************Methode static*************************** */
 
-        $sender = $this->getCmd(null, 'chat');
-        if (!is_object($sender)) {
-            $sender = new telegramCmd();
-            $sender->setLogicalId('chat');
-            $sender->setIsVisible(0);
-            $sender->setName(__('Chat', __FILE__));
-        }
-        $sender->setType('info');
-        $sender->setSubType('string');
-        $sender->setEqLogic_id($this->getId());
-        $sender->save();
+	public static function health() {
+		$https = strpos(network::getNetworkAccess('external'), 'https') !== false;
+		$return[] = array(
+			'test' => __('HTTPS', __FILE__),
+			'result' => ($https) ? __('OK', __FILE__) : __('NOK', __FILE__),
+			'advice' => ($https) ? '' : __('Votre Jeedom ne permet pas le fonctionnement de Telegram sans HTTPS', __FILE__),
+			'state' => $https,
+		);
+		return $return;
+	}
 
-        $alluser = $this->getCmd(null, 'alluser');
-        if (!is_object($alluser)) {
-            $alluser = new telegramCmd();
-            $alluser->setLogicalId('alluser');
-            $alluser->setIsVisible(1);
-            $alluser->setName(__('Tous', __FILE__));
-            $alluser->setType('action');
-            $alluser->setConfiguration('chatid','Tous les utilisateurs');
-            $alluser->setConfiguration('firstname','Tous les utilisateurs');
-            $alluser->setConfiguration('username','Tous les utilisateurs');
-            $alluser->setSubType('message');
-            $alluser->setEqLogic_id($this->getId());
-            $alluser->setDisplay('title_disable', 1);
-            $alluser->setDisplay('message_placeholder','message');
-            $alluser->save();
-        }
+	/*     * *********************Methode d'instance************************* */
 
-        $url = network::getNetworkAccess('external') . '/plugins/telegram/core/api/jeeTelegram.php?apikey=' . jeedom::getApiKey('telegram') . '&id=' . $this->getId();
-        $token = trim($this->getConfiguration('bot_token'));
+	public function postSave() {
+		$text = $this->getCmd(null, 'text');
+		if (!is_object($text)) {
+			$text = new telegramCmd();
+			$text->setLogicalId('text');
+			$text->setIsVisible(0);
+			$text->setName(__('Message', __FILE__));
+		}
+		$text->setType('info');
+		$text->setSubType('string');
+		$text->setEqLogic_id($this->getId());
+		$text->save();
 
-        $request_http = new com_http('https://api.telegram.org/bot' . $token . '/setWebhook');
-        log::add('telegram', 'debug', $url);
-        $post = array(
-            'url' => $url
-        );
+		$sender = $this->getCmd(null, 'sender');
+		if (!is_object($sender)) {
+			$sender = new telegramCmd();
+			$sender->setLogicalId('sender');
+			$sender->setIsVisible(0);
+			$sender->setName(__('Expediteur', __FILE__));
+		}
+		$sender->setType('info');
+		$sender->setSubType('string');
+		$sender->setEqLogic_id($this->getId());
+		$sender->save();
 
-        $request_http->setPost($post);
-        try {
-            $result = $request_http->exec(60, 1);
-        } catch (Exception $e) {
-        }
-        log::add('telegram', 'debug', $result);
+		$sender = $this->getCmd(null, 'chat');
+		if (!is_object($sender)) {
+			$sender = new telegramCmd();
+			$sender->setLogicalId('chat');
+			$sender->setIsVisible(0);
+			$sender->setName(__('Chat', __FILE__));
+		}
+		$sender->setType('info');
+		$sender->setSubType('string');
+		$sender->setEqLogic_id($this->getId());
+		$sender->save();
 
-    }
+		$alluser = $this->getCmd(null, 'alluser');
+		if (!is_object($alluser)) {
+			$alluser = new telegramCmd();
+			$alluser->setLogicalId('alluser');
+			$alluser->setIsVisible(1);
+			$alluser->setName(__('Tous', __FILE__));
+			$alluser->setType('action');
+			$alluser->setConfiguration('chatid', 'Tous les utilisateurs');
+			$alluser->setConfiguration('firstname', 'Tous les utilisateurs');
+			$alluser->setConfiguration('username', 'Tous les utilisateurs');
+			$alluser->setSubType('message');
+			$alluser->setEqLogic_id($this->getId());
+			$alluser->setDisplay('message_placeholder', __('Options', __FILE__));
+			$alluser->save();
+		}
+		$url = network::getNetworkAccess('external') . '/plugins/telegram/core/api/jeeTelegram.php?apikey=' . jeedom::getApiKey('telegram') . '&id=' . $this->getId();
+		$token = trim($this->getConfiguration('bot_token'));
+		$request_http = new com_http('https://api.telegram.org/bot' . $token . '/setWebhook');
+		log::add('telegram', 'debug', $url);
+		$post = array(
+			'url' => $url,
+		);
+		$request_http->setPost($post);
+		try {
+			$result = $request_http->exec(60, 1);
+		} catch (Exception $e) {
+		}
+		log::add('telegram', 'debug', $result);
+	}
+
+	/*     * **********************Getteur Setteur*************************** */
 
 }
 
 class telegramCmd extends cmd {
 
-    public function preSave() {
-        if ($this->getSubtype() == 'message') {
-            $this->setDisplay('title_disable', 0);
-        }
-    }
+	/*     * *************************Attributs****************************** */
 
-    public function sendTelegram($url,$type,$post_fields) {
-        $ch = curl_init();
-        if ($type == 'file') {
-            $header = "Content-Type:multipart/form-data";
-            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-            $header
-        ));
-        }/* else {
-            $header = "Content-Type:application/x-www-form-urlencoded";
-        }*/
+	/*     * ***********************Methode static*************************** */
 
-        log::add('telegram', 'debug',$url);
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $post_fields);
-        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 60);
-        //curl_setopt($ch, CURLOPT_TIMEOUT, 60);
-        $output = curl_exec($ch);
-    }
+	/*     * *********************Methode d'instance************************* */
 
-    public function execute($_options = array()) {
-        $eqLogic = $this->getEqLogic();
-        $toSend = array();
-        if ($this->getLogicalId() == 'alluser'){
-            foreach($eqLogic->getCmd('action') as $cmd){
-                if ($cmd->getLogicalId() != 'alluser'){
-                    $toSend[]= $cmd->getConfiguration('chatid');
-                }
-            }
-        } else {
-            $toSend[] = $this->getConfiguration('chatid');
-        }
-        $request_http = "https://api.telegram.org/bot" . trim($eqLogic->getConfiguration('bot_token'));
+	public function sendTelegram($_url, $_type, $_to, $_data) {
+		foreach ($_to as $chatid) {
+			$_data['chat_id'] = $chatid;
+			$request_http = new com_http($_url);
+			if ($_type == 'file') {
+				$request_http->setHeader(array("Content-Type:multipart/form-data"));
+			}
+			$request_http->setPost($_data);
+			log::add('telegram', 'debug', 'Call url ' . $_url . ' with option ' . print_r($_data, true));
+			$output = $request_http->exec();
+			log::add('telegram', 'debug', 'Result : ' . $output);
+			if (!is_json($output)) {
+				throw new Exception(__('Erreur lors de l\'envoi telegram : ', __FILE__) . $output);
+			}
+			$result = json_decode($output, true);
+			if (!$result['ok']) {
+				throw new Exception(__('Erreur lors de l\'envoi telegram : ', __FILE__) . $output);
+			}
+		}
+	}
 
-        foreach ($toSend as $chatid){
-            $data = array(
-                'chat_id' => $chatid
-            );
-            $data['chat_id'] = $chatid;
-            $options = arg2array($_options['message']);
-            if ($eqLogic->getConfiguration('silentnotif') == true || (isset($options['notify']) && $options['notify'] == 0)) {
-                $data['disable_notification'] = 1;
-            }
-            if (isset($_options['answer'])) {
-                $replyMarkup = array(
-                    'keyboard' => array(
-                        $_options['answer']
-                    ),
-                    'one_time_keyboard' => true,
-                    'resize_keyboard' => true
-                );
-                $encodedMarkup = json_encode($replyMarkup);
-                //$data['reply_markup'] = '{"keyboard": [["' . implode('""],["', $_options['answer']) . '"]],"one_time_keyboard": true}';
-                $data['reply_markup'] = $encodedMarkup;
-                log::add('telegram', 'debug', $data['reply_markup']);
-            }
+	public function execute($_options = array()) {
+		if ($this->getType() == 'info') {
+			return;
+		}
+		$data = array();
+		$options = arg2array($_options['message']);
+		$eqLogic = $this->getEqLogic();
+		$to = array();
+		if ($this->getLogicalId() == 'alluser') {
+			foreach ($eqLogic->getCmd('action') as $cmd) {
+				if ($cmd->getLogicalId() != 'alluser') {
+					$to[] = $cmd->getConfiguration('chatid');
+				}
+			}
+		} else {
+			$to[] = $this->getConfiguration('chatid');
+		}
+		$request_http = "https://api.telegram.org/bot" . trim($eqLogic->getConfiguration('bot_token'));
+		$data['disable_notification'] = (isset($options['disable_notify'])) ? $options['disable_notify'] : $eqLogic->getConfiguration('disable_notify', 0);
+		$data['parse_mode'] = (isset($options['parse_mode'])) ? $options['parse_mode'] : $eqLogic->getConfiguration('parse_mode', 'HTML');
 
-            if (isset($options['location'])) {
-                if (strrpos($options['location'],'#') !== false) {
-                    $geolocCmd = geolocCmd::byId(str_replace('#','',$options['location']));
-                    if ($geolocCmd->getConfiguration('mode') == 'fixe') {
-                      $geolocval = $geolocCmd->getConfiguration('coordinate');
-                    } else {
-                      $geolocval = $geolocCmd->execCmd();
-                    }
-                } else {
-                    $geolocval = $options['location'];
-                }
-                $coordinate = explode(',',$geolocval);
-                $data['latitude'] = $coordinate[0];
-                $data['longitude'] = $coordinate[1];
-                $url = $request_http . "/sendLocation";
-                //log::add('telegram', 'debug', print_r($data, true));
-                $this->sendTelegram($url,'message',$data);
-            }
+		if (isset($_options['answer'])) {
+			$data['reply_markup'] = json_encode(array(
+				'keyboard' => array($_options['answer']),
+				'one_time_keyboard' => true,
+				'resize_keyboard' => true,
+			));
+		}
 
-            if (isset($options['tts'])) {
-                if (is_file(realpath($options['tts']))) {
-                    $data['voice'] = new CURLFile(realpath($options['tts']));
-                } else {
-                    exec("pico2wave -l fr-FR -w /tmp/voice.wav \"" . $options['tts'] . "\"");
-                    exec("opusenc --bitrate 64 /tmp/voice.wav /tmp/voice.ogg");
-                    $data['voice'] = new CURLFile(realpath('/tmp/voice.ogg'));
-                }
-                $url = $request_http . "/sendVoice";
-                $this->sendTelegram($url,'file',$data);
-                return;
-            }
+		if (isset($_options['title']) && $_options['title'] != '') {
+			$data['text'] = trim($_options['title']);
+			$url = $request_http . "/sendMessage";
+			$this->sendTelegram($url, 'message', $to, $data);
+		}
 
-            if (isset($options['file'])) {
-                if (strrpos($options['file'],',') !== false) {
-                    $files = explode(',',$options['file']);
-                    foreach ($files as $file) {
-                        $_options['files'][] = $file;
-                    }
-                } else {
-                    $_options['files'][] = $options['file'];
-                }
-            }
+		if (isset($options['location'])) {
+			if (strrpos($options['location'], '#') !== false) {
+				$geolocCmd = geolocCmd::byId(str_replace('#', '', $options['location']));
+				$geolocval = ($geolocCmd->getConfiguration('mode') == 'fixe') ? $geolocCmd->getConfiguration('coordinate') : $geolocCmd->execCmd();
+			} else {
+				$geolocval = $options['location'];
+			}
+			$coordinate = explode(',', $geolocval);
+			$data['latitude'] = $coordinate[0];
+			$data['longitude'] = $coordinate[1];
+			$url = $request_http . "/sendLocation";
+			$this->sendTelegram($url, 'message', $to, $data);
+		}
 
-            if (isset($options['message'])) {
-                $_options['message'] = $options['message'];
-            }
+		if (isset($options['tts'])) {
+			if (is_file(realpath($options['tts']))) {
+				$data['voice'] = new CURLFile(realpath($options['tts']));
+			} else {
+				exec("pico2wave -l fr-FR -w /tmp/voice.wav \"" . $options['tts'] . "\"");
+				exec("opusenc --bitrate 64 /tmp/voice.wav /tmp/voice.ogg");
+				$data['voice'] = new CURLFile(realpath('/tmp/voice.ogg'));
+			}
+			$url = $request_http . "/sendVoice";
+			$this->sendTelegram($url, 'file', $to, $data);
+		}
 
-            if (!isset($_options['files']) || !is_array($_options['files']) || (isset($options['message']) && count($options) > 0)) {
-                    $data['text'] = trim($_options['message']);
-                    if ($eqLogic->getConfiguration('nohtml') == true || (isset($options['html']) && $options['html'] == 0)) {
-                        $data['parse_mode'] = 'HTML';
-                    }
-                    $url = $request_http . "/sendMessage";
-                    //log::add('telegram', 'debug', print_r($data, true));
-                    $this->sendTelegram($url,'message',$data);
-            }
-            //log::add('telegram', 'debug', print_r($result, true));
+		if (isset($options['file'])) {
+			$_options['files'] = explode(',', $options['file']);
+		}
 
-            if (isset($_options['files']) && is_array($_options['files'])) {
-                foreach ($_options['files'] as $file) {
-                    $ext = pathinfo($file, PATHINFO_EXTENSION);
-                    if ($ext == 'mp4'){
-                        copy($file , substr($file,0,-3) . 'mkv');
-                        $file = substr($file,0,-3) . 'mkv';
-                    }
-                    $photolist = "gif,jpeg,jpg,png";
-                    $videolist = "avi,mpeg,mpg,mkv,mp4,mpe";
-                    $audiolist = "ogg,mp3";
-                    if (strpos($photolist,$ext) !== false) {
-                        $post_fields = array('chat_id'   => $chatid,
-                        'text' => trim($_options['message']),
-                        'photo'     => new CURLFile(realpath($file)),
-                        'caption' => pathinfo($file, PATHINFO_FILENAME)
-                        );
-                        $url = $request_http . "/sendPhoto?chat_id=" . $chatid;
-                    } else if (strpos($audiolist,$ext) !== false) {
-                        $post_fields = array('chat_id'   => $chatid,
-                        'text' => trim($_options['title'] . ' ' . $_options['message']),
-                        'audio'     => new CURLFile(realpath($file)),
-                        'title' => pathinfo($file, PATHINFO_FILENAME)
-                        );
-                        $url = $request_http . "/sendAudio";
-                    } else if (strpos($videolist,$ext) !== false) {
-                        $post_fields = array('chat_id'   => $chatid,
-                        'text' => trim($_options['title'] . ' ' . $_options['message']),
-                        'video'     => new CURLFile(realpath($file)),
-                        'caption' => pathinfo($file, PATHINFO_FILENAME)
-                        );
-                        $url = $request_http . "/sendVideo";
-                    } else {
-                        $post_fields = array('chat_id'   => $chatid,
-                        'text' => trim($_options['title'] . ' ' . $_options['message']),
-                        'document'     => new CURLFile(realpath($file)),
-                        'caption' => pathinfo($file, PATHINFO_FILENAME)
-                        );
-                        $url = $request_http . "/sendDocument";
-                    }
-                    $this->sendTelegram($url,'file',$post_fields);
-                    if ($ext == 'mp4'){
-                        unlink($file);
-                    }
-            }
-        }
-    }
-}
+		if (isset($_options['files']) && is_array($_options['files'])) {
+			foreach ($_options['files'] as $file) {
+				$ext = pathinfo($file, PATHINFO_EXTENSION);
+				if ($ext == 'mp4') {
+					copy($file, substr($file, 0, -3) . 'mkv');
+					$file = substr($file, 0, -3) . 'mkv';
+				}
+				if (in_array($ext, array('gif', 'jpeg', 'jpg', 'png'))) {
+					$post_fields = array('chat_id' => $chatid,
+						'text' => trim($_options['message']),
+						'photo' => new CURLFile(realpath($file)),
+						'caption' => pathinfo($file, PATHINFO_FILENAME),
+					);
+					$url = $request_http . "/sendPhoto?chat_id=" . $chatid;
+				} else if (in_array($ext, array('ogg', 'mp3'))) {
+					$post_fields = array('chat_id' => $chatid,
+						'text' => trim($_options['title'] . ' ' . $_options['message']),
+						'audio' => new CURLFile(realpath($file)),
+						'title' => pathinfo($file, PATHINFO_FILENAME),
+					);
+					$url = $request_http . "/sendAudio";
+				} else if (in_array($ext, array('avi', 'mpeg', 'mpg', 'mkv', 'mp4', 'mpe'))) {
+					$post_fields = array('chat_id' => $chatid,
+						'text' => trim($_options['title'] . ' ' . $_options['message']),
+						'video' => new CURLFile(realpath($file)),
+						'caption' => pathinfo($file, PATHINFO_FILENAME),
+					);
+					$url = $request_http . "/sendVideo";
+				} else {
+					$post_fields = array('chat_id' => $chatid,
+						'text' => trim($_options['title'] . ' ' . $_options['message']),
+						'document' => new CURLFile(realpath($file)),
+						'caption' => pathinfo($file, PATHINFO_FILENAME),
+					);
+					$url = $request_http . "/sendDocument";
+				}
+				$this->sendTelegram($url, 'file', $to, $post_fields);
+				if ($ext == 'mp4') {
+					unlink($file);
+				}
+			}
+		}
+	}
+
+	/*     * **********************Getteur Setteur*************************** */
 
 }
-
-?>
