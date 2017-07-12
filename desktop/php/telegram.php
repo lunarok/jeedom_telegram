@@ -1,5 +1,4 @@
 <?php
-
 if (!isConnect('admin')) {
 	throw new Exception('{{401 - Accès non autorisé}}');
 }
@@ -91,7 +90,6 @@ foreach (jeedom::getConfiguration('eqLogic:category') as $key => $value) {
 	echo '</label>';
 }
 ?>
-
        </div>
      </div>
      <div class="form-group">
@@ -101,43 +99,36 @@ foreach (jeedom::getConfiguration('eqLogic:category') as $key => $value) {
         <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="isVisible" checked/>{{Visible}}</label>
       </div>
     </div>
-
-
     <div class="form-group">
       <label class="col-sm-3 control-label">{{Bot Token}}</label>
       <div class="col-sm-3">
         <input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="bot_token" placeholder="{{Token}}"/>
       </div>
     </div>
-
     <div class="form-group">
       <label class="col-sm-3 control-label">{{Ne jamais répondre}}</label>
       <div class="col-sm-3">
         <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="noreply"/></label>
       </div>
     </div>
-
     <div class="form-group">
       <label class="col-sm-3 control-label">{{Message de confirmation de réception}}</label>
       <div class="col-sm-3">
         <input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="reply" placeholder="{{Message recu}}"/>
       </div>
     </div>
-
     <div class="form-group">
       <label class="col-sm-3 control-label">{{Emplacement de réception des fichiers du bot}}</label>
       <div class="col-sm-3">
         <input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="savepath" placeholder="{{Emplacement}}"/>
       </div>
     </div>
-
     <div class="form-group">
       <label class="col-sm-3 control-label">{{Désactiver les notifications}}</label>
       <div class="col-sm-3">
         <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="disable_notify"/></label>
       </div>
     </div>
-
     <div class="form-group">
       <label class="col-sm-3 control-label">{{Format des messages}}</label>
       <div class="col-sm-3">
@@ -157,7 +148,6 @@ foreach (jeedom::getConfiguration('eqLogic:category') as $key => $value) {
 </fieldset>
 </form>
 </div>
-
 <div role="tabpanel" class="tab-pane" id="commandtab">
   <br/>
   <table id="table_cmd" class="table table-bordered table-condensed">
@@ -176,7 +166,6 @@ foreach (jeedom::getConfiguration('eqLogic:category') as $key => $value) {
     <tbody>
     </tbody>
   </table>
-
 </div>
 </div>
 </div>
