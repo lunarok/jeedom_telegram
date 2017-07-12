@@ -203,6 +203,9 @@ class telegramCmd extends cmd {
 
 		if (isset($_options['files']) && is_array($_options['files'])) {
 			foreach ($_options['files'] as $file) {
+				if (trim($file) == '') {
+					continue;
+				}
 				$ext = pathinfo($file, PATHINFO_EXTENSION);
 				if ($ext == 'mp4') {
 					copy($file, substr($file, 0, -3) . 'mkv');
@@ -210,28 +213,28 @@ class telegramCmd extends cmd {
 				}
 				if (in_array($ext, array('gif', 'jpeg', 'jpg', 'png'))) {
 					$post_fields = array('chat_id' => $chatid,
-						'text' => trim($_options['message']),
+						'text' => $_options['title'],
 						'photo' => new CURLFile(realpath($file)),
 						'caption' => pathinfo($file, PATHINFO_FILENAME),
 					);
 					$url = $request_http . "/sendPhoto?chat_id=" . $chatid;
 				} else if (in_array($ext, array('ogg', 'mp3'))) {
 					$post_fields = array('chat_id' => $chatid,
-						'text' => trim($_options['title'] . ' ' . $_options['message']),
+						'text' => $_options['title'],
 						'audio' => new CURLFile(realpath($file)),
 						'title' => pathinfo($file, PATHINFO_FILENAME),
 					);
 					$url = $request_http . "/sendAudio";
 				} else if (in_array($ext, array('avi', 'mpeg', 'mpg', 'mkv', 'mp4', 'mpe'))) {
 					$post_fields = array('chat_id' => $chatid,
-						'text' => trim($_options['title'] . ' ' . $_options['message']),
+						'text' => $_options['title'],
 						'video' => new CURLFile(realpath($file)),
 						'caption' => pathinfo($file, PATHINFO_FILENAME),
 					);
 					$url = $request_http . "/sendVideo";
 				} else {
 					$post_fields = array('chat_id' => $chatid,
-						'text' => trim($_options['title'] . ' ' . $_options['message']),
+						'text' => $_options['title'],
 						'document' => new CURLFile(realpath($file)),
 						'caption' => pathinfo($file, PATHINFO_FILENAME),
 					);
