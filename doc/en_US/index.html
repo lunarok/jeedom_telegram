@@ -512,26 +512,29 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="sect3">
 <h4 id="_envoyer_des_messages">2.3. Envoyer des messages</h4>
 <div class="paragraph">
-<p>Les commandes actions permettent d&#8217;envoyer des messages. Si l&#8217;option est remplie avec un des mots clés, il y aura un envoi spcéifique dans Telegram</p>
+<p>Les commandes actions permettent d&#8217;envoyer des messages. Il est possible de fournir des options pour les messages</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>tts : en précisant "tts" en titre, le message doit être le chemin d&#8217;un fichier audio de type ogg encodé avec opus qui sera notifié en message vocal dans Telegram (sinon un texte mais opus-tools doit être installé)</p>
+<p>tts : la valeur doit être le chemin d&#8217;un fichier audio de type ogg encodé avec opus qui sera notifié en message vocal dans Telegram (sinon un texte mais opus-tools doit être installé)</p>
 </li>
 <li>
-<p>location : en précisant "location" en titre, le message doit être soit "geoloc:idEqGeoloc" soit "latitude,longitude"</p>
+<p>location : la valeur doit être soit une commande geoloc soit "latitude,longitude"</p>
 </li>
 <li>
-<p>file : en précisant "file" en titre, le message doit être le path d&#8217;un fichier</p>
+<p>file : la valeur doit être le path d&#8217;un ou plusieurs fichiers</p>
 </li>
 <li>
-<p>texte dans le reste des cas (mot clef non listé ou option vide)</p>
+<p>message : permet d&#8217;envoyer un message dans le même ordre</p>
+</li>
+<li>
+<p>notify : valeur binaire pour que la notif soit silencieuse (0) ou avec son/vibrationn (1)</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>Option est le champ "titre"</p>
+<p>Exemple : tts=/fichier.ogg message=detection file=/screen1.png,/screen2.png notify=0</p>
 </div>
 <div class="paragraph">
 <p>Toutes les pièces jointes ajoutées à une commande action sont envoyées avec un type détecté par rapport à leur extension :</p>

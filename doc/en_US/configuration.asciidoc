@@ -30,17 +30,19 @@ Pareil pour les groupes et le ask marche sur les groupes (il ne marche pas pour 
 
 ==== Envoyer des messages
 
-Les commandes actions permettent d'envoyer des messages. Si l'option est remplie avec un des mots clés, il y aura un envoi spcéifique dans Telegram
+Les commandes actions permettent d'envoyer des messages. Il est possible de fournir des options pour les messages
 
-- tts : en précisant "tts" en titre, le message doit être le chemin d'un fichier audio de type ogg encodé avec opus qui sera notifié en message vocal dans Telegram (sinon un texte mais opus-tools doit être installé)
+- tts : la valeur doit être le chemin d'un fichier audio de type ogg encodé avec opus qui sera notifié en message vocal dans Telegram (sinon un texte mais opus-tools doit être installé)
 
-- location : en précisant "location" en titre, le message doit être soit "geoloc:idEqGeoloc" soit "latitude,longitude"
+- location : la valeur doit être soit une commande geoloc soit "latitude,longitude"
 
-- file : en précisant "file" en titre, le message doit être le path d'un fichier
+- file : la valeur doit être le path d'un ou plusieurs fichiers
 
-- texte dans le reste des cas (mot clef non listé ou option vide)
+- message : permet d'envoyer un message dans le même ordre
 
-Option est le champ "titre"
+- notify : valeur binaire pour que la notif soit silencieuse (0) ou avec son/vibrationn (1)
+
+Exemple : tts=/fichier.ogg message=detection file=/screen1.png,/screen2.png notify=0
 
 Toutes les pièces jointes ajoutées à une commande action sont envoyées avec un type détecté par rapport à leur extension :
 
