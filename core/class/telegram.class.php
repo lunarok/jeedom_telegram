@@ -206,7 +206,6 @@ class telegramCmd extends cmd {
 				if (trim($file) == '') {
 					continue;
 				}
-				$data['text'] = $_options['title'];
 				$ext = pathinfo($file, PATHINFO_EXTENSION);
 				if ($ext == 'mp4') {
 					copy($file, substr($file, 0, -3) . 'mkv');

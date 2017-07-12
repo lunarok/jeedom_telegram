@@ -141,6 +141,12 @@ $answer = array(
 );
 
 echo json_encode($answer);
+if (isset($reply['file']) && count($reply['file']) > 0) {
+	if (!is_array($reply['file'])) {
+		$reply['file'] = array($reply['file']);
+	}
+	$cmd_user->execCmd(array('files' => $reply['file']));
+}
 
 if ($file_id != '' && $eqLogic->getConfiguration('savepath', '') != '') {
 	$url = "https://api.telegram.org/bot" . trim($eqLogic->getConfiguration('bot_token')) . '/getFile';
