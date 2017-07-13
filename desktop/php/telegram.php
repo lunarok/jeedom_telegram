@@ -106,27 +106,9 @@ foreach (jeedom::getConfiguration('eqLogic:category') as $key => $value) {
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-3 control-label">{{Ne jamais répondre}}</label>
-      <div class="col-sm-3">
-        <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="noreply"/></label>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">{{Message de confirmation de réception}}</label>
-      <div class="col-sm-3">
-        <input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="reply" placeholder="{{Message recu}}"/>
-      </div>
-    </div>
-    <div class="form-group">
       <label class="col-sm-3 control-label">{{Emplacement de réception des fichiers du bot}}</label>
       <div class="col-sm-3">
         <input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="savepath" placeholder="{{Emplacement}}"/>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">{{Désactiver les notifications}}</label>
-      <div class="col-sm-3">
-        <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="disable_notify"/></label>
       </div>
     </div>
     <div class="form-group">
@@ -139,6 +121,25 @@ foreach (jeedom::getConfiguration('eqLogic:category') as $key => $value) {
       </select>
     </div>
   </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">{{Message de confirmation de réception}}</label>
+      <div class="col-sm-3">
+        <input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="reply" placeholder="{{Message recu}}"/>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">{{Ne pas répondre pour acquitter}}</label>
+      <div class="col-sm-3">
+        <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="noreply"/></label>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">{{Désactiver les notifications}}</label>
+      <div class="col-sm-3">
+        <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="disable_notify"/></label>
+      </div>
+    </div>
+    
   <div class="form-group">
     <label class="col-sm-3 control-label">{{Créer automatiquement les nouveaux contacts}}</label>
     <div class="col-sm-3">
