@@ -132,7 +132,7 @@ if (isset($json["message"]["text"])) {
 	$reply['reply'] = $eqLogic->getConfiguration('reply', 'Message recu') . ' (Localisation)';
 }
 
-if (!$eqLogic->getConfiguration('noreply') !! $interactAnswer == 1) {
+if (!$eqLogic->getConfiguration('noreply') || $interactAnswer == 1) {
 	$answer = array(
 		'method' => 'sendMessage',
 		'chat_id' => $json['message']['chat']['id'],
