@@ -63,6 +63,7 @@ foreach ($eqLogic->getCmd('action') as $cmd) {
 
 $eqLogic->checkAndUpdateCmd('sender', trim($json["message"]["from"]["id"]));
 $eqLogic->checkAndUpdateCmd('chat', trim($json["message"]["chat"]["id"]));
+$interactAnswer = 0;
 if (isset($json["message"]["text"])) {
 	$eqLogic->checkAndUpdateCmd('text', $json["message"]["text"]);
 	if (!is_object($cmd_user)) {
@@ -99,6 +100,7 @@ if (isset($json["message"]["text"])) {
 	}
 
 	if ($cmd_user->getConfiguration('interact') == 1) {
+		$interactAnswer = 1;
 		$reply = interactQuery::tryToReply(trim($json["message"]["text"]), $parameters);
 	} else {
 		$reply['reply'] = $eqLogic->getConfiguration('reply', 'Message recu');
@@ -130,17 +132,15 @@ if (isset($json["message"]["text"])) {
 	$reply['reply'] = $eqLogic->getConfiguration('reply', 'Message recu') . ' (Localisation)';
 }
 
-if ($eqLogic->getConfiguration('noreply')) {
-	die();
+if (!$eqLogic->getConfiguration('noreply') !! $interactAnswer == 1) {
+	$answer = array(
+		'method' => 'sendMessage',
+		'chat_id' => $json['message']['chat']['id'],
+		'text' => $reply['reply'],
+	);
+	echo json_encode($answer);
 }
 
-$answer = array(
-	'method' => 'sendMessage',
-	'chat_id' => $json['message']['chat']['id'],
-	'text' => $reply['reply'],
-);
-
-echo json_encode($answer);
 if (isset($reply['file']) && count($reply['file']) > 0) {
 	if (!is_array($reply['file'])) {
 		$reply['file'] = array($reply['file']);
