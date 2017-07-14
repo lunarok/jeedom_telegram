@@ -165,12 +165,6 @@ class telegramCmd extends cmd {
 			));
 		}
 
-		if (isset($_options['title']) && $_options['title'] != '') {
-			$data['text'] = trim($_options['title']);
-			$url = $request_http . "/sendMessage";
-			$this->sendTelegram($url, 'message', $to, $data);
-		}
-
 		if (isset($options['location'])) {
 			if (strrpos($options['location'], '#') !== false) {
 				$geolocCmd = geolocCmd::byId(str_replace('#', '', $options['location']));
@@ -200,6 +194,16 @@ class telegramCmd extends cmd {
 		if (isset($options['file'])) {
 			$_options['files'] = explode(',', $options['file']);
 		}
+		
+		if (isset($options['message'])) {
+                	$_options['message'] = $options['message'];
+            	}
+		
+		if (!isset($_options['files']) && $_options['message'] != '') {
+			$data['text'] = trim($_options['message']);
+			$url = $request_http . "/sendMessage";
+			$this->sendTelegram($url, 'message', $to, $data);
+		}
 
 		if (isset($_options['files']) && is_array($_options['files'])) {
 			foreach ($_options['files'] as $file) {
@@ -228,6 +232,7 @@ class telegramCmd extends cmd {
 					$data['caption'] = pathinfo($file, PATHINFO_FILENAME);
 					$url = $request_http . '/sendDocument';
 				}
+				$data['text'] = trim($_options['message']);
 				$this->sendTelegram($url, 'file', $to, $data);
 				if ($ext == 'mp4') {
 					unlink($file);
