@@ -101,6 +101,7 @@ if (isset($json["message"]["text"])) {
 
 	if ($cmd_user->getConfiguration('interact') == 1) {
 		$interactAnswer = 1;
+		$parameters['plugin'] = 'telegram';
 		$reply = interactQuery::tryToReply(trim($json["message"]["text"]), $parameters);
 	} else {
 		$reply['reply'] = $eqLogic->getConfiguration('reply', 'Message recu');
@@ -132,7 +133,7 @@ if (isset($json["message"]["text"])) {
 	$reply['reply'] = $eqLogic->getConfiguration('reply', 'Message recu') . ' (Localisation)';
 }
 
-if (!$eqLogic->getConfiguration('noreply') || $interactAnswer == 1) {
+if (!$eqLogic->getConfiguration('noreply',0) || $interactAnswer == 1) {
 	$answer = array(
 		'method' => 'sendMessage',
 		'chat_id' => $json['message']['chat']['id'],
