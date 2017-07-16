@@ -7,5 +7,5 @@ Oui il utilise les API Telegram (la version Bot)
 [panel,primary]
 .Est-ce que mes données sont visibles sur les serveurs de transit ?
 --
-Non, Telegram garantit le chiffrement client-à-client.
+Non, Telegram garantit le chiffrement client à client.
 --
