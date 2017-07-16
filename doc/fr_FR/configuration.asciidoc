@@ -14,7 +14,7 @@ Vous devez donc rentrer la clef fournie par Telegram à la création du bot sur 
 
 Vous pouvez configurer le bot pour créer des notifications silencieuses sur les téléphones
 
-Il est possible de personnaliser le texte que le bot répond à un message
+Il est possible de personnaliser le texte que le bot répond à un message et le format par défaut des messages du bot
 
 Vous pouvez également préciser un emplacement pour stocker les fichiers envoyés au bot. Dans ce cas les fichiers seront créés suivant le format :
 
@@ -41,6 +41,8 @@ Les commandes actions permettent d'envoyer des messages. Il est possible de four
 - message : permet d'envoyer un message dans le même ordre
 
 - notify : valeur binaire pour que la notif soit silencieuse (0) ou avec son/vibrationn (1)
+
+- parse_mode : format du message envoyé (correspon à l'option de conf équipement), valeurs possibles : '', HTML, Markdown
 
 Exemple : tts=/fichier.ogg message=detection file=/screen1.png,/screen2.png notify=0
 
