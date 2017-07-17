@@ -1,6 +1,6 @@
 ==== Telegram
 
-Telegram is an end-to-end encrypted messaging service. This means that even the intermediate servers do not see what is going on.
+Telegram est un service de messagerie chiffré bout à bout. Ce qui veut dire que même les serveurs intermédiaires ne voient ce qui transite.
 
 You can use it to send messages from and to Jeedom.
 

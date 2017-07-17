@@ -439,7 +439,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="sect3">
 <h4 id="_telegram">1.1. Telegram</h4>
 <div class="paragraph">
-<p>Telegram est un service de messagerie chiffré bout-à-bout. Ce qui veut dire que même les serveurs intermédiaires ne voient ce qui transite.</p>
+<p>Telegram est un service de messagerie chiffré bout à bout. Ce qui veut dire que même les serveurs intermédiaires ne voient ce qui transite.</p>
 </div>
 <div class="paragraph">
 <p>Vous pouvez l&#8217;utiliser pour envoyer des messages depuis et vers Jeedom.</p>
@@ -484,7 +484,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p>Vous pouvez configurer le bot pour créer des notifications silencieuses sur les téléphones</p>
 </div>
 <div class="paragraph">
-<p>Il est possible de personnaliser le texte que le bot répond à un message</p>
+<p>Il est possible de personnaliser le texte que le bot répond à un message et le format par défaut des messages du bot</p>
 </div>
 <div class="paragraph">
 <p>Vous pouvez également préciser un emplacement pour stocker les fichiers envoyés au bot. Dans ce cas les fichiers seront créés suivant le format :</p>
@@ -531,6 +531,9 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li>
 <p>notify : valeur binaire pour que la notif soit silencieuse (0) ou avec son/vibrationn (1)</p>
 </li>
+<li>
+<p>parse_mode : format du message envoyé (correspon à l&#8217;option de conf équipement), valeurs possibles : '', HTML, Markdown</p>
+</li>
 </ul>
 </div>
 <div class="paragraph">
@@ -572,7 +575,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="openblock panel">
 <div class="title">Est-ce que mes données sont visibles sur les serveurs de transit ?</div><div class="content">
 <div class="paragraph">
-<p>Non, Telegram garantit le chiffrement client-à-client.</p>
+<p>Non, Telegram garantit le chiffrement client à client.</p>
 </div>
 </div>
 </div>
@@ -585,7 +588,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="openblock panel">
 <div class="title">Je n&#8217;ai pas de retour de Telegram</div><div class="content">
 <div class="paragraph">
-<p>Il faut bien avoir une adresse en HTTPS, Telegram refuse d&#8217;utiliser une URL http en webhook (ce point est visible dans la page santé). De plus Telegram n&#8217;accepte que les ports 443, 80, 88, 443</p>
+<p>Il faut bien avoir une adresse en HTTPS, Telegram refuse d&#8217;utiliser une URL http en webhook (ce point est visible dans la page santé). De plus Telegram n&#8217;accepte que les ports 443, 80 et 88</p>
 </div>
 </div>
 </div>
@@ -599,7 +602,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="openblock panel">
 <div class="title">Le 'ask' sur tous les destinataires ne marche pas</div><div class="content">
 <div class="paragraph">
-<p>C&#8217;est normal, il ne peut pas fonctionner car Telegram ne sait pas reconnaitre l&#8217;utilisateur à qui ont a envoyé la question de celui qui répond, il faut utiliser les groupes pour ca</p>
+<p>C&#8217;est normal, il ne peut pas fonctionner car Telegram ne sait pas reconnaître l&#8217;utilisateur à qui on a envoyé la question de celui qui répond, il faut utiliser les groupes pour cela</p>
 </div>
 </div>
 </div>
