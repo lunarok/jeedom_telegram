@@ -206,9 +206,19 @@ class telegramCmd extends cmd {
 		}
 
 		if (isset($_options['files']) && is_array($_options['files'])) {
+			$text = '';
+			if (isset($_options['title'])) {
+				$text .= $_options['title'] . ' ';
+			}
+			if (isset($_options['message'])) {
+				$text .= $_options['message'];
+			}
 			foreach ($_options['files'] as $file) {
 				if (trim($file) == '') {
 					continue;
+				}
+				if ($text == ''){
+					$text =  pathinfo($file, PATHINFO_FILENAME);
 				}
 				$ext = pathinfo($file, PATHINFO_EXTENSION);
 				if ($ext == 'mp4') {
@@ -217,22 +227,21 @@ class telegramCmd extends cmd {
 				}
 				if (in_array($ext, array('gif', 'jpeg', 'jpg', 'png'))) {
 					$data['photo'] = new CURLFile(realpath($file));
-					$data['caption'] = pathinfo($file, PATHINFO_FILENAME);
+					$data['caption'] = $text;
 					$url = $request_http . '/sendPhoto';
 				} else if (in_array($ext, array('ogg', 'mp3'))) {
 					$data['audio'] = new CURLFile(realpath($file));
-					$data['title'] = pathinfo($file, PATHINFO_FILENAME);
+					$data['title'] = $text;
 					$url = $request_http . '/sendAudio';
 				} else if (in_array($ext, array('avi', 'mpeg', 'mpg', 'mkv', 'mp4', 'mpe'))) {
 					$data['video'] = new CURLFile(realpath($file));
-					$data['caption'] = pathinfo($file, PATHINFO_FILENAME);
+					$data['caption'] = $text;
 					$url = $request_http . '/sendVideo';
 				} else {
 					$data['document'] = new CURLFile(realpath($file));
-					$data['caption'] = pathinfo($file, PATHINFO_FILENAME);
+					$data['caption'] = $text;
 					$url = $request_http . '/sendDocument';
 				}
-				$data['text'] = trim($_options['message']);
 				$this->sendTelegram($url, 'file', $to, $data);
 				if ($ext == 'mp4') {
 					unlink($file);
