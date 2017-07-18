@@ -194,10 +194,14 @@ class telegramCmd extends cmd {
 		if (isset($options['file'])) {
 			$_options['files'] = explode(',', $options['file']);
 		}
-		
-		if (isset($options['message'])) {
-                	$_options['message'] = $options['message'];
-            	}
+
+		if (count($options) > 0) {
+                	if (isset($options['message'])) {
+                		$_options['message'] = $options['message'];
+            		} else {
+				$_options['message'] = '';
+			}
+            	}	
 		
 		if (!isset($_options['files']) && $_options['message'] != '') {
 			$data['text'] = trim($_options['message']);
