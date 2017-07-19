@@ -210,20 +210,11 @@ class telegramCmd extends cmd {
 		}
 
 		if (isset($_options['files']) && is_array($_options['files'])) {
-			$text = '';
-			if (isset($_options['title'])) {
-				$text .= $_options['title'] . ' ';
-			}
-			if (isset($_options['message'])) {
-				$text .= $_options['message'];
-			}
 			foreach ($_options['files'] as $file) {
 				if (trim($file) == '') {
 					continue;
 				}
-				if ($text == ''){
-					$text =  pathinfo($file, PATHINFO_FILENAME);
-				}
+				$text = ($_options['message'] == '') ? pathinfo($file, PATHINFO_FILENAME) : $_options['message'];
 				$ext = pathinfo($file, PATHINFO_EXTENSION);
 				if ($ext == 'mp4') {
 					copy($file, substr($file, 0, -3) . 'mkv');
