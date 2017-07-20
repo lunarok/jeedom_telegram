@@ -47,8 +47,7 @@ if ($json["message"]["chat"]["type"] == 'private') {
 log::add('telegram', 'debug', 'Recu message de ' . $username);
 
 foreach ($eqLogic->getCmd('action') as $cmd) {
-	if ($json["message"]["chat"]["id"] == $cmd->getConfiguration('chatid') && $cmd->getCache('storeVariable', 'none') != 'none') {
-		$cmd->askResponse($json["message"]["text"]);
+	if ($cmd->askResponse($json["message"]["text"])) {
 		echo json_encode(array('text' => ''));
 		die();
 	}
