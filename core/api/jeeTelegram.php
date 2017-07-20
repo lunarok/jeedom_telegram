@@ -46,20 +46,20 @@ if ($json["message"]["chat"]["type"] == 'private') {
 }
 log::add('telegram', 'debug', 'Recu message de ' . $username);
 
+foreach ($eqLogic->getCmd('action') as $cmd) {
+	if ($json["message"]["chat"]["id"] == $cmd->getConfiguration('chatid') && $cmd->getCache('storeVariable', 'none') != 'none') {
+		$cmd->askResponse($json["message"]["text"]);
+		echo json_encode(array('text' => ''));
+		die();
+	}
+}
+
 $cmd_user = $eqLogic->getCmd('action', $json["message"]["chat"]["id"]);
 if (is_object($cmd_user)) {
 	$parameters['reply_cmd'] = $cmd_user;
 	$user = user::byId($cmd_user->getConfiguration('user'));
 	if (is_object($user)) {
 		$parameters['profile'] = $user->getLogin();
-	}
-}
-
-foreach ($eqLogic->getCmd('action') as $cmd) {
-	if ($json["message"]["chat"]["id"] == $cmd->getConfiguration('chatid') && $cmd->getCache('storeVariable', 'none') != 'none') {
-		$cmd->askResponse($json["message"]["text"]);
-		echo json_encode(array('text' => ''));
-		die();
 	}
 }
 
@@ -135,7 +135,7 @@ if (isset($json["message"]["text"])) {
 	$reply['reply'] = $eqLogic->getConfiguration('reply', 'Message recu') . ' (Localisation)';
 }
 
-if (!$eqLogic->getConfiguration('noreply',0) || $interactAnswer == 1) {
+if (!$eqLogic->getConfiguration('noreply', 0) || $interactAnswer == 1) {
 	$answer = array(
 		'method' => 'sendMessage',
 		'chat_id' => $json['message']['chat']['id'],

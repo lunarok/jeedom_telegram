@@ -158,6 +158,7 @@ class telegramCmd extends cmd {
 		$data['parse_mode'] = (isset($options['parse_mode'])) ? $options['parse_mode'] : $eqLogic->getConfiguration('parse_mode', 'HTML');
 
 		if (isset($_options['answer'])) {
+			$data['disable_notification'] = 0;
 			$data['reply_markup'] = json_encode(array(
 				'keyboard' => array($_options['answer']),
 				'one_time_keyboard' => true,
@@ -196,13 +197,13 @@ class telegramCmd extends cmd {
 		}
 
 		if (count($options) > 0) {
-                	if (isset($options['message'])) {
-                		$_options['message'] = $options['message'];
-            		} else {
+			if (isset($options['message'])) {
+				$_options['message'] = $options['message'];
+			} else {
 				$_options['message'] = '';
 			}
-            	}	
-		
+		}
+
 		if (!isset($_options['files']) && $_options['message'] != '') {
 			$data['text'] = trim($_options['message']);
 			$url = $request_http . "/sendMessage";
