@@ -85,7 +85,7 @@ class telegram extends eqLogic {
 			$alluser->setConfiguration('username', 'Tous les utilisateurs');
 			$alluser->setSubType('message');
 			$alluser->setEqLogic_id($this->getId());
-			$alluser->setDisplay('message_placeholder', __('Options', __FILE__));
+			$alluser->setDisplay('title_placeholder', __('Options', __FILE__));
 			$alluser->save();
 		}
 		$url = network::getNetworkAccess('external') . '/plugins/telegram/core/api/jeeTelegram.php?apikey=' . jeedom::getApiKey('telegram') . '&id=' . $this->getId();
@@ -141,7 +141,7 @@ class telegramCmd extends cmd {
 			return;
 		}
 		$data = array();
-		$options = arg2array($_options['message']);
+		$options = arg2array($_options['title']);
 		$eqLogic = $this->getEqLogic();
 		$to = array();
 		if ($this->getLogicalId() == 'alluser') {
@@ -194,14 +194,6 @@ class telegramCmd extends cmd {
 
 		if (isset($options['file'])) {
 			$_options['files'] = explode(',', $options['file']);
-		}
-
-		if (count($options) > 0) {
-			if (isset($options['message'])) {
-				$_options['message'] = $options['message'];
-			} else {
-				$_options['message'] = '';
-			}
 		}
 
 		if (!isset($_options['files']) && $_options['message'] != '') {

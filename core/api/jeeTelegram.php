@@ -80,7 +80,7 @@ if (isset($json["message"]["text"])) {
 		$cmd_user->setType('action');
 		$cmd_user->setSubType('message');
 		$cmd_user->setEqLogic_id($eqLogic->getId());
-		$cmd_user->setDisplay('message_placeholder', __('Options', __FILE__));
+		$cmd_user->setDisplay('title_placeholder', __('Options', __FILE__));
 	}
 	if (isset($json["message"]["chat"]["title"])) {
 		$cmd_user->setConfiguration('title', $json["message"]["chat"]["title"]);
