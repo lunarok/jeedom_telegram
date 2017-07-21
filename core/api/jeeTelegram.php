@@ -100,7 +100,7 @@ if (isset($json["message"]["text"])) {
 		die();
 	}
 
-  if ($cmd_user->getConfiguration('interact') == 1) {
+	if ($cmd_user->getConfiguration('interact') == 1) {
 		$interactAnswer = 1;
 		$parameters['plugin'] = 'telegram';
 		$reply = interactQuery::tryToReply(trim($json["message"]["text"]), $parameters);
