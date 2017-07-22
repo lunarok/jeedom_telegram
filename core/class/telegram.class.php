@@ -73,20 +73,21 @@ class telegram extends eqLogic {
 		$sender->setEqLogic_id($this->getId());
 		$sender->save();
 
-		$alluser = $this->getCmd(null, 'alluser');
-		if (!is_object($alluser)) {
-			$alluser = new telegramCmd();
-			$alluser->setLogicalId('alluser');
-			$alluser->setIsVisible(1);
-			$alluser->setName(__('Tous', __FILE__));
-			$alluser->setType('action');
-			$alluser->setConfiguration('chatid', 'Tous les utilisateurs');
-			$alluser->setConfiguration('firstname', 'Tous les utilisateurs');
-			$alluser->setConfiguration('username', 'Tous les utilisateurs');
-			$alluser->setSubType('message');
-			$alluser->setEqLogic_id($this->getId());
-			$alluser->setDisplay('title_placeholder', __('Options', __FILE__));
-			$alluser->save();
+		$cmd = $this->getCmd(null, 'alluser');
+		if (!is_object($cmd)) {
+			$cmd = new telegramCmd();
+			$cmd->setLogicalId('alluser');
+			$cmd->setIsVisible(1);
+			$cmd->setName(__('Tous', __FILE__));
+			$cmd->setType('action');
+			$cmd->setConfiguration('chatid', 'Tous les utilisateurs');
+			$cmd->setConfiguration('firstname', 'Tous les utilisateurs');
+			$cmd->setConfiguration('username', 'Tous les utilisateurs');
+			$cmd->setSubType('message');
+			$cmd->setEqLogic_id($this->getId());
+			$cmd->setDisplay('title_placeholder', __('Options', __FILE__));
+			$cmd->setDisplay('message_placeholder',__('Message', __FILE__));
+			$cmd->save();
 		}
 		$url = network::getNetworkAccess('external') . '/plugins/telegram/core/api/jeeTelegram.php?apikey=' . jeedom::getApiKey('telegram') . '&id=' . $this->getId();
 		$token = trim($this->getConfiguration('bot_token'));

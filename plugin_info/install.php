@@ -22,8 +22,8 @@ function telegram_update() {
   foreach (eqLogic::byType('telegram', true) as $telegram) {
       foreach ($telegram->getCmd('action') as $cmd) {
           $cmd->setDisplay('title_disable', 0);
-          $cmd->setDisplay('title_placeholder','options');
-          $cmd->setDisplay('message_placeholder','message');
+          $cmd->setDisplay('title_placeholder', __('Options', __FILE__));
+    			$cmd->setDisplay('message_placeholder',__('Message', __FILE__));
           $cmd->save();
       }
       $telegram->save();
