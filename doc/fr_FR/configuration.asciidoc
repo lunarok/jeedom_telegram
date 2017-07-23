@@ -30,7 +30,7 @@ Pareil pour les groupes et le ask marche sur les groupes (il ne marche pas pour 
 
 ==== Envoyer des messages
 
-Les commandes actions permettent d'envoyer des messages. Il est possible de fournir des options pour les messages
+Les commandes actions permettent d'envoyer des messages. Il est possible de fournir des options pour les messages (dans la zone option, sous la forme option="valeur")
 
 - tts : la valeur doit être le chemin d'un fichier audio de type ogg encodé avec opus qui sera notifié en message vocal dans Telegram (sinon un texte mais opus-tools doit être installé)
 
@@ -44,7 +44,7 @@ Les commandes actions permettent d'envoyer des messages. Il est possible de four
 
 - parse_mode : format du message envoyé (correspon à l'option de conf équipement), valeurs possibles : '', HTML, Markdown
 
-Exemple : tts=/fichier.ogg message=detection file=/screen1.png,/screen2.png notify=0
+Exemple : tts=/fichier.ogg file=/screen1.png,/screen2.png notify=0
 
 Toutes les pièces jointes ajoutées à une commande action sont envoyées avec un type détecté par rapport à leur extension :
 
