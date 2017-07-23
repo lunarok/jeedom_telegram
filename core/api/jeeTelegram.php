@@ -105,6 +105,7 @@ if (isset($json["message"]["text"])) {
 		$interactAnswer = 1;
 		$parameters['plugin'] = 'telegram';
 		$reply = interactQuery::tryToReply(trim($json["message"]["text"]), $parameters);
+		log::add('telegram', 'debug', 'Interaction ' . print_r($reply,true));
 	} else {
 		$reply['reply'] = $eqLogic->getConfiguration('reply', 'Message recu');
 	}
