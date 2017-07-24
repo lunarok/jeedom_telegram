@@ -42,7 +42,7 @@ Les commandes actions permettent d'envoyer des messages. Il est possible de four
 
 - notify : valeur binaire pour que la notif soit silencieuse (0) ou avec son/vibrationn (1)
 
-- parse_mode : format du message envoyé (correspon à l'option de conf équipement), valeurs possibles : '', HTML, Markdown
+- parse_mode : format du message envoyé (correspond à l'option de conf équipement), valeurs possibles : '', HTML, Markdown
 
 Exemple : tts=/fichier.ogg file=/screen1.png,/screen2.png notify=0
 
@@ -54,4 +54,4 @@ Toutes les pièces jointes ajoutées à une commande action sont envoyées avec 
 
 - images en extensions "gif,jpeg,jpg,png"
 
-- le reste est envoyé en tant que document joint
+- les autres type sont envoyés en tant que pièce jointe
