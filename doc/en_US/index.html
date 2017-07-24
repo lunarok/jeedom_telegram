@@ -512,7 +512,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="sect3">
 <h4 id="_envoyer_des_messages">2.3. Envoyer des messages</h4>
 <div class="paragraph">
-<p>Les commandes actions permettent d&#8217;envoyer des messages. Il est possible de fournir des options pour les messages</p>
+<p>Les commandes actions permettent d&#8217;envoyer des messages. Il est possible de fournir des options pour les messages (dans la zone option, sous la forme option="valeur")</p>
 </div>
 <div class="ulist">
 <ul>
@@ -532,12 +532,12 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p>notify : valeur binaire pour que la notif soit silencieuse (0) ou avec son/vibrationn (1)</p>
 </li>
 <li>
-<p>parse_mode : format du message envoyé (correspon à l&#8217;option de conf équipement), valeurs possibles : '', HTML, Markdown</p>
+<p>parse_mode : format du message envoyé (correspond à l&#8217;option de conf équipement), valeurs possibles : '', HTML, Markdown</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>Exemple : tts=/fichier.ogg message=detection file=/screen1.png,/screen2.png notify=0</p>
+<p>Exemple : tts=/fichier.ogg file=/screen1.png,/screen2.png notify=0</p>
 </div>
 <div class="paragraph">
 <p>Toutes les pièces jointes ajoutées à une commande action sont envoyées avec un type détecté par rapport à leur extension :</p>
@@ -554,7 +554,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p>images en extensions "gif,jpeg,jpg,png"</p>
 </li>
 <li>
-<p>le reste est envoyé en tant que document joint</p>
+<p>les autres type sont envoyés en tant que pièce jointe</p>
 </li>
 </ul>
 </div>
