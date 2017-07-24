@@ -136,8 +136,8 @@ if (isset($reply['file']) && count($reply['file']) > 0) {
 		'method' => 'sendMessage',
 		'chat_id' => $json['message']['chat']['id'],
 		'text' => $reply['reply'],
-	)
-	$cmd_user->execCmd('message' => $reply['reply']);
+	);
+	$cmd_user->execCmd(array('message' => $reply['reply']));
 } else {
 	echo json_encode(array('text' => ''));
 }
