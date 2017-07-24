@@ -166,6 +166,20 @@ class telegramCmd extends cmd {
 				'resize_keyboard' => true,
 			));
 		}
+		
+		if (isset($options['empty'])) {
+			$data['disable_notification'] = 0;
+			$data['text'] = "Délai dépassé ou quelqu'un a répondu";
+			if ($_options['message'] != '') {
+				$data['text'] = $_options['message'];
+			}
+			$data['reply_markup'] = json_encode(array(
+				'hide_keyboard' => true,
+			));
+			$url = $request_http . "/sendMessage";
+			$this->sendTelegram($url, 'message', $to, $data);
+			return;
+		}
 
 		if (isset($options['location'])) {
 			if (strrpos($options['location'], '#') !== false) {
