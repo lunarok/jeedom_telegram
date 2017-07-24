@@ -1,5 +1,4 @@
 <?php
-
 /* This file is part of Jeedom.
  *
  * Jeedom is free software: you can redistribute it and/or modify
@@ -15,27 +14,23 @@
  * You should have received a copy of the GNU General Public License
  * along with Jeedom. If not, see <http://www.gnu.org/licenses/>.
  */
+http_response_code(200);
 header("Content-Type: application/json");
 require_once dirname(__FILE__) . "/../../../../core/php/core.inc.php";
-
 if (!jeedom::apiAccess(init('apikey'), 'telegram')) {
 	echo __('Clef API non valide, vous n\'êtes pas autorisé à effectuer cette action (telegram)', __FILE__);
 	die();
 }
-
 $content = file_get_contents('php://input');
 $json = json_decode($content, true);
 log::add('telegram', 'debug', $content);
-
 $id = init('id');
 $eqLogic = telegram::byId($id);
 if (!is_object($eqLogic)) {
 	echo json_encode(array('text' => __('Id inconnu : ', __FILE__) . init('id')));
 	die();
 }
-
 $parameters = array();
-
 if ($json["message"]["chat"]["type"] == 'private') {
 	$username = isset($json["message"]["from"]["username"]) ? $json["message"]["from"]["username"] : $json["message"]["from"]["first_name"];
 } else if ($json["message"]["chat"]["type"] == 'group') {
@@ -45,14 +40,12 @@ if ($json["message"]["chat"]["type"] == 'private') {
 	die();
 }
 log::add('telegram', 'debug', 'Recu message de ' . $username);
-
 foreach ($eqLogic->getCmd('action') as $cmd) {
 	if ($cmd->askResponse($json["message"]["text"])) {
 		echo json_encode(array('text' => ''));
 		die();
 	}
 }
-
 $cmd_user = $eqLogic->getCmd('action', $json["message"]["chat"]["id"]);
 if (is_object($cmd_user)) {
 	$parameters['reply_cmd'] = $cmd_user;
@@ -61,7 +54,6 @@ if (is_object($cmd_user)) {
 		$parameters['profile'] = $user->getLogin();
 	}
 }
-
 $eqLogic->checkAndUpdateCmd('sender', trim($json["message"]["from"]["id"]));
 $eqLogic->checkAndUpdateCmd('chat', trim($json["message"]["chat"]["id"]));
 $interactAnswer = 0;
@@ -100,11 +92,11 @@ if (isset($json["message"]["text"])) {
 	if (isset($json["message"]["reply_to_message"])) {
 		die();
 	}
-
 	if ($cmd_user->getConfiguration('interact') == 1) {
 		$interactAnswer = 1;
 		$parameters['plugin'] = 'telegram';
 		$reply = interactQuery::tryToReply(trim($json["message"]["text"]), $parameters);
+		log::add('telegram', 'debug', 'Interaction ' . print_r($reply,true));
 	} else {
 		$reply['reply'] = $eqLogic->getConfiguration('reply', 'Message recu');
 	}
@@ -134,7 +126,6 @@ if (isset($json["message"]["text"])) {
 	}
 	$reply['reply'] = $eqLogic->getConfiguration('reply', 'Message recu') . ' (Localisation)';
 }
-
 if (isset($reply['file']) && count($reply['file']) > 0) {
 	if (!is_array($reply['file'])) {
 		$reply['file'] = array($reply['file']);
@@ -145,10 +136,17 @@ if (isset($reply['file']) && count($reply['file']) > 0) {
 		'method' => 'sendMessage',
 		'chat_id' => $json['message']['chat']['id'],
 		'text' => $reply['reply'],
-	);
-	echo json_encode($answer);
+	)
+	$cmd_user->execCmd('message' => $reply['reply']);
+} else {
+	echo json_encode(array('text' => ''));
 }
-
+if (isset($reply['file']) && count($reply['file']) > 0) {
+	if (!is_array($reply['file'])) {
+		$reply['file'] = array($reply['file']);
+	}
+	$cmd_user->execCmd(array('files' => $reply['file']));
+}
 if ($file_id != '' && $eqLogic->getConfiguration('savepath', '') != '') {
 	$url = "https://api.telegram.org/bot" . trim($eqLogic->getConfiguration('bot_token')) . '/getFile';
 	$post_fields['file_id'] = $file_id;
