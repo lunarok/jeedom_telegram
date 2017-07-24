@@ -143,6 +143,8 @@ if (!$eqLogic->getConfiguration('noreply', 0) || $interactAnswer == 1) {
 		'text' => $reply['reply'],
 	);
 	echo json_encode($answer);
+} else {
+	echo json_encode(array('text' => ''));
 }
 
 if (isset($reply['file']) && count($reply['file']) > 0) {
