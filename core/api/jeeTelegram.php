@@ -73,7 +73,7 @@ if (isset($json["message"]["text"])) {
 		$cmd_user->setSubType('message');
 		$cmd_user->setEqLogic_id($eqLogic->getId());
 		$cmd_user->setDisplay('title_placeholder', __('Options', __FILE__));
-		$cmd_user->setDisplay('message_placeholder',__('Message', __FILE__));
+		$cmd_user->setDisplay('message_placeholder', __('Message', __FILE__));
 	}
 	if (isset($json["message"]["chat"]["title"])) {
 		$cmd_user->setConfiguration('title', $json["message"]["chat"]["title"]);
@@ -96,7 +96,7 @@ if (isset($json["message"]["text"])) {
 		$interactAnswer = 1;
 		$parameters['plugin'] = 'telegram';
 		$reply = interactQuery::tryToReply(trim($json["message"]["text"]), $parameters);
-		log::add('telegram', 'debug', 'Interaction ' . print_r($reply,true));
+		log::add('telegram', 'debug', 'Interaction ' . print_r($reply, true));
 	} else {
 		$reply['reply'] = $eqLogic->getConfiguration('reply', 'Message recu');
 	}
