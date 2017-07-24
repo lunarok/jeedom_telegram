@@ -15,7 +15,6 @@
  * You should have received a copy of the GNU General Public License
  * along with Jeedom. If not, see <http://www.gnu.org/licenses/>.
  */
-http_response_code(200);
 header("Content-Type: application/json");
 require_once dirname(__FILE__) . "/../../../../core/php/core.inc.php";
 
@@ -106,7 +105,6 @@ if (isset($json["message"]["text"])) {
 		$interactAnswer = 1;
 		$parameters['plugin'] = 'telegram';
 		$reply = interactQuery::tryToReply(trim($json["message"]["text"]), $parameters);
-		log::add('telegram', 'debug', 'Interaction ' . print_r($reply,true));
 	} else {
 		$reply['reply'] = $eqLogic->getConfiguration('reply', 'Message recu');
 	}
@@ -137,22 +135,18 @@ if (isset($json["message"]["text"])) {
 	$reply['reply'] = $eqLogic->getConfiguration('reply', 'Message recu') . ' (Localisation)';
 }
 
-if (!$eqLogic->getConfiguration('noreply', 0) || $interactAnswer == 1) {
+if (isset($reply['file']) && count($reply['file']) > 0) {
+	if (!is_array($reply['file'])) {
+		$reply['file'] = array($reply['file']);
+	}
+	$cmd_user->execCmd(array('files' => $reply['file'], 'message' => $reply['reply']));
+} else if (!$eqLogic->getConfiguration('noreply', 0) || $interactAnswer == 1) {
 	$answer = array(
 		'method' => 'sendMessage',
 		'chat_id' => $json['message']['chat']['id'],
 		'text' => $reply['reply'],
 	);
 	echo json_encode($answer);
-} else {
-	echo json_encode(array('text' => ''));
-}
-
-if (isset($reply['file']) && count($reply['file']) > 0) {
-	if (!is_array($reply['file'])) {
-		$reply['file'] = array($reply['file']);
-	}
-	$cmd_user->execCmd(array('files' => $reply['file']));
 }
 
 if ($file_id != '' && $eqLogic->getConfiguration('savepath', '') != '') {
