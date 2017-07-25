@@ -86,7 +86,7 @@ class telegram extends eqLogic {
 			$cmd->setSubType('message');
 			$cmd->setEqLogic_id($this->getId());
 			$cmd->setDisplay('title_placeholder', __('Options', __FILE__));
-			$cmd->setDisplay('message_placeholder',__('Message', __FILE__));
+			$cmd->setDisplay('message_placeholder', __('Message', __FILE__));
 			$cmd->save();
 		}
 		$url = network::getNetworkAccess('external') . '/plugins/telegram/core/api/jeeTelegram.php?apikey=' . jeedom::getApiKey('telegram') . '&id=' . $this->getId();
@@ -166,7 +166,7 @@ class telegramCmd extends cmd {
 				'resize_keyboard' => true,
 			));
 		}
-		
+
 		if (isset($options['empty'])) {
 			$data['disable_notification'] = 0;
 			$data['text'] = "Délai dépassé ou quelqu'un a répondu";
