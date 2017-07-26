@@ -100,6 +100,7 @@ class telegram extends eqLogic {
 		try {
 			$result = $request_http->exec(60, 1);
 		} catch (Exception $e) {
+
 		}
 		log::add('telegram', 'debug', $result);
 	}
@@ -125,7 +126,7 @@ class telegramCmd extends cmd {
 			}
 			$request_http->setPost($_data);
 			log::add('telegram', 'debug', 'Call url ' . $_url . ' with option ' . print_r($_data, true));
-			$output = $request_http->exec(60);
+			$output = $request_http->exec(30);
 			log::add('telegram', 'debug', 'Result : ' . $output);
 			if (!is_json($output)) {
 				throw new Exception(__('Erreur lors de l\'envoi telegram : ', __FILE__) . $output);
