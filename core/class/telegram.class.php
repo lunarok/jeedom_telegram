@@ -143,7 +143,10 @@ class telegramCmd extends cmd {
 			return;
 		}
 		$data = array();
-		$options = arg2array($_options['title']);
+		$options = array();
+		if (isset($_options['title'])) {
+			$options = arg2array($_options['title']);
+		}
 		$eqLogic = $this->getEqLogic();
 		$to = array();
 		if ($this->getLogicalId() == 'alluser') {
