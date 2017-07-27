@@ -2,9 +2,9 @@
 
 Le plugin ne comporte pas de configuration générale.
 
-Sur la page santé, un test pour vérifier le https en connexion externe est fait. Il n'est pas possible en l'état d'utiliser un certificat autosigné.
+Sur la page santé, un test pour vérifier le https en connexion externe est fait. Il n'est pas possible en l'état d'utiliser un certificat auto signé.
 
-Un certificat letsencrypt fonctionne (en ayant bien paramétrer le certificat de chaine également)
+Un certificat letsencrypt fonctionne (en ayant bien paramétré le certificat de chaine également)
 
 ==== Configuration d'un équipement
 
