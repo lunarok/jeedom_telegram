@@ -4,8 +4,8 @@ Telegram est un service de messagerie chiffré bout à bout. Ce qui veut dire qu
 
 Vous pouvez l'utiliser pour envoyer des messages depuis et vers Jeedom.
 
-Telegram accepte les pièces jointes également (pour le plugin Camera par exemple)
+Telegram accepte les pièces jointes également (pour le plugin Camera par exemple).
 
-Il est également possible dans un message de spécifier en option "tts" ou "geoloc" pour un message
+Il est également possible dans un message de spécifier en option "tts" ou "geoloc" pour un message.
 
-Le plugin accepte également la fonction "ask" de Jeedom et fournira un clavier spécifique avec des touches pré-remplies des réponses
+Le plugin accepte également la fonction "ask" de Jeedom et fournira un clavier spécifique avec des touches pré-remplies contenant les réponses.

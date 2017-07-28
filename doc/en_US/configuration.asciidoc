@@ -2,9 +2,9 @@
 
 The plugin does not have general configuration.
 
-On the health page, a test to check the https in external connection is done. It is not possible  to use a self-signed certificate.
+Sur la page santé, un test pour vérifier le https en connexion externe est fait. Il n'est pas possible en l'état d'utiliser un certificat auto signé.
 
-Un certificat letsencrypt fonctionne (en ayant bien paramétrer le certificat de chaine également)
+Un certificat letsencrypt fonctionne (en ayant bien paramétré le certificat de chaine également)
 
 ==== Configuration of equipment
 
@@ -40,7 +40,7 @@ Les commandes actions permettent d'envoyer des messages. Il est possible de four
 
 - message : permet d'envoyer un message dans le même ordre
 
-- notify : valeur binaire pour que la notif soit silencieuse (0) ou avec son/vibrationn (1)
+- disable_notification : valeur binaire pour que la notif soit silencieuse (1) ou avec son/vibrationn (0)
 
 - parse_mode : format du message envoyé (correspond à l'option de conf équipement), valeurs possibles : '', HTML, Markdown
 
