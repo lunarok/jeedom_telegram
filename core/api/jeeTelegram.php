@@ -40,12 +40,15 @@ if ($json["message"]["chat"]["type"] == 'private') {
 	die();
 }
 log::add('telegram', 'debug', 'Recu message de ' . $username);
-foreach ($eqLogic->getCmd('action') as $cmd) {
-	if ($cmd->askResponse($json["message"]["text"])) {
-		echo json_encode(array('text' => ''));
-		die();
+if (isset($json["message"]["text"])) {
+	foreach ($eqLogic->getCmd('action') as $cmd) {
+		if ($cmd->askResponse($json["message"]["text"])) {
+			echo json_encode(array('text' => ''));
+			die();
+		}
 	}
 }
+
 $cmd_user = $eqLogic->getCmd('action', $json["message"]["chat"]["id"]);
 if (is_object($cmd_user)) {
 	$parameters['reply_cmd'] = $cmd_user;
