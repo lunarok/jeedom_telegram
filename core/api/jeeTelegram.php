@@ -42,9 +42,17 @@ if ($json["message"]["chat"]["type"] == 'private') {
 log::add('telegram', 'debug', 'Recu message de ' . $username);
 if (isset($json["message"]["text"])) {
 	foreach ($eqLogic->getCmd('action') as $cmd) {
-		if ($cmd->askResponse($json["message"]["text"])) {
+		if ($json["message"]["chat"]["id"] == $cmd->getConfiguration('chatid') && $cmd->getCache('storeVariable', 'none') != 'none') {
+			$dataStore = new dataStore();
+			$dataStore->setType('scenario');
+			$dataStore->setKey($cmd->getCache('storeVariable', 'none'));
+			$dataStore->setValue($json["message"]["text"]);
+			$dataStore->setLink_id(-1);
+			$dataStore->save();
+			$cmd->setCache('storeVariable', 'none');
+			$cmd->save();
 			echo json_encode(array('text' => ''));
-			die();
+			return;
 		}
 	}
 }
