@@ -13,3 +13,11 @@ Il faut vérifier que le user www-data a bien accès au fichier envoyé (et aux 
 --
 C'est normal, il ne peut pas fonctionner car Telegram ne sait pas reconnaître l'utilisateur à qui on a envoyé la question de celui qui répond, il faut utiliser les groupes pour cela
 --
+
+[panel,danger]
+.Mon utilisateur telegram n'arrive pas à communiquer avec Jeedom / Les messages n'arrivent pas dans Jeedom
+--
+Merci de vérifier que vous avez bien paramétré un username dans votre profil telegram. Regarder le menu options ou settings via le menu sandwich (les 3 barres horizontales les unes sur les autres)
+
+image::../images/Set_Username_Telegram.png[]
+--
