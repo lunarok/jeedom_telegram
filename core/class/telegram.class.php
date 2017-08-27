@@ -187,7 +187,7 @@ class telegramCmd extends cmd {
 
 		if (isset($options['location'])) {
 			if (strrpos($options['location'], '#') !== false) {
-                $geolocval = geotravCmd::byEqLogicIdAndLogicalId($this->getConfiguration('cmdgeoloc'),'location:coordinate')->execCmd();
+                $geolocval = geotravCmd::byEqLogicIdAndLogicalId(str_replace('#', '', $options['location']),'location:coordinate')->execCmd();
 			} else  {
 				$geolocval = $options['location'];
 			}
