@@ -104,18 +104,18 @@ class telegram extends eqLogic {
 		}
 		log::add('telegram', 'debug', $result);
 	}
-
-	/*     * **********************Getteur Setteur*************************** */
-
 }
 
 class telegramCmd extends cmd {
 
-	/*     * *************************Attributs****************************** */
-
-	/*     * ***********************Methode static*************************** */
-
-	/*     * *********************Methode d'instance************************* */
+    public function preSave() {
+        if ($this->getSubtype() == 'message') {
+            $this->setDisplay('title_disable', 0);
+            $this->setDisplay('message_disable', 0);
+            $this->setDisplay('title_placeholder', __('Options', __FILE__));
+			$this->setDisplay('message_placeholder', __('Message', __FILE__));
+        }
+    }
 
 	public function sendTelegram($_url, $_type, $_to, $_data) {
 		foreach ($_to as $chatid) {
