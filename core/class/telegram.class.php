@@ -112,8 +112,8 @@ class telegramCmd extends cmd {
         if ($this->getSubtype() == 'message') {
             $this->setDisplay('title_disable', 0);
             $this->setDisplay('message_disable', 0);
-            $this->setDisplay('title_placeholder', __('Options', __FILE__));
-			$this->setDisplay('message_placeholder', __('Message', __FILE__));
+            //$this->setDisplay('title_placeholder', __('Options', __FILE__));
+			//$this->setDisplay('message_placeholder', __('Message', __FILE__));
         }
     }
 
