@@ -121,7 +121,7 @@ if (isset($json["message"]["text"])) {
 	$cmd_user = $eqLogic->getCmd('action', $json["message"]["chat"]["id"]);
 	if (is_object($cmd_user)) {
         $geolocCmd = geotravCmd::byEqLogicIdAndLogicalId(str_replace('#', '', str_replace('eqLogic', '', $cmd_user->getConfiguration('cmdgeoloc', ''))),'location:updateCoo');
-        $option = array('message' => , $json["message"]["location"]["latitude"] . ',' . $json["message"]["location"]["longitude"]);
+        $option = array('message' => $json["message"]["location"]["latitude"] . ',' . $json["message"]["location"]["longitude"]);
 		$geolocCmd->execute($option);
 	}
 	$reply['reply'] = $eqLogic->getConfiguration('reply', 'Message recu') . ' (Localisation)';
