@@ -120,12 +120,9 @@ if (isset($json["message"]["text"])) {
 	$file_id = '';
 	$cmd_user = $eqLogic->getCmd('action', $json["message"]["chat"]["id"]);
 	if (is_object($cmd_user)) {
-		$geoloc = str_replace('#', '', $cmd_user->getConfiguration('cmdgeoloc', ''));
-		$geolocCmd = geolocCmd::byId($geoloc);
-		if (is_object($geolocCmd)) {
-			$geolocCmd->event($json["message"]["location"]["latitude"] . ',' . $json["message"]["location"]["longitude"]);
-			$geolocCmd->save();
-		}
+        $geolocCmd = geotravCmd::byEqLogicIdAndLogicalId(str_replace('#', '', $cmd_user->getConfiguration('cmdgeoloc', '')),'location:updateCoo');
+        $option = array('message' => , $json["message"]["location"]["latitude"] . ',' . $json["message"]["location"]["longitude"]);
+		$geolocCmd->execute($option);
 	}
 	$reply['reply'] = $eqLogic->getConfiguration('reply', 'Message recu') . ' (Localisation)';
 }
