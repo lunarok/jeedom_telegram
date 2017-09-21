@@ -164,11 +164,19 @@ class telegramCmd extends cmd {
 
 		if (isset($_options['answer'])) {
 			$data['disable_notification'] = 0;
-			$data['reply_markup'] = json_encode(array(
+			if (isset($options['answers_per_line'])) {
+				$data['reply_markup'] = json_encode(array(
+				'keyboard' => array_chunk ($_options['answer'],$options['answers_per_line']),
+				'one_time_keyboard' => true,
+				'resize_keyboard' => true,
+				));
+			} else {
+				$data['reply_markup'] = json_encode(array(
 				'keyboard' => array($_options['answer']),
 				'one_time_keyboard' => true,
 				'resize_keyboard' => true,
-			));
+				));
+			}
 		}
 
 		if (isset($options['empty'])) {
