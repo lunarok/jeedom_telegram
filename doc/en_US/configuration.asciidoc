@@ -44,6 +44,8 @@ Les commandes actions permettent d'envoyer des messages. Il est possible de four
 
 - parse_mode : format du message envoyé (correspond à l'option de conf équipement), valeurs possibles : '', HTML, Markdown
 
+- answers_per_line : cette option n'est utilisée que dans le mode ask et permet de définir combien d'options de réponse sont présenter par ligne
+
 Exemple : tts=/fichier.ogg file=/screen1.png,/screen2.png notify=0
 
 Toutes les pièces jointes ajoutées à une commande action sont envoyées avec un type détecté par rapport à leur extension :
