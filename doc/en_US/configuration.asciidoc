@@ -14,9 +14,9 @@ So you must get the key supplied by Telegram to the creation of the bot on the e
 
 Vous pouvez configurer le bot pour créer des notifications silencieuses sur les téléphones
 
-Il est possible de personnaliser le texte que le bot répond à un message et le format par défaut des messages du bot
+Il est possible de personnaliser le texte que le bot répond à un message et le format par défaut des messages du bot.
 
-Vous pouvez également préciser un emplacement pour stocker les fichiers envoyés au bot. Dans ce cas les fichiers seront créés suivant le format :
+Vous pouvez également préciser un emplacement pour stocker les fichiers envoyés au bot. Dans ce cas, les fichiers seront créés suivant le format :
 
 - vidéo : $username.mp4
 
@@ -24,7 +24,7 @@ Vous pouvez également préciser un emplacement pour stocker les fichiers envoy�
 
 - document : nom du fichier envoyé
 
-Par la suite, les utilisateurs entrant en communication avec le bot créeront automatiquement une entrée sur l'équipement pour envoyer des messages si l'option est activée
+Par la suite, les utilisateurs entrant en communication avec le bot créeront automatiquement une entrée sur l'équipement pour envoyer des messages si l'option est activée.
 
 Pareil pour les groupes et le ask marche sur les groupes (il ne marche pas pour le destinataire "Tous")
 
@@ -44,7 +44,7 @@ Les commandes actions permettent d'envoyer des messages. Il est possible de four
 
 - parse_mode : format du message envoyé (correspond à l'option de conf équipement), valeurs possibles : '', HTML, Markdown
 
-- answers_per_line : cette option n'est utilisée que dans le mode ask et permet de définir combien d'options de réponse sont présenter par ligne
+- answers_per_line : cette option n'est utilisée que dans le mode ask et permet de définir combien d'options de réponses sont présentées par ligne
 
 Exemple : tts=/fichier.ogg file=/screen1.png,/screen2.png notify=0
 
@@ -52,8 +52,8 @@ Toutes les pièces jointes ajoutées à une commande action sont envoyées avec 
 
 - vidéos en extensions "avi,mpeg,mpg,mkv,mp4,mpe"
 
-- audio en extensions "ogg,mp3"
+- audios en extensions "ogg,mp3"
 
 - images en extensions "gif,jpeg,jpg,png"
 
-- les autres type sont envoyés en tant que pièce jointe
+- les autres types sont envoyés en tant que pièces jointes
