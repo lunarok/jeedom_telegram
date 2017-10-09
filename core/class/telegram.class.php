@@ -164,7 +164,7 @@ class telegramCmd extends cmd {
 
 		if (isset($_options['answer'])) {
 			$data['disable_notification'] = 0;
-			/*if (isset($options['answers_per_line'])) {
+			if (isset($options['answers_per_line'])) {
 				$data['reply_markup'] = json_encode(array(
 				'keyboard' => array_chunk ($_options['answer'],$options['answers_per_line']),
 				'one_time_keyboard' => true,
@@ -176,14 +176,15 @@ class telegramCmd extends cmd {
 				'one_time_keyboard' => true,
 				'resize_keyboard' => true,
 				));
-			}*/
+			}
+            /*using inline keyboard, not really good for usage
             $inline = array();
             foreach ($_options['answer'] as $value) {
                 $inline[] = array('text' => $value, 'callback_data' => $value);
             }
             $data['reply_markup'] = json_encode(array(
             'inline_keyboard' => array($inline)
-            ));
+        ));*/
 		}
 
 		if (isset($options['empty'])) {
