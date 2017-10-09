@@ -177,8 +177,12 @@ class telegramCmd extends cmd {
 				'resize_keyboard' => true,
 				));
 			}*/
+            $inline = array();
+            foreach ($_options['answer'] as $value) {
+                $inline[] = array('text' = $value, 'callback_data' = $value);
+            }
             $data['reply_markup'] = json_encode(array(
-            'inline_keyboard' => array($_options['answer'])
+            'inline_keyboard' => array($inline)
             ));
 		}
 
