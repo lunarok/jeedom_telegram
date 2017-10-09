@@ -179,7 +179,7 @@ class telegramCmd extends cmd {
 			}*/
             $inline = array();
             foreach ($_options['answer'] as $value) {
-                $inline[] = array('text' = $value, 'callback_data' = $value);
+                $inline[] = array('text' => $value, 'callback_data' => $value);
             }
             $data['reply_markup'] = json_encode(array(
             'inline_keyboard' => array($inline)
