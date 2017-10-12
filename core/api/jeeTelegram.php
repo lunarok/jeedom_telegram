@@ -31,6 +31,9 @@ if (!is_object($eqLogic)) {
 	die();
 }
 $parameters = array();
+if (isset($json["edited_message"])) {
+	$json["message"] = $json["edited_message"];
+}
 if ($json["message"]["chat"]["type"] == 'private') {
 	$username = isset($json["message"]["from"]["username"]) ? $json["message"]["from"]["username"] : $json["message"]["from"]["first_name"];
 } else if ($json["message"]["chat"]["type"] == 'group') {
