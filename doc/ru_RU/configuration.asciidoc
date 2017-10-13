@@ -46,7 +46,7 @@ Les commandes actions permettent d'envoyer des messages. Il est possible de four
 
 - answers_per_line : cette option n'est utilisée que dans le mode ask et permet de définir combien d'options de réponses sont présentées par ligne
 
-Exemple : tts=/fichier.ogg file=/screen1.png,/screen2.png notify=0
+Exemple : tts=/fichier.ogg file=/screen1.png,/screen2.png disable_notify=0
 
 Toutes les pièces jointes ajoutées à une commande action sont envoyées avec un type détecté par rapport à leur extension :
 
