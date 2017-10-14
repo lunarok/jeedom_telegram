@@ -164,9 +164,9 @@ class telegramCmd extends cmd {
 
 		if (isset($_options['answer'])) {
 			$data['disable_notification'] = 0;
-			if (isset($options['answers_per_line'])) {
+			if (strpos($_options['answer'][0], 'answers_per_line') !== false) {
 				$data['reply_markup'] = json_encode(array(
-				'keyboard' => array_chunk ($_options['answer'],$options['answers_per_line']),
+				'keyboard' => array_chunk (array_splice($_options['answer'], 1),str_replace("answers_per_line=","",$_options['answer'][0])),
 				'one_time_keyboard' => true,
 				'resize_keyboard' => true,
 				));
