@@ -139,7 +139,7 @@ foreach (jeedom::getConfiguration('eqLogic:category') as $key => $value) {
         <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="disable_notify"/></label>
       </div>
     </div>
-    
+
   <div class="form-group">
     <label class="col-sm-3 control-label">{{Créer automatiquement les nouveaux contacts}}</label>
     <div class="col-sm-3">
