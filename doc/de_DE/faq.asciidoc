@@ -1,7 +1,7 @@
 [panel,primary]
 .Stützt sich das Plugin auf APIs Dritter ?
 --
-Oui il utilise les API Telegram (la version Bot)
+Ja, es verwendet die Telegramm-API (die Bot-Version)
 --
 
 [panel,primary]
