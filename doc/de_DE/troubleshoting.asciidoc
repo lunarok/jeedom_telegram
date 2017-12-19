@@ -1,5 +1,5 @@
 [panel,danger]
-.Je n'ai pas de retour de Telegram
+.Ich bekomme kein Telegram zurück
 --
 Il faut bien avoir une adresse en HTTPS, Telegram refuse d'utiliser une URL http en webhook (ce point est visible dans la page santé). De plus Telegram n'accepte que les ports 443, 80 et 88
 --
