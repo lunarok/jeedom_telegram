@@ -1,10 +1,13 @@
 {
 	"id" : "telegram",
 	"name" : "Telegram",
+	"description" : "Permet d'utiliser un Bot Telegram pour discuter avec votre Jeedom. Le plugin permet d'utiliser les fonctionnalités d'interactions, ask (avec menu réponses) et l'envoi de pièces jointes par Jeedom. Attention il nécessite d'avoir une connexion https fonctionnelle sur votre Jeedom",
 	"licence" : "AGPL",
 	"author" : "lunarok",
 	"require" : "3.1",
 	"category" : "communication",
+	"language" : ["fr_FR","en_US"],
+	"compatibility" : ["miniplus","smart","rpi","docker","diy","mobile"],
     "changelog" : "https://lunarok.github.io/jeedom_docs/plugins/telegram/changelog.html",
     "documentation" : "https://lunarok.github.io/jeedom_docs/plugins/telegram/"
 }
