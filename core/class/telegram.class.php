@@ -177,6 +177,7 @@ class telegramCmd extends cmd {
 				'resize_keyboard' => true,
 				));
 			}
+		}
             /*using inline keyboard, not really good for usage
             $inline = array();
             foreach ($_options['answer'] as $value) {
