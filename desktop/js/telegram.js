@@ -49,7 +49,7 @@ function addCmdToTable(_cmd) {
         tr += '<div class="input-group">';
         tr += '<input class="cmdAttr form-control" data-l1key="configuration" data-l2key="cmdgeoloc">';
         tr += '<span class="input-group-btn">';
-        tr += '<a class="btn btn-default cursor listEquipementAction" data-input="cmdgeoloc"><i class="fa fa-list-alt "></i></a>';
+        tr += '<a class="btn btn-default cursor listEquipementAction" data-input="cmdgeoloc"><i class="fas fa-list-alt "></i></a>';
         tr += '</span>';
         tr += '</div>';
         tr += '</td>';
@@ -79,10 +79,10 @@ function addCmdToTable(_cmd) {
     tr += '</td>';
     tr += '<td>';
     if (is_numeric(_cmd.id)) {
-        tr += '<a class="btn btn-default btn-xs cmdAction" data-action="configure"><i class="fa fa-cogs"></i></a> ';
-        tr += '<a class="btn btn-default btn-xs cmdAction" data-action="test"><i class="fa fa-rss"></i> {{Tester}}</a>';
+        tr += '<a class="btn btn-default btn-xs cmdAction" data-action="configure"><i class="fas fa-cogs"></i></a> ';
+        tr += '<a class="btn btn-default btn-xs cmdAction" data-action="test"><i class="fas fa-rss"></i> {{Tester}}</a>';
     }
-    tr += '<i class="fa fa-minus-circle pull-right cmdAction cursor" data-action="remove"></i>';
+    tr += '<i class="fas fa-minus-circle pull-right cmdAction cursor" data-action="remove"></i>';
     tr += '</td>';
     tr += '</tr>';
     $('#table_cmd tbody').append(tr);
