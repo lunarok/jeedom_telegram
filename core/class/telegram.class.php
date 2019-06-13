@@ -126,7 +126,7 @@ class telegramCmd extends cmd {
 			}
 			$request_http->setPost($_data);
 			log::add('telegram', 'debug', 'Call url ' . $_url . ' with option ' . print_r($_data, true));
-			$output = $request_http->exec(30);
+			$output = $request_http->exec(90);
 			log::add('telegram', 'debug', 'Result : ' . $output);
 			if (!is_json($output)) {
 				throw new Exception(__('Erreur lors de l\'envoi telegram : ', __FILE__) . $output);
