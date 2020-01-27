@@ -88,7 +88,7 @@ if (isset($json["message"]["text"])) {
 			$cmd_user->setConfiguration('username', $json["message"]["from"]["username"]);
 		}
 		if (isset($json["message"]["from"]["first_name"])) {
-			$cmd_user->setConfiguration('last_name', $json["message"]["from"]["first_name"]);
+			$cmd_user->setConfiguration('first_name', $json["message"]["from"]["first_name"]);
 		}
 		if (isset($json["message"]["from"]["last_name"])) {
 			$cmd_user->setConfiguration('last_name', $json["message"]["from"]["last_name"]);
