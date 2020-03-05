@@ -188,7 +188,6 @@ class telegramCmd extends cmd {
         ));*/
 
 		if (isset($options['empty'])) {
-			$data['disable_notification'] = 0;
 			$data['text'] = "Délai dépassé ou quelqu'un a répondu";
 			if ($_options['message'] != '') {
 				$data['text'] = $_options['message'];
