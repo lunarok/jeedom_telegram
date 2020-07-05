@@ -158,6 +158,14 @@ class telegramCmd extends cmd {
                     }
                 }
             }
+            elseif(isset($options['chatId'])) {
+                foreach ($eqLogic->getCmd('action') as $cmd) {
+                    if ($cmd->getLogicalId() === $options['chatId']) {
+                        $to[] = $cmd->getConfiguration('chatid');
+                        break;
+                    }
+                }
+            }
             else {
                 foreach ($eqLogic->getCmd('action') as $cmd) {
                     if ($cmd->getLogicalId() != 'alluser') {
