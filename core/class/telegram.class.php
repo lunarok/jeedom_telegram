@@ -150,14 +150,24 @@ class telegramCmd extends cmd {
 		$eqLogic = $this->getEqLogic();
 		$to = array();
 		if ($this->getLogicalId() == 'alluser') {
-			foreach ($eqLogic->getCmd('action') as $cmd) {
-				if ($cmd->getLogicalId() != 'alluser') {
-					$to[] = $cmd->getConfiguration('chatid');
-				}
-			}
+            if(isset($options['user'])) {
+                foreach ($eqLogic->getCmd('action') as $cmd) {
+                    if ($cmd->getName() === $options['user']) {
+                        $to[] = $cmd->getConfiguration('chatid');
+                        break;
+                    }
+                }
+            }
+            else {
+                foreach ($eqLogic->getCmd('action') as $cmd) {
+                    if ($cmd->getLogicalId() != 'alluser') {
+                        $to[] = $cmd->getConfiguration('chatid');
+                    }
+                }
+            }
 		} else {
 			$to[] = $this->getConfiguration('chatid');
-		}
+        }
 		$request_http = "https://api.telegram.org/bot" . trim($eqLogic->getConfiguration('bot_token'));
 		$data['disable_notification'] = (isset($options['disable_notify'])) ? $options['disable_notify'] : $eqLogic->getConfiguration('disable_notify', 0);
 		$data['parse_mode'] = (isset($options['parse_mode'])) ? $options['parse_mode'] : $eqLogic->getConfiguration('parse_mode', 'HTML');
