@@ -125,6 +125,7 @@ class telegramCmd extends cmd {
 				$request_http->setHeader(array("Content-Type:multipart/form-data"));
 			}
 			$request_http->setPost($_data);
+			$request_http->setNoReportError(true);
 			log::add('telegram', 'debug', 'Call url ' . $_url . ' with option ' . print_r($_data, true));
 			$output = $request_http->exec(90);
 			log::add('telegram', 'debug', 'Result : ' . $output);
