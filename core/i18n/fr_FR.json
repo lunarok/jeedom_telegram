@@ -30,7 +30,8 @@
     },
     "plugins\/telegram\/core\/class\/telegram.class.php": {
         "Message": "Message",
-        "Expediteur": "Expediteur",
+        "Expediteur": "Expediteur",        
+        "Dernier expediteur ASK": "Dernier expediteur ASK",
         "Tous": "Tous"
     }
 }
