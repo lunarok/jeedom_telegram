@@ -85,6 +85,23 @@ class telegram extends eqLogic {
 		$sender->setEqLogic_id($this->getId());
 		$sender->save();
 
+		$cmd = $this->getCmd(null, 'lastaskuser');
+                if (!is_object($cmd)) {
+                        $cmd = new telegramCmd();
+                        $cmd->setLogicalId('lastaskuser');
+                        $cmd->setIsVisible(1);
+                        $cmd->setName(__('Dernier utilisateur ASK', __FILE__));
+                        $cmd->setType('action');
+                        $cmd->setConfiguration('chatid', 'Dernier utilisateur ASK');
+                        $cmd->setConfiguration('firstname', 'Dernier utilisateur ASK');
+                        $cmd->setConfiguration('username', 'Dernier utilisateur ASK');
+                        $cmd->setSubType('message');
+                        $cmd->setEqLogic_id($this->getId());
+                        $cmd->setDisplay('title_placeholder', __('Options', __FILE__));
+                        $cmd->setDisplay('message_placeholder', __('Message', __FILE__));
+                        $cmd->save();
+                }
+		
 		$cmd = $this->getCmd(null, 'alluser');
 		if (!is_object($cmd)) {
 			$cmd = new telegramCmd();
@@ -168,7 +185,9 @@ class telegramCmd extends cmd {
 					$to[] = $cmd->getConfiguration('chatid');
 				}
 			}
-		} else {
+		} elseif ($this->getLogicalId() == 'lastaskuser') {
+                        $to[] = $eqLogic->getCmd(null, 'ask_sender')->execCmd();
+                } else {
 			$to[] = $this->getConfiguration('chatid');
 		}
 		$request_http = "https://api.telegram.org/bot" . trim($eqLogic->getConfiguration('bot_token'));
