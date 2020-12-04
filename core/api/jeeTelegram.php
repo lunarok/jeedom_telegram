@@ -47,6 +47,7 @@ if (isset($json["message"]["text"])) {
 	foreach ($eqLogic->getCmd('action') as $cmd) {
 		if ($cmd->askResponse($json["message"]["text"])) {
 			echo json_encode(array('text' => ''));
+			$eqLogic->checkAndUpdateCmd('ask_sender', trim($json["message"]["from"]["id"]));
 			die();
 		}
 	}
