@@ -32,6 +32,8 @@
         "Message": "Message",
         "Expediteur": "Expediteur",        
         "Dernier expediteur ASK": "Dernier expediteur ASK",
+        "Dernier utilisateur ASK": "Dernier utilisateur ASK",
+        "Dernier utilisateur": "Dernier utilisateur",
         "Tous": "Tous"
     }
 }
