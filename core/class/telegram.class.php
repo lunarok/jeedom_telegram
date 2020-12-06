@@ -83,8 +83,42 @@ class telegram extends eqLogic {
 		$sender->setType('info');
 		$sender->setSubType('string');
 		$sender->setEqLogic_id($this->getId());
-		$sender->save();
+		$sender->save();		
 
+		$cmd = $this->getCmd(null, 'lastaskuser');
+                if (!is_object($cmd)) {
+                        $cmd = new telegramCmd();
+                        $cmd->setLogicalId('lastaskuser');
+                        $cmd->setIsVisible(1);
+                        $cmd->setName(__('Dernier utilisateur ASK', __FILE__));
+                        $cmd->setType('action');
+                        $cmd->setConfiguration('chatid', 'Dernier utilisateur ASK');
+                        $cmd->setConfiguration('firstname', 'Dernier utilisateur ASK');
+                        $cmd->setConfiguration('username', 'Dernier utilisateur ASK');
+                        $cmd->setSubType('message');
+                        $cmd->setEqLogic_id($this->getId());
+                        $cmd->setDisplay('title_placeholder', __('Options', __FILE__));
+                        $cmd->setDisplay('message_placeholder', __('Message', __FILE__));
+                        $cmd->save();
+                }
+
+                $cmd = $this->getCmd(null, 'lastuser');
+                if (!is_object($cmd)) {
+                        $cmd = new telegramCmd();
+                        $cmd->setLogicalId('lastuser');
+                        $cmd->setIsVisible(1);
+                        $cmd->setName(__('Dernier utilisateur', __FILE__));
+                        $cmd->setType('action');
+                        $cmd->setConfiguration('chatid', 'Dernier utilisateur');
+                        $cmd->setConfiguration('firstname', 'Dernier utilisateur');
+                        $cmd->setConfiguration('username', 'Dernier utilisateur');
+                        $cmd->setSubType('message');
+                        $cmd->setEqLogic_id($this->getId());
+                        $cmd->setDisplay('title_placeholder', __('Options', __FILE__));
+                        $cmd->setDisplay('message_placeholder', __('Message', __FILE__));
+                        $cmd->save();
+                }
+		
 		$cmd = $this->getCmd(null, 'alluser');
 		if (!is_object($cmd)) {
 			$cmd = new telegramCmd();
@@ -164,11 +198,15 @@ class telegramCmd extends cmd {
 		$to = array();
 		if ($this->getLogicalId() == 'alluser') {
 			foreach ($eqLogic->getCmd('action') as $cmd) {
-				if ($cmd->getLogicalId() != 'alluser') {
+				if (!in_array($cmd->getLogicalId(), ['alluser','lastaskuser','lastuser'])) {
 					$to[] = $cmd->getConfiguration('chatid');
 				}
 			}
-		} else {
+		} elseif ($this->getLogicalId() == 'lastaskuser') {
+                        $to[] = $eqLogic->getCmd(null, 'ask_sender')->execCmd();
+		} elseif ($this->getLogicalId() == 'lastuser') {
+                        $to[] = $eqLogic->getCmd(null, 'sender')->execCmd();
+                } else {
 			$to[] = $this->getConfiguration('chatid');
 		}
 		$request_http = "https://api.telegram.org/bot" . trim($eqLogic->getConfiguration('bot_token'));
