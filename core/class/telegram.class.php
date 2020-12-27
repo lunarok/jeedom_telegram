@@ -213,6 +213,11 @@ class telegramCmd extends cmd {
 		$data['disable_notification'] = (isset($options['disable_notify'])) ? $options['disable_notify'] : $eqLogic->getConfiguration('disable_notify', 0);
 		$data['parse_mode'] = (isset($options['parse_mode'])) ? $options['parse_mode'] : $eqLogic->getConfiguration('parse_mode', 'HTML');
 
+		
+		if (isset($options['disable_web_page_preview']) && $options['disable_web_page_preview']) {
+			$data['disable_web_page_preview'] = true; 
+        	}
+		
 		if (isset($_options['answer'])) {
 			$data['disable_notification'] = 0;
 			if (strpos($_options['answer'][0], 'answers_per_line') !== false) {
