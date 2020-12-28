@@ -210,8 +210,9 @@ class telegramCmd extends cmd {
 			$to[] = $this->getConfiguration('chatid');
 		}
 		$request_http = "https://api.telegram.org/bot" . trim($eqLogic->getConfiguration('bot_token'));
-		$data['disable_notification'] = (isset($options['disable_notify'])) ? $options['disable_notify'] : $eqLogic->getConfiguration('disable_notify', 0);
-		$data['parse_mode'] = (isset($options['parse_mode'])) ? $options['parse_mode'] : $eqLogic->getConfiguration('parse_mode', 'HTML');
+		$data['disable_notification'] = $eqLogic->getConfiguration('disable_notify', 0);
+		$data['parse_mode'] = $eqLogic->getConfiguration('parse_mode', 'HTML');
+		$data = array_merge($data, $options);
 
 		if (isset($_options['answer'])) {
 			$data['disable_notification'] = 0;
@@ -239,6 +240,7 @@ class telegramCmd extends cmd {
         ));*/
 
 		if (isset($options['empty'])) {
+			unset($data['empty']);
 			$data['disable_notification'] = 0;
 			$data['text'] = "Délai dépassé ou quelqu'un a répondu";
 			if ($_options['message'] != '') {
@@ -253,6 +255,7 @@ class telegramCmd extends cmd {
 		}
 
 		if (isset($options['location'])) {
+			unset($data['location']);
 			if (strrpos($options['location'], '#') !== false) {
                 $geolocval = geotravCmd::byEqLogicIdAndLogicalId(str_replace('#', '', $options['location']),'location:coordinate')->execCmd();
 			} else  {
@@ -266,6 +269,7 @@ class telegramCmd extends cmd {
 		}
 
 		if (isset($options['tts'])) {
+			unset($data['tts']);
 			if (is_file(realpath($options['tts']))) {
 				$data['voice'] = new CURLFile(realpath($options['tts']));
 			} else {
@@ -278,6 +282,7 @@ class telegramCmd extends cmd {
 		}
 
 		if (isset($options['file'])) {
+			unset($data['file']);
 			$_options['files'] = explode(',', $options['file']);
 		}
 
