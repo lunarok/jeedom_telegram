@@ -105,7 +105,14 @@ if (isset($json["message"]["text"])) {
 		$reply = interactQuery::tryToReply(trim($json["message"]["text"]), $parameters);
 		log::add('telegram', 'debug', 'Interaction ' . print_r($reply, true));
 	} else {
-		$reply['reply'] = $eqLogic->getConfiguration('reply', 'Message recu');
+		if (($cmd_user->getConfiguration('ghlocal') == 1) && class_exists('ghlocal')) {
+			$interactAnswer = 1;
+			$reply = ghlocal::callAPI(trim($json["message"]["text"]), $json["message"]["from"]["first_name"]);
+			$reply = $reply['text'];
+			log::add('telegram', 'debug', 'Interaction ' . print_r($reply, true));
+		} else {
+			$reply['reply'] = $eqLogic->getConfiguration('reply', 'Message recu');
+		}
 	}
 	$file_id = '';
 } else if (isset($json["message"]["document"])) {
