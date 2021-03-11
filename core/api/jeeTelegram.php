@@ -107,7 +107,7 @@ if (isset($json["message"]["text"])) {
 	} else {
 		if (($cmd_user->getConfiguration('ghlocal') == 1) && class_exists('ghlocal')) {
 			$interactAnswer = 1;
-			$reply = ghlocal::callAPI(trim($json["message"]["text"]), $json["message"]["from"]["first_name"]);
+			$reply = ghlocal::callAssistant(trim($json["message"]["text"]), $json["message"]["from"]["first_name"]);
 			$reply = $reply['text'];
 			log::add('telegram', 'debug', 'Interaction ' . print_r($reply, true));
 		} else {
