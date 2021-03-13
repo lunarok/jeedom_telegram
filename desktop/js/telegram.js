@@ -136,8 +136,8 @@ function addCmdToTable(_cmd) {
     tr += '<td>';
     tr += '<span><label class="checkbox-inline"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="isVisible" checked/>{{Visible}}</label></span> ';
     if ((!isset(_cmd.type) || _cmd.type == 'action') && _cmd.logicalId != 'alluser') {
-              tr += '<span><label class="checkbox-inline"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="configuration" data-l2key="interact" checked/>{{Interactions Jeedom}}</label></span> ';
-        tr += '<span><label class="checkbox-inline"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="configuration" data-l2key="ghlocal" checked/>{{Interactions Google Assistant Relay}}</label></span> ';
+              tr += '<span><label class="checkbox-inline"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="configuration" data-l2key="interact"/>{{Interactions Jeedom}}</label></span> ';
+        tr += '<span><label class="checkbox-inline"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="configuration" data-l2key="ghlocal"/>{{Interactions Google Assistant Relay}}</label></span> ';
     }
     tr += '</td>';
     tr += '<td>';
