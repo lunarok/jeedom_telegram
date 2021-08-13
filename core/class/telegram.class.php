@@ -211,7 +211,13 @@ class telegramCmd extends cmd {
 		}
 		$request_http = "https://api.telegram.org/bot" . trim($eqLogic->getConfiguration('bot_token'));
 		$data['disable_notification'] = $eqLogic->getConfiguration('disable_notify', 0);
+		if (isset($options['disable_notification'])) {
+			$data['disable_notification'] = $options['disable_notification'];
+		}
 		$data['parse_mode'] = $eqLogic->getConfiguration('parse_mode', 'HTML');
+		if (isset($options['parse_mode'])) {
+			$data['parse_mode'] = $options['parse_mode'];
+		}
 		$data = array_merge($data, $options);
 
 		if (isset($_options['answer'])) {
@@ -241,7 +247,6 @@ class telegramCmd extends cmd {
 
 		if (isset($options['empty'])) {
 			unset($data['empty']);
-			$data['disable_notification'] = 0;
 			$data['text'] = "Délai dépassé ou quelqu'un a répondu";
 			if ($_options['message'] != '') {
 				$data['text'] = $_options['message'];
