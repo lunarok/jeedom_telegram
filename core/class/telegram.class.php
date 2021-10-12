@@ -292,7 +292,7 @@ class telegramCmd extends cmd {
 		}
 
 		if (!isset($_options['files']) && $_options['message'] != '') {
-			$data['text'] = str_replace("<", "&lt;", trim($_options['message']));
+			$data['text'] = trim($_options['message']);
 			$url = $request_http . "/sendMessage";
 			$this->sendTelegram($url, 'message', $to, $data);
 		}
