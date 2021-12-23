@@ -29,5 +29,3 @@ function telegram_update() {
       $telegram->save();
   }
 }
-
-?>
