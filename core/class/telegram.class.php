@@ -296,7 +296,7 @@ class telegramCmd extends cmd {
 			unlink($save);
 			$cmd = 'curl ' . $options['snapshot'] . ' -o ' . $save;
 			shell_exec($cmd);
-			$options['files'][] = $save;
+			$_options['files'][] = $save;
 		}
 		
 		if (isset($options['rtspSnapshot'])) {
@@ -305,7 +305,7 @@ class telegramCmd extends cmd {
 			unlink($save);
 			$cmd = 'ffmpeg -rtsp_transport tcp -loglevel fatal -i "' . $options['rtspSnapshot'] . '" -f image2 -vf fps=fps=1 ' . $save;
 			shell_exec($cmd);
-			$options['files'][] = $save;
+			$_options['files'][] = $save;
 		}
 		
 		if (isset($options['rtspVideo'])) {
@@ -314,7 +314,7 @@ class telegramCmd extends cmd {
 			unlink($save);
 			$cmd = 'ffmpeg -rtsp_transport tcp -loglevel fatal -i "' . $options['rtspVideo'] . '"  -c copy -map 0 -segment_time 00:00:10 -f segment -reset_timestamps 1  ' . $save;
 			shell_exec($cmd);
-			$options['files'][] = $save;
+			$_options['files'][] = $save;
 		}
 
 		if (!isset($_options['files']) && $_options['message'] != '') {
