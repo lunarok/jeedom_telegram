@@ -257,24 +257,6 @@ class telegramCmd extends cmd {
 			$this->sendTelegram($url, 'message', $to, $data);
 			return;
 		}
-		
-		if (isset($options['snapshot'])) {
-			unset($data['snapshot']);
-			$save = '/tmp/telegram_' . $this->getId() . '.png';
-			unlink($save);
-			$cmd = 'curl ' . $options['snapshot'] . ' -o ' . $save;
-			shell_exec($cmd);
-			$options['file'] = $save;
-		}
-		
-		if (isset($options['rtsp'])) {
-			unset($data['rtsp']);
-			$save = '/tmp/telegram_' . $this->getId() . '.png';
-			unlink($save);
-			$cmd = 'ffmpeg -rtsp_transport tcp -loglevel fatal -i "' . $options['rtsp'] . '" -f image2 -vf fps=fps=1 ' . $save;
-			shell_exec($cmd);
-			$options['file'] = $save;
-		}
 
 		if (isset($options['location'])) {
 			unset($data['location']);
@@ -306,6 +288,33 @@ class telegramCmd extends cmd {
 		if (isset($options['file'])) {
 			unset($data['file']);
 			$_options['files'] = explode(',', $options['file']);
+		}
+		
+		if (isset($options['snapshot'])) {
+			unset($data['snapshot']);
+			$save = '/tmp/telegram_' . $this->getId() . '.png';
+			unlink($save);
+			$cmd = 'curl ' . $options['snapshot'] . ' -o ' . $save;
+			shell_exec($cmd);
+			$options['files'][] = $save;
+		}
+		
+		if (isset($options['rtspSnapshot'])) {
+			unset($data['rtsp']);
+			$save = '/tmp/telegram_' . $this->getId() . '.png';
+			unlink($save);
+			$cmd = 'ffmpeg -rtsp_transport tcp -loglevel fatal -i "' . $options['rtsp'] . '" -f image2 -vf fps=fps=1 ' . $save;
+			shell_exec($cmd);
+			$options['files'][] = $save;
+		}
+		
+		if (isset($options['rtspVideo'])) {
+			unset($data['rtsp']);
+			$save = '/tmp/telegram_' . $this->getId() . '.mp4';
+			unlink($save);
+			$cmd = 'ffmpeg -rtsp_transport tcp -loglevel fatal -i "' . $options['rtsp'] . '"  -c copy -map 0 -segment_time 00:00:10 -f segment -reset_timestamps 1  ' . $save;
+			shell_exec($cmd);
+			$options['files'][] = $save;
 		}
 
 		if (!isset($_options['files']) && $_options['message'] != '') {
