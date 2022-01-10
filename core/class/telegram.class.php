@@ -303,7 +303,7 @@ class telegramCmd extends cmd {
 			unset($data['rtsp']);
 			$save = '/tmp/telegram_' . $this->getId() . '.png';
 			unlink($save);
-			$cmd = 'ffmpeg -rtsp_transport tcp -loglevel fatal -i "' . $options['rtsp'] . '" -f image2 -vf fps=fps=1 ' . $save;
+			$cmd = 'ffmpeg -rtsp_transport tcp -loglevel fatal -i "' . $options['rtspSnapshot'] . '" -f image2 -vf fps=fps=1 ' . $save;
 			shell_exec($cmd);
 			$options['files'][] = $save;
 		}
@@ -312,7 +312,7 @@ class telegramCmd extends cmd {
 			unset($data['rtsp']);
 			$save = '/tmp/telegram_' . $this->getId() . '.mp4';
 			unlink($save);
-			$cmd = 'ffmpeg -rtsp_transport tcp -loglevel fatal -i "' . $options['rtsp'] . '"  -c copy -map 0 -segment_time 00:00:10 -f segment -reset_timestamps 1  ' . $save;
+			$cmd = 'ffmpeg -rtsp_transport tcp -loglevel fatal -i "' . $options['rtspVideo'] . '"  -c copy -map 0 -segment_time 00:00:10 -f segment -reset_timestamps 1  ' . $save;
 			shell_exec($cmd);
 			$options['files'][] = $save;
 		}
