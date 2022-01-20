@@ -290,6 +290,16 @@ class telegramCmd extends cmd {
 			$_options['files'] = explode(',', $options['file']);
 		}
 		
+		if (isset($options['url'])) {
+			unset($data['url']);
+			$path = parse_url($data['url'], PHP_URL_PATH);
+			$save = '/tmp/' . basename($path);
+			unlink($save);
+			$cmd = 'curl ' . $options['url'] . ' -o ' . $save;
+			shell_exec($cmd);
+			$_options['files'][] = $save;
+		}
+		
 		if (isset($options['snapshot'])) {
 			unset($data['snapshot']);
 			$save = '/tmp/telegram_' . $this->getId() . '.png';
