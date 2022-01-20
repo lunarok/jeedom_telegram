@@ -292,12 +292,14 @@ class telegramCmd extends cmd {
 		
 		if (isset($options['url'])) {
 			unset($data['url']);
-			$save = '/tmp/' . basename($data['url']);
-			log::add('telegram', 'debug', 'URL save : ' . $save);
-			unlink($save);
-			$cmd = 'curl ' . $options['url'] . ' -o ' . $save;
-			shell_exec($cmd);
-			$_options['files'][] = $save;
+			foreach(explode(',', $options['url']) as $file) {
+				$save = '/tmp/' . basename($file);
+				log::add('telegram', 'debug', 'URL save : ' . $save);
+				unlink($save);
+				$cmd = 'curl ' . $file . ' -o ' . $save;
+				shell_exec($cmd);
+				$_options['files'][] = $save;
+			}
 		}
 		
 		if (isset($options['snapshot'])) {
