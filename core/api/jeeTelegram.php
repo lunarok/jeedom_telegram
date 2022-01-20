@@ -107,38 +107,6 @@ if (isset($json["message"]["text"])) {
 	} else {
 		if (($cmd_user->getConfiguration('ghlocal') == 1) && class_exists('ghlocal')) {
 			$interactAnswer = 1;
-			if (trim(lowercase($json["message"]["text"])) == 'google') {
-				$cmd_user->setConfiguration('googleInter',1);
-				$cmd_user->save();
-				$_options['message'] = 'Allumer, Eteindre ?';
-				$_options['answer'] = array('allumer','éteindre');
-				$cmd_user->execCmd($_options);
-				die();
-			}
-			if ($cmd_user->getConfiguration('googleInter') == 1) {
-				$cmd_user->setConfiguration('googleInter',2);
-				$cmd_user->setConfiguration('googleSentence',trim($json["message"]["text"]) . ' ');
-				$cmd_user->save();
-				$_options['message'] = 'Lumière, Tout ?';
-				$_options['answer'] = array('lumières','tout');
-				$cmd_user->execCmd($_options);
-				die();
-			}
-			if ($cmd_user->getConfiguration('googleInter') == 2) {
-				$cmd_user->setConfiguration('googleInter',3);
-				$cmd_user->setConfiguration('googleSentence',$cmd_user->getConfiguration('googleSentence') . trim($json["message"]["text"]) . ' ');
-				$cmd_user->save();
-				$_options['message'] = 'Pièce ?';
-				$_options['answer'] = array('salon','chambre');
-				$cmd_user->execCmd($_options);
-				die();
-			}
-			if ($cmd_user->getConfiguration('googleInter') == 3) {
-				$cmd_user->setConfiguration('googleInter',0);
-				$json["message"]["text"] = $cmd_user->getConfiguration('googleSentence') . $json["message"]["text"];
-				$cmd_user->setConfiguration('googleSentence','');
-				$cmd_user->save();
-			}
 			$reply = ghlocal::callAssistant(trim($json["message"]["text"]), $json["message"]["from"]["first_name"]);
 			$reply['reply'] = $reply['text'];
 			log::add('telegram', 'debug', 'Assistant ' . print_r($reply, true));
