@@ -292,8 +292,7 @@ class telegramCmd extends cmd {
 		
 		if (isset($options['url'])) {
 			unset($data['url']);
-			$path = parse_url($data['url'], PHP_URL_PATH);
-			$save = '/tmp/' . basename($path);
+			$save = '/tmp/' . basename($data['url']);
 			log::add('telegram', 'debug', 'URL save : ' . $save);
 			unlink($save);
 			$cmd = 'curl ' . $options['url'] . ' -o ' . $save;
