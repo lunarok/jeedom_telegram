@@ -251,7 +251,7 @@ class telegramCmd extends cmd {
 				$data['text'] = $_options['message'];
 			}
 			$data['reply_markup'] = json_encode(array(
-				'hide_keyboard' => true,
+				'remove_keyboard' => true,
 			));
 			$url = $request_http . "/sendMessage";
 			$this->sendTelegram($url, 'message', $to, $data);
