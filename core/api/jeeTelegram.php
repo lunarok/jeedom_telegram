@@ -36,7 +36,7 @@ if (isset($json["edited_message"])) {
 }
 if ($json["message"]["chat"]["type"] == 'private') {
 	$username = isset($json["message"]["from"]["username"]) ? $json["message"]["from"]["username"] : $json["message"]["from"]["first_name"];
-} else if ($json["message"]["chat"]["type"] == 'group') {
+} else if (($json["message"]["chat"]["type"] == 'supergroup')||($json["message"]["chat"]["type"] == 'group')) {
 	$username = $json["message"]["chat"]["title"];
 } else {
 	log::add('telegram', 'debug', 'Message non supporté');
